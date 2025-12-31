@@ -82,6 +82,7 @@
             text-transform: uppercase;
             letter-spacing: 3px;
             text-shadow: 0 0 20px rgba(5, 195, 221, 0.5);
+            text-decoration: none;
         }
 
         .logo span {
@@ -253,23 +254,66 @@
             opacity: 0.8;
         }
 
-        .glitch {
-            position: relative;
-            animation: glitch 5s infinite;
-        }
-
-        @keyframes glitch {
-            0%, 90%, 100% { transform: translate(0); }
-            92% { transform: translate(-2px, 2px); }
-            94% { transform: translate(2px, -2px); }
-            96% { transform: translate(-2px, -2px); }
-        }
-
         /* Hidden morse code hint in CSS */
         .morse::after {
             content: '•••−•−−− •••−•−− ••−−− ••• −'; /* SOS in morse */
             position: absolute;
             opacity: 0;
+        }
+
+        /* Mobile responsive */
+        @media (max-width: 768px) {
+            .notice-banner {
+                font-size: 0.8rem !important;
+                padding: 0.8rem !important;
+                line-height: 1.5 !important;
+            }
+
+            header {
+                padding: 1rem;
+            }
+
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: flex-start;
+            }
+
+            .logo {
+                font-size: 1.3rem;
+            }
+
+            nav {
+                flex-wrap: wrap;
+                gap: 0.5rem;
+                width: 100%;
+            }
+
+            nav a {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.9rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .tagline {
+                font-size: 1rem;
+            }
+
+            .container {
+                padding: 2rem 1rem;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            .cta-button {
+                padding: 0.8rem 2rem;
+                font-size: 1rem;
+            }
         }
     </style>
 </head>
@@ -278,7 +322,7 @@
     <div class="particles" id="particles"></div>
 
     <!-- Notice Banner -->
-    <div style="background: rgba(255, 107, 107, 0.2); border-bottom: 2px solid var(--warning); padding: 1rem; text-align: center; font-size: 0.95rem; color: var(--warning); backdrop-filter: blur(10px); line-height: 1.6;">
+    <div class="notice-banner" style="background: rgba(255, 107, 107, 0.2); border-bottom: 2px solid var(--warning); padding: 1rem; text-align: center; font-size: 0.95rem; color: var(--warning); backdrop-filter: blur(10px); line-height: 1.6;">
         ⚠️ 諸事情により本ページの更新は止まっております。新サイトの開設をお待ちください。<br>
         なお、AIサポートシステムについては2024年11月までの情報ですが稼働いたします。
     </div>
@@ -299,7 +343,7 @@
 
     <div class="container">
         <div class="hero">
-            <h1 class="glitch">ニューロライフ製薬</h1>
+            <h1>ニューロライフ製薬</h1>
             <p class="tagline">未来の健康を、今日から</p>
             <p style="max-width: 700px; margin: 0 auto 2rem; line-height: 1.8;">
                 最先端の神経科学とバイオテクノロジーを駆使し、<br>

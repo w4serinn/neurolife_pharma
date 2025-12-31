@@ -325,11 +325,86 @@
             background: rgba(5, 195, 221, 0.4);
             transform: translateY(-2px);
         }
+
+        /* Mobile responsive */
+        @media (max-width: 768px) {
+            .notice-banner {
+                font-size: 0.8rem !important;
+                padding: 0.8rem !important;
+                line-height: 1.5 !important;
+            }
+
+            header {
+                padding: 1rem;
+            }
+
+            .header-content {
+                flex-direction: column;
+                gap: 0.5rem;
+                align-items: flex-start;
+            }
+
+            .logo {
+                font-size: 1.3rem;
+            }
+
+            nav a {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.9rem;
+            }
+
+            .chat-container {
+                margin: 1rem auto;
+                padding: 0 0.5rem;
+            }
+
+            .chat-header h1 {
+                font-size: 1.3rem;
+            }
+
+            .chat-header p {
+                font-size: 0.8rem;
+            }
+
+            .chat-messages {
+                padding: 1rem;
+                min-height: 300px;
+                max-height: 400px;
+            }
+
+            .message-text {
+                font-size: 0.9rem;
+                padding: 0.8rem;
+            }
+
+            .chat-input-container {
+                padding: 1rem;
+                flex-direction: column;
+            }
+
+            #userInput {
+                font-size: 0.9rem;
+            }
+
+            #sendButton {
+                width: 100%;
+                padding: 0.8rem;
+            }
+
+            .quick-actions {
+                flex-direction: column;
+            }
+
+            .quick-action {
+                width: 100%;
+                text-align: center;
+            }
+        }
     </style>
 </head>
 <body>
     <!-- Notice Banner -->
-    <div style="background: rgba(255, 107, 107, 0.2); border-bottom: 2px solid var(--warning); padding: 1rem; text-align: center; font-size: 0.95rem; color: var(--warning); backdrop-filter: blur(10px); line-height: 1.6;">
+    <div class="notice-banner" style="background: rgba(255, 107, 107, 0.2); border-bottom: 2px solid var(--warning); padding: 1rem; text-align: center; font-size: 0.95rem; color: var(--warning); backdrop-filter: blur(10px); line-height: 1.6;">
         ⚠️ 諸事情により本ページの更新は止まっております。新サイトの開設をお待ちください。<br>
         なお、AIサポートシステムについては2024年11月までの情報ですが稼働いたします。
     </div>
