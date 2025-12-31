@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>依頼者とのチャット | 調査依頼</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Noto+Sans+JP:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0a4d68;
+            --secondary: #088395;
+            --accent: #05c3dd;
+            --dark: #051923;
+            --light: #f0f9ff;
+            --warning: #ff6b6b;
+            --success: #51cf66;
+            --client-bubble: #3a3a3c;
+            --user-bubble: #0b7ce6;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background: #1c1c1e;
+            color: var(--light);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            background: rgba(5, 25, 35, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .back-button {
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 1.5rem;
+            transition: all 0.3s;
+        }
+
+        .back-button:hover {
+            transform: translateX(-5px);
+        }
+
+        .header-info {
+            flex: 1;
+        }
+
+        .contact-name {
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: var(--light);
+        }
+
+        .contact-status {
+            font-size: 0.85rem;
+            color: rgba(240, 249, 255, 0.6);
+            margin-top: 0.2rem;
+        }
+
+        .status-indicator {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: var(--success);
+            border-radius: 50%;
+            margin-right: 0.5rem;
+            animation: pulse-status 2s infinite;
+        }
+
+        @keyframes pulse-status {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .chat-container {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1.5rem;
+            background: #000;
+        }
+
+        .date-separator {
+            text-align: center;
+            margin: 1.5rem 0;
+            color: rgba(240, 249, 255, 0.5);
+            font-size: 0.8rem;
+        }
+
+        .message {
+            display: flex;
+            margin-bottom: 1rem;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .message.client-message {
+            justify-content: flex-start;
+        }
+
+        .message.user-message {
+            justify-content: flex-end;
+        }
+
+        .message-bubble {
+            max-width: 70%;
+            padding: 0.8rem 1rem;
+            border-radius: 18px;
+            line-height: 1.5;
+            position: relative;
+            word-wrap: break-word;
+        }
+
+        .client-message .message-bubble {
+            background: var(--client-bubble);
+            border-bottom-left-radius: 4px;
+        }
+
+        .user-message .message-bubble {
+            background: var(--user-bubble);
+            border-bottom-right-radius: 4px;
+            color: white;
+        }
+
+        .message-time {
+            font-size: 0.7rem;
+            color: rgba(240, 249, 255, 0.5);
+            margin-top: 0.3rem;
+            text-align: right;
+        }
+
+        .client-message .message-time {
+            text-align: left;
+        }
+
+        .attachment {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            padding: 0.8rem;
+            margin-top: 0.5rem;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .attachment:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: var(--accent);
+        }
+
+        .attachment-icon {
+            margin-right: 0.5rem;
+        }
+
+        .typing-indicator {
+            display: none;
+            padding: 0.8rem 1rem;
+            background: var(--client-bubble);
+            border-radius: 18px;
+            border-bottom-left-radius: 4px;
+            max-width: 60px;
+            margin-bottom: 1rem;
+        }
+
+        .typing-indicator.active {
+            display: inline-block;
+        }
+
+        .typing-dots {
+            display: flex;
+            gap: 4px;
+        }
+
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            background: rgba(240, 249, 255, 0.6);
+            border-radius: 50%;
+            animation: typing 1.4s infinite;
+        }
+
+        .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes typing {
+            0%, 60%, 100% { transform: translateY(0); opacity: 0.6; }
+            30% { transform: translateY(-8px); opacity: 1; }
+        }
+
+        .input-container {
+            background: rgba(5, 25, 35, 0.95);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1rem 1.5rem;
+            display: flex;
+            gap: 0.8rem;
+            align-items: center;
+        }
+
+        #userInput {
+            flex: 1;
+            background: rgba(58, 58, 60, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 0.8rem 1.2rem;
+            color: var(--light);
+            font-family: 'Noto Sans JP', sans-serif;
+            font-size: 0.95rem;
+            outline: none;
+            transition: all 0.3s;
+        }
+
+        #userInput:focus {
+            border-color: var(--accent);
+            background: rgba(58, 58, 60, 1);
+        }
+
+        #sendButton {
+            background: var(--accent);
+            color: var(--dark);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+        }
+
+        #sendButton:hover {
+            transform: scale(1.1);
+            background: var(--light);
+        }
+
+        #sendButton:active {
+            transform: scale(0.95);
+        }
+
+        .notification {
+            position: fixed;
+            top: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--warning);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(255, 107, 107, 0.4);
+            z-index: 1000;
+            animation: slideDown 0.3s ease-out;
+            display: none;
+        }
+
+        .notification.show {
+            display: block;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateX(-50%) translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0);
+            }
+        }
+
+        .quick-replies {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-top: 0.5rem;
+        }
+
+        .quick-reply {
+            background: rgba(5, 195, 221, 0.2);
+            border: 1px solid var(--accent);
+            padding: 0.5rem 1rem;
+            border-radius: 16px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: var(--accent);
+        }
+
+        .quick-reply:hover {
+            background: rgba(5, 195, 221, 0.3);
+            transform: translateY(-2px);
+        }
+
+        /* Mobile responsive */
+        @media (max-width: 768px) {
+            .message-bubble {
+                max-width: 85%;
+            }
+
+            .input-container {
+                padding: 0.8rem 1rem;
+            }
+
+            #userInput {
+                font-size: 0.9rem;
+            }
+        }
+
+        /* 画像表示用 */
+        .message-image {
+            max-width: 100%;
+            border-radius: 8px;
+            margin-top: 0.5rem;
+            cursor: pointer;
+        }
+
+        .evidence-tag {
+            display: inline-block;
+            background: rgba(255, 107, 107, 0.2);
+            color: var(--warning);
+            padding: 0.3rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            margin-top: 0.5rem;
+            border: 1px solid var(--warning);
+        }
+    </style>
+</head>
+<body>
+    <div class="notification" id="notification">
+        📩 新しい情報が届きました
+    </div>
+
+    <header>
+        <a href="index.html" class="back-button">←</a>
+        <div class="header-info">
+            <div class="contact-name">依頼者（匿名希望）</div>
+            <div class="contact-status">
+                <span class="status-indicator"></span>オンライン
+            </div>
+        </div>
+    </header>
+
+    <div class="chat-container" id="chatContainer">
+        <div class="date-separator">今日</div>
+        
+        <!-- 初期メッセージはJavaScriptで追加 -->
+    </div>
+
+    <div class="typing-indicator" id="typingIndicator">
+        <div class="typing-dots">
+            <div class="typing-dot"></div>
+            <div class="typing-dot"></div>
+            <div class="typing-dot"></div>
+        </div>
+    </div>
+
+    <div class="input-container">
+        <input type="text" id="userInput" placeholder="メッセージを入力..." onkeypress="handleKeyPress(event)">
+        <button id="sendButton" onclick="sendMessage()">↑</button>
+    </div>
+
+    <script>
+        // ストーリー進行状態を管理
+        let storyState = {
+            phase: 0,
+            foundNemophila: false,
+            foundCode2847: false,
+            accessedInternal: false,
+            knowsDreamLink: false,
+            askedAboutFacility: false
+        };
+
+        // LocalStorageから状態を読み込み
+        function loadState() {
+            const saved = localStorage.getItem('investigationState');
+            if (saved) {
+                storyState = JSON.parse(saved);
+            }
+        }
+
+        // LocalStorageに状態を保存
+        function saveState() {
+            localStorage.setItem('investigationState', JSON.stringify(storyState));
+        }
+
+        // ページ読み込み時に状態を復元
+        loadState();
+
+        // メッセージ履歴を保存・復元
+        let messageHistory = [];
+
+        function saveMessages() {
+            localStorage.setItem('chatHistory', JSON.stringify(messageHistory));
+        }
+
+        function loadMessages() {
+            const saved = localStorage.getItem('chatHistory');
+            if (saved) {
+                messageHistory = JSON.parse(saved);
+                messageHistory.forEach(msg => {
+                    addMessageToDOM(msg.text, msg.isUser, msg.hasAttachment, msg.hasQuickReplies, msg.timestamp);
+                });
+            } else {
+                // 初回訪問時の初期メッセージ
+                showInitialMessages();
+            }
+        }
+
+        function showInitialMessages() {
+            setTimeout(() => {
+                addMessage('助けてください。', false);
+            }, 500);
+
+            setTimeout(() => {
+                addMessage('友人の田中ユウキが先月、NeuroLife製薬という会社の治験バイトに参加してから連絡が取れなくなりました。', false);
+            }, 2000);
+
+            setTimeout(() => {
+                addMessage('最後に「すごい報酬だから3週間頑張ってくる」ってLINEが来たきり、既読もつきません。', false);
+            }, 4000);
+
+            setTimeout(() => {
+                addMessage('会社のホームページを見つけたんですが、今は臨床試験の募集もしていないみたいで…', false);
+            }, 6000);
+
+            setTimeout(() => {
+                addMessage('何かおかしいんです。調べてもらえませんか？', false, true);
+            }, 8000);
+        }
+
+        function addMessageToDOM(text, isUser = false, hasAttachment = false, hasQuickReplies = false, timestamp = null) {
+            const container = document.getElementById('chatContainer');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${isUser ? 'user-message' : 'client-message'}`;
+
+            const time = timestamp || new Date().toLocaleTimeString('ja-JP', { hour: '2-digit', minute: '2-digit' });
+
+            let attachmentHTML = '';
+            if (hasAttachment && !isUser) {
+                attachmentHTML = `
+                    <div class="attachment" onclick="window.open('index.html', '_blank')">
+                        <span class="attachment-icon">🔗</span>
+                        NeuroLife製薬 公式サイト
+                    </div>
+                `;
+            }
+
+            let quickRepliesHTML = '';
+            if (hasQuickReplies && !isUser) {
+                quickRepliesHTML = `
+                    <div class="quick-replies">
+                        <div class="quick-reply" onclick="sendQuickReply('調べてみます')">調べてみます</div>
+                        <div class="quick-reply" onclick="sendQuickReply('詳しく教えてください')">詳しく教えてください</div>
+                    </div>
+                `;
+            }
+
+            messageDiv.innerHTML = `
+                <div class="message-bubble">
+                    ${text.replace(/\n/g, '<br>')}
+                    ${attachmentHTML}
+                    <div class="message-time">${time}</div>
+                </div>
+                ${quickRepliesHTML}
+            `;
+
+            container.appendChild(messageDiv);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function addMessage(text, isUser = false, hasAttachment = false, hasQuickReplies = false) {
+            const msg = {
+                text: text,
+                isUser: isUser,
+                hasAttachment: hasAttachment,
+                hasQuickReplies: hasQuickReplies,
+                timestamp: new Date().toLocaleTimeString('ja-JP', { hour: '2-digit', minute: '2-digit' })
+            };
+            
+            messageHistory.push(msg);
+            saveMessages();
+            addMessageToDOM(text, isUser, hasAttachment, hasQuickReplies, msg.timestamp);
+        }
+
+        function showTyping() {
+            document.getElementById('typingIndicator').classList.add('active');
+        }
+
+        function hideTyping() {
+            document.getElementById('typingIndicator').classList.remove('active');
+        }
+
+        function showNotification(text = '📩 新しい情報が届きました') {
+            const notification = document.getElementById('notification');
+            notification.textContent = text;
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+
+        function getBotResponse(userMessage) {
+            const message = userMessage.toLowerCase().trim();
+
+            // Phase 0: 初期対応
+            if (storyState.phase === 0) {
+                if (message.includes('調べ') || message.includes('わかり') || message.includes('はい') || message.includes('協力')) {
+                    storyState.phase = 1;
+                    saveState();
+                    return {
+                        text: 'ありがとうございます！\n\n田中が参加したのは「DreamLink」という睡眠薬の治験だったと思います。\n\n会社のサイトを調べてもらえますか？',
+                        delay: 1000
+                    };
+                }
+                
+                if (message.includes('詳しく') || message.includes('もっと')) {
+                    return {
+                        text: '田中とは大学の同級生で、いつも連絡を取り合っていたんです。\n\n先月「お金が必要だから治験バイトやる」って言ってから、ぱったり連絡が途絶えて…\n\n心配で警察にも相談したんですが、成人だし事件性がないって取り合ってもらえなくて。',
+                        delay: 1500
+                    };
+                }
+            }
+
+            // Phase 1: サイト調査中
+            if (storyState.phase === 1) {
+                if (message.includes('dreamlink') || message.includes('ドリームリンク')) {
+                    storyState.knowsDreamLink = true;
+                    saveState();
+                    return {
+                        text: 'DreamLinkですね！\n\nその製品について何かわかりましたか？\n\n臨床試験の情報とか、製品の詳細とか…',
+                        delay: 1000
+                    };
+                }
+
+                if (message.includes('社内') || message.includes('システム') || message.includes('制限')) {
+                    return {
+                        text: '社内システム…？\n\nそんなものがあるんですね。\n\n田中の部屋から見つけたメモに何か手がかりがあるかもしれません。ちょっと探してみます。',
+                        delay: 1500,
+                        callback: () => {
+                            setTimeout(() => {
+                                showNotification('📩 新しいメッセージ');
+                                setTimeout(() => {
+                                    addMessage('田中の部屋を調べたら、こんなメモが見つかりました。\n\n「ネモフィラの花畑 青い海」\n\n何か意味があるんでしょうか...？', false);
+                                    
+                                    if (!storyState.foundNemophila) {
+                                        storyState.foundNemophila = true;
+                                        storyState.phase = 2;
+                                        saveState();
+                                    }
+                                }, 1000);
+                            }, 3000);
+                        }
+                    };
+                }
+
+                if (message.includes('臨床試験') || message.includes('被験者') || message.includes('治験')) {
+                    return {
+                        text: 'そうなんです、臨床試験のページがあるはずなのに、リンクが無効になってて…\n\n何か隠してるんじゃないかって思うんです。',
+                        delay: 1000
+                    };
+                }
+            }
+
+            // Phase 2: ネモフィラ発見後
+            if (storyState.phase === 2) {
+                if (message.includes('ネモフィラ') || message.includes('nemophila')) {
+                    return {
+                        text: 'ネモフィラ…調べてみたら、青い花なんですね。\n\n「青い海」というのも書いてありました。\n\nこれって何かのパスワードとかですかね？',
+                        delay: 1200
+                    };
+                }
+
+                if (message.includes('アクセス') || message.includes('入れた') || message.includes('見つけた')) {
+                    if (!storyState.accessedInternal) {
+                        storyState.accessedInternal = true;
+                        storyState.phase = 3;
+                        saveState();
+                        
+                        return {
+                            text: '本当ですか！？\n\n何か田中の情報は見つかりましたか？\n\nもう一つ、「被験者コード 2847」というメモも見つけたんですが、関係ありそうですか？',
+                            delay: 1000
+                        };
+                    }
+                }
+            }
+
+            // Phase 3: 社内システムアクセス後
+            if (storyState.phase === 3) {
+                if (message.includes('2847') || message.includes('被験者コード')) {
+                    return {
+                        text: '被験者コード 2847…\n\nこれが田中のIDなんですね。\n\n実験記録とか見つかりましたか？田中は今どこにいるんでしょう…',
+                        delay: 1200
+                    };
+                }
+
+                if (message.includes('実験') || message.includes('記録') || message.includes('データ')) {
+                    return {
+                        text: '実験記録…！\n\n何て書いてありましたか？\n\n田中は無事なんでしょうか？',
+                        delay: 1000
+                    };
+                }
+
+                if (message.includes('施設') || message.includes('場所') || message.includes('どこ')) {
+                    if (!storyState.askedAboutFacility) {
+                        storyState.askedAboutFacility = true;
+                        storyState.phase = 4;
+                        saveState();
+                    }
+                    return {
+                        text: '観察施設…\n\nそんな場所があるんですね。どこにあるんだろう…\n\n住所とか、何か手がかりはありませんでしたか？',
+                        delay: 1200
+                    };
+                }
+
+                if (message.includes('異常') || message.includes('危険') || message.includes('やばい')) {
+                    return {
+                        text: '異常って…\n\n田中に何かあったんですか！？\n\n早く助けないと…警察に行くべきでしょうか？',
+                        delay: 1000
+                    };
+                }
+            }
+
+            // Phase 4: 施設特定段階
+            if (storyState.phase === 4) {
+                if (message.includes('警察') || message.includes('通報')) {
+                    return {
+                        text: 'そうですね…証拠を集めて警察に行きます。\n\nあなたが見つけてくれた情報、本当に助かりました。\n\nありがとうございます。',
+                        delay: 1200
+                    };
+                }
+
+                if (message.includes('まだ') || message.includes('もっと') || message.includes('調べ')) {
+                    return {
+                        text: 'もっと調べてくれるんですか？\n\n本当にありがとうございます。\n\nDreamLinkの真の目的とか、他の被験者の情報とか、何かあれば教えてください。',
+                        delay: 1200
+                    };
+                }
+            }
+
+            // 一般的な応答
+            if (message.includes('大丈夫') || message.includes('心配')) {
+                return {
+                    text: '心配してくれてありがとうございます。\n\n田中のこと、絶対に見つけます。',
+                    delay: 800
+                };
+            }
+
+            if (message.includes('ありがとう') || message.includes('感謝')) {
+                return {
+                    text: 'こちらこそ、本当にありがとうございます。\n\nあなたの協力がなければ、ここまで調べられませんでした。',
+                    delay: 1000
+                };
+            }
+
+            // デフォルト応答
+            return {
+                text: '何か新しい情報を見つけたら、すぐに教えてください。\n\n一緒に田中を探しましょう。',
+                delay: 800
+            };
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('userInput');
+            const message = input.value.trim();
+
+            if (message === '') return;
+
+            addMessage(message, true);
+            input.value = '';
+
+            showTyping();
+
+            const response = getBotResponse(message);
+
+            setTimeout(() => {
+                hideTyping();
+                addMessage(response.text, false);
+                
+                if (response.callback) {
+                    response.callback();
+                }
+            }, response.delay || 1000);
+        }
+
+        function sendQuickReply(text) {
+            document.getElementById('userInput').value = text;
+            sendMessage();
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        }
+
+        // ページ読み込み時
+        window.addEventListener('DOMContentLoaded', function() {
+            loadMessages();
+        });
+    </script>
+</body>
+</html>
