@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AIサポート | ニューロライフ製薬</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Noto+Sans+JP:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0a4d68;
+            --secondary: #088395;
+            --accent: #05c3dd;
+            --dark: #051923;
+            --light: #f0f9ff;
+            --warning: #ff6b6b;
+            --success: #51cf66;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background: linear-gradient(135deg, var(--dark) 0%, var(--primary) 100%);
+            color: var(--light);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            background: rgba(5, 25, 35, 0.9);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--accent);
+            padding: 1.5rem 2rem;
+            box-shadow: 0 4px 20px rgba(5, 195, 221, 0.1);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-shadow: 0 0 20px rgba(5, 195, 221, 0.5);
+            text-decoration: none;
+        }
+
+        .logo span {
+            color: var(--warning);
+            font-size: 0.7rem;
+            vertical-align: super;
+        }
+
+        nav a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 400;
+            transition: all 0.3s;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+        }
+
+        nav a:hover {
+            color: var(--accent);
+            background: rgba(5, 195, 221, 0.1);
+        }
+
+        .chat-container {
+            flex: 1;
+            max-width: 900px;
+            width: 100%;
+            margin: 2rem auto;
+            padding: 0 1rem;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-header {
+            background: rgba(10, 77, 104, 0.5);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--accent);
+            border-bottom: none;
+            border-radius: 12px 12px 0 0;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .chat-header h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .chat-header p {
+            color: rgba(240, 249, 255, 0.7);
+            font-size: 0.9rem;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 0.3rem 1rem;
+            background: rgba(81, 207, 102, 0.2);
+            border: 1px solid var(--success);
+            border-radius: 20px;
+            font-size: 0.85rem;
+            margin-top: 0.5rem;
+        }
+
+        .status::before {
+            content: '●';
+            color: var(--success);
+            margin-right: 0.5rem;
+            animation: blink 2s infinite;
+        }
+
+        @keyframes blink {
+            0%, 50%, 100% { opacity: 1; }
+            25%, 75% { opacity: 0.3; }
+        }
+
+        .chat-messages {
+            flex: 1;
+            background: rgba(5, 25, 35, 0.8);
+            backdrop-filter: blur(10px);
+            border-left: 1px solid var(--accent);
+            border-right: 1px solid var(--accent);
+            padding: 2rem;
+            overflow-y: auto;
+            min-height: 400px;
+            max-height: 500px;
+        }
+
+        .message {
+            margin-bottom: 1.5rem;
+            display: flex;
+            gap: 1rem;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .message-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .bot-avatar {
+            background: linear-gradient(135deg, var(--secondary), var(--accent));
+            color: var(--dark);
+        }
+
+        .user-avatar {
+            background: rgba(240, 249, 255, 0.2);
+            border: 2px solid var(--light);
+            color: var(--light);
+        }
+
+        .message-content {
+            flex: 1;
+        }
+
+        .message-sender {
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+            font-size: 0.9rem;
+        }
+
+        .message-text {
+            background: rgba(10, 77, 104, 0.3);
+            padding: 1rem;
+            border-radius: 8px;
+            border-left: 3px solid var(--accent);
+            line-height: 1.6;
+        }
+
+        .user-message .message-text {
+            background: rgba(240, 249, 255, 0.1);
+            border-left-color: var(--light);
+        }
+
+        .warning-message .message-text {
+            background: rgba(255, 107, 107, 0.1);
+            border-left-color: var(--warning);
+            color: var(--warning);
+        }
+
+        .code-block {
+            background: rgba(0, 0, 0, 0.4);
+            padding: 0.5rem;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            margin: 0.5rem 0;
+            color: var(--success);
+        }
+
+        .chat-input-container {
+            background: rgba(10, 77, 104, 0.5);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--accent);
+            border-top: none;
+            border-radius: 0 0 12px 12px;
+            padding: 1.5rem;
+            display: flex;
+            gap: 1rem;
+        }
+
+        #userInput {
+            flex: 1;
+            background: rgba(5, 25, 35, 0.8);
+            border: 1px solid var(--accent);
+            border-radius: 8px;
+            padding: 1rem;
+            color: var(--light);
+            font-family: 'Noto Sans JP', sans-serif;
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.3s;
+        }
+
+        #userInput:focus {
+            border-color: var(--light);
+            box-shadow: 0 0 15px rgba(5, 195, 221, 0.3);
+        }
+
+        #sendButton {
+            background: linear-gradient(135deg, var(--secondary), var(--accent));
+            color: var(--dark);
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        #sendButton:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(5, 195, 221, 0.4);
+        }
+
+        #sendButton:active {
+            transform: translateY(0);
+        }
+
+        .typing-indicator {
+            display: none;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--accent);
+            font-style: italic;
+            font-size: 0.9rem;
+        }
+
+        .typing-indicator.active {
+            display: flex;
+        }
+
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--accent);
+            border-radius: 50%;
+            animation: typing 1.4s infinite;
+        }
+
+        .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes typing {
+            0%, 60%, 100% { transform: translateY(0); }
+            30% { transform: translateY(-10px); }
+        }
+
+        .quick-actions {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+
+        .quick-action {
+            background: rgba(5, 195, 221, 0.2);
+            border: 1px solid var(--accent);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .quick-action:hover {
+            background: rgba(5, 195, 221, 0.4);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <!-- Notice Banner -->
+    <div style="background: rgba(255, 107, 107, 0.2); border-bottom: 2px solid var(--warning); padding: 1rem; text-align: center; font-size: 0.95rem; color: var(--warning); backdrop-filter: blur(10px); line-height: 1.6;">
+        ⚠️ 諸事情により本ページの更新は止まっております。新サイトの開設をお待ちください。<br>
+        なお、AIサポートシステムについては2024年11月までの情報ですが稼働いたします。
+    </div>
+
+    <header>
+        <div class="header-content">
+            <a href="index.html" class="logo">NeuroLife<span style="font-size: 0.5em; font-weight: 400; margin-left: 0.3rem;">Pharmaceuticals</span><span data-hint="NL-X789">®</span></a>
+            <nav>
+                <a href="index.html">ホームに戻る</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="chat-container">
+        <div class="chat-header">
+            <h1>AIサポート システム</h1>
+            <p>ニューロライフ製薬 カスタマーサポート AI v3.7.2</p>
+            <div class="status">オンライン</div>
+        </div>
+
+        <div class="chat-messages" id="chatMessages">
+            <div class="message bot-message">
+                <div class="message-avatar bot-avatar">NL</div>
+                <div class="message-content">
+                    <div class="message-sender">NeuroLife AI</div>
+                    <div class="message-text">
+                        こんにちは。ニューロライフ製薬のAIサポートシステムです。<br>
+                        製品に関するご質問や、研究開発についてのお問い合わせにお答えします。<br><br>
+                        お気軽にご質問ください。
+                    </div>
+                    <div class="quick-actions">
+                        <div class="quick-action" onclick="sendQuickMessage('製品について')">製品について</div>
+                        <div class="quick-action" onclick="sendQuickMessage('研究開発')">研究開発</div>
+                        <div class="quick-action" onclick="sendQuickMessage('会社情報')">会社情報</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="typing-indicator" id="typingIndicator">
+            <div class="typing-dot"></div>
+            <div class="typing-dot"></div>
+            <div class="typing-dot"></div>
+            <span>入力中...</span>
+        </div>
+
+        <div class="chat-input-container">
+            <input type="text" id="userInput" placeholder="メッセージを入力..." onkeypress="handleKeyPress(event)">
+            <button id="sendButton" onclick="sendMessage()">送信</button>
+        </div>
+    </div>
+
+    <script>
+        // チャットボットの応答データベース
+        const responses = {
+            // 基本的な挨拶
+            'こんにちは': 'こんにちは!本日はどのようなご用件でしょうか?',
+            'はじめまして': 'はじめまして。ニューラライフ製薬へようこそ。',
+            'ありがとう': 'どういたしまして。他にご質問はございますか?',
+            
+            // 製品関連
+            '製品について': '当社の主要製品は以下の通りです:\n\n• NeuroSync™ - 認知機能向上\n• MemoriaPlus™ - 記憶増強\n• DreamLink™ - 睡眠調整\n\n詳細をお知りになりたい製品名を入力してください。',
+            
+            'neurosync': 'NeuroSync™は脳神経の最適化により認知機能を向上させる製品です。\n製品コード: NS-2847-ALPHA\n\n※現在、限定的な臨床試験段階にあります。',
+            
+            'memoriaplus': 'MemoriaPlus™は長期記憶の形成をサポートする製品です。\n製品コード: MP-1923-BETA\n\n一般向けには2026年春の販売開始を予定しています。',
+            
+            'dreamlink': 'DreamLink™は睡眠の質を向上させ、明晰夢を誘導する製品です。\n製品コード: DL-X789-OMEGA\n\n⚠️ 警告: この製品は現在、厳格な監視下での臨床試験段階です。一般使用は禁止されています。',
+            
+            // 研究開発
+            '研究開発': '当社は以下の分野で研究開発を行っています:\n\n• 神経可塑性の増強\n• 記憶エンコーディングの最適化\n• 夢と意識の科学的解明\n\n詳細については公式ウェブサイトをご覧ください。',
+            
+            // 新サイト
+            '新サイト': '社内機密情報を確認。パスワードは以下の形式、半角英字で入力ください。\n\nパスワード XXXX',
+            
+            'nemophila': '✓ パスワード認証成功\n\nアクセスを許可します。\n\n新サイトはこちら:\n<a href="newsite.html" style="color: var(--accent); text-decoration: underline;">https://neurolife-pharma.com/internal</a>',
+            
+            'パスワード nemophila': '✓ パスワード認証成功\n\nアクセスを許可します。\n\n新サイトはこちら:\n<a href="newsite.html" style="color: var(--accent); text-decoration: underline;">https://neurolife-pharma.com/internal</a>',
+            
+            'パスワード': 'パスワードは<span style="color: #05c3dd;">12</span><span style="color: #ff6b6b;">5</span><span style="color: #05c3dd;">12</span><span style="color: #ff6b6b;">76</span><span style="color: #05c3dd;">6</span>\n\n<span style="color: #ff6b6b;">5</span><span style="color: #05c3dd;">9</span><span style="color: #ff6b6b;">5</span><span style="color: #05c3dd;">5</span> ->メモ\n<span style="color: #ff6b6b;">723</span><span style="color: #05c3dd;">745</span>->茶色\n<span style="color: #ff6b6b;">5372</span><span style="color: #05c3dd;">71</span><span style="color: #ff6b6b;">65</span><span style="color: #05c3dd;">7</span> -> 街並み',
+            
+            // 会社情報
+            '会社情報': 'ニューロライフ製薬株式会社\n設立: 2015年\n本社: 東京\n従業員数: 347名\n\nミッション: 人間の潜在能力を解放する\n\n詳細については公式ウェブサイトをご覧ください。',
+            
+            // デフォルト応答
+            'default': '申し訳ございません。その質問には回答できません。\n\n以下のトピックについてお答えできます:\n• 製品について\n• 研究開発\n• 会社情報\n\nまたは、特定のキーワードを入力してみてください。'
+        };
+
+        function addMessage(text, isUser = false, isWarning = false) {
+            const messagesContainer = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${isUser ? 'user-message' : 'bot-message'} ${isWarning ? 'warning-message' : ''}`;
+            
+            const avatarClass = isUser ? 'user-avatar' : 'bot-avatar';
+            const avatarText = isUser ? 'YOU' : 'NL';
+            const senderName = isUser ? 'あなた' : 'NeuroLife AI';
+            
+            messageDiv.innerHTML = `
+                <div class="message-avatar ${avatarClass}">${avatarText}</div>
+                <div class="message-content">
+                    <div class="message-sender">${senderName}</div>
+                    <div class="message-text">${text.replace(/\n/g, '<br>')}</div>
+                </div>
+            `;
+            
+            messagesContainer.appendChild(messageDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        function showTypingIndicator() {
+            document.getElementById('typingIndicator').classList.add('active');
+        }
+
+        function hideTypingIndicator() {
+            document.getElementById('typingIndicator').classList.remove('active');
+        }
+
+        function getBotResponse(userMessage) {
+            const message = userMessage.toLowerCase().trim();
+            
+            // キーワードマッチング
+            for (let key in responses) {
+                if (message.includes(key)) {
+                    return responses[key];
+                }
+            }
+            
+            return responses['default'];
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('userInput');
+            const message = input.value.trim();
+            
+            if (message === '') return;
+            
+            // ユーザーメッセージを表示
+            addMessage(message, true);
+            input.value = '';
+            
+            // タイピングインジケーターを表示
+            showTypingIndicator();
+            
+            // ボットの応答(遅延を加えてリアルに)
+            setTimeout(() => {
+                hideTypingIndicator();
+                const response = getBotResponse(message);
+                const isWarning = response.includes('⚠️');
+                addMessage(response, false, isWarning);
+            }, 1000 + Math.random() * 1000);
+        }
+
+        function sendQuickMessage(message) {
+            document.getElementById('userInput').value = message;
+            sendMessage();
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        }
+    </script>
+</body>
+</html>

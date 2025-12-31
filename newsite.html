@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>社内情報システム - 構築中 | ニューロライフ製薬</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Noto+Sans+JP:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0a4d68;
+            --secondary: #088395;
+            --accent: #05c3dd;
+            --dark: #051923;
+            --light: #f0f9ff;
+            --warning: #ff6b6b;
+            --success: #51cf66;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background: linear-gradient(135deg, var(--dark) 0%, var(--primary) 100%);
+            color: var(--light);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Animated grid background */
+        .grid-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(5, 195, 221, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(5, 195, 221, 0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: gridMove 20s linear infinite;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(5, 25, 35, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--accent);
+            padding: 1rem 2rem;
+            z-index: 100;
+        }
+
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .logo span {
+            color: var(--warning);
+            font-size: 0.7rem;
+            vertical-align: super;
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            padding: 2rem;
+            max-width: 900px;
+        }
+
+        .construction-icon {
+            font-size: 6rem;
+            margin-bottom: 2rem;
+            animation: blink 2s ease-in-out infinite;
+        }
+
+        @keyframes blink {
+            0%, 50%, 100% { opacity: 1; }
+            25%, 75% { opacity: 0.3; }
+        }
+
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(90deg, var(--warning), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            background: rgba(255, 107, 107, 0.2);
+            border: 2px solid var(--warning);
+            border-radius: 30px;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 20px rgba(255, 107, 107, 0.3); }
+            50% { transform: scale(1.05); box-shadow: 0 0 30px rgba(255, 107, 107, 0.6); }
+        }
+
+        .message-box {
+            background: rgba(10, 77, 104, 0.4);
+            border: 1px solid var(--accent);
+            border-radius: 12px;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+            margin: 2rem 0;
+            line-height: 1.8;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 30px;
+            background: rgba(5, 25, 35, 0.8);
+            border: 1px solid var(--accent);
+            border-radius: 15px;
+            overflow: hidden;
+            margin: 2rem 0;
+            position: relative;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--secondary), var(--accent));
+            width: 47%;
+            animation: progress 3s ease-in-out infinite;
+            box-shadow: 0 0 20px rgba(5, 195, 221, 0.5);
+        }
+
+        @keyframes progress {
+            0%, 100% { width: 47%; }
+            50% { width: 52%; }
+        }
+
+        .progress-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            font-size: 0.9rem;
+            z-index: 1;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .info-card {
+            background: rgba(5, 25, 35, 0.6);
+            border: 1px solid rgba(5, 195, 221, 0.3);
+            border-radius: 8px;
+            padding: 1.5rem;
+            backdrop-filter: blur(5px);
+        }
+
+        .info-label {
+            font-size: 0.8rem;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .info-value {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 2rem;
+            padding: 1rem 2rem;
+            background: rgba(5, 195, 221, 0.2);
+            border: 1px solid var(--accent);
+            border-radius: 8px;
+            color: var(--accent);
+            text-decoration: none;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+
+        .back-link:hover {
+            background: rgba(5, 195, 221, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(5, 195, 221, 0.3);
+        }
+
+        .loading-dots {
+            display: inline-block;
+            margin-left: 0.5rem;
+        }
+
+        .loading-dots span {
+            animation: loadingDot 1.4s infinite;
+            display: inline-block;
+        }
+
+        .loading-dots span:nth-child(2) { animation-delay: 0.2s; }
+        .loading-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes loadingDot {
+            0%, 60%, 100% { opacity: 0.3; }
+            30% { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="grid-background"></div>
+
+    <header>
+        <a href="index.html" class="logo">NeuroLife<span style="font-size: 0.5em; font-weight: 400; margin-left: 0.3rem;">Pharmaceuticals</span><span>®</span></a>
+    </header>
+
+    <div class="container">
+        <div class="construction-icon">🚧</div>
+        
+        <h1>システム構築中</h1>
+        
+        <div class="status-badge">UNDER CONSTRUCTION</div>
+
+        <div class="message-box">
+            <p style="font-size: 1.1rem; margin-bottom: 1rem;">
+                社内情報システムは現在構築中です。
+            </p>
+            <p style="opacity: 0.8;">
+                新しいイントラネットポータルへの移行作業を進めております。<br>
+                完成までしばらくお待ちください<span class="loading-dots"><span>.</span><span>.</span><span>.</span></span>
+            </p>
+        </div>
+
+        <div class="progress-bar">
+            <div class="progress-fill"></div>
+            <div class="progress-text">進捗率: 47%</div>
+        </div>
+
+        <div class="info-grid">
+            <div class="info-card">
+                <div class="info-label">開始日</div>
+                <div class="info-value">2024.11.15</div>
+            </div>
+            <div class="info-card">
+                <div class="info-label">完了予定</div>
+                <div class="info-value">2025.02.28</div>
+            </div>
+            <div class="info-card">
+                <div class="info-label">ステータス</div>
+                <div class="info-value" style="color: var(--warning);">開発中</div>
+            </div>
+        </div>
+
+        <div class="message-box" style="margin-top: 3rem; background: rgba(255, 107, 107, 0.1); border-color: var(--warning);">
+            <p style="font-size: 0.95rem; opacity: 0.9;">
+                ⚠️ この領域へのアクセスは記録されています<br>
+                不正なアクセスは厳重に処罰されます
+            </p>
+        </div>
+
+        <a href="chatbot.html" class="back-link">← サポートページに戻る</a>
+    </div>
+
+    <script>
+        // Random glitch effect on title
+        setInterval(() => {
+            const title = document.querySelector('h1');
+            if (Math.random() < 0.05) {
+                title.style.transform = `translate(${Math.random() * 4 - 2}px, ${Math.random() * 4 - 2}px)`;
+                setTimeout(() => {
+                    title.style.transform = 'translate(0, 0)';
+                }, 100);
+            }
+        }, 2000);
+    </script>
+</body>
+</html>
