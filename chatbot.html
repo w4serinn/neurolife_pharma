@@ -682,6 +682,15 @@
                 </div>
                 <div class="summary-section">
                     <div class="summary-section-title">
+                        🔗 発見したサイト
+                        <span class="summary-badge" id="linkCount">0</span>
+                    </div>
+                    <div id="discoveredLinks">
+                        <div class="empty-state">サイトはまだ発見されていません</div>
+                    </div>
+                </div>
+                <div class="summary-section">
+                    <div class="summary-section-title">
                         📌 重要キーワード
                         <span class="summary-badge" id="keywordCount">0</span>
                     </div>
@@ -760,6 +769,14 @@
             '2847'
         ];
 
+        // 発見可能なサイトのマッピング（URL: 説明）
+        const siteLinks = {
+            'newsite.html': '社内情報システム（構築中）',
+            'clinical-trial.html': '臨床試験被験者ページ',
+            'research.html': '研究開発資料',
+            'protocol.html': 'プロトコル文書'
+        };
+
         // 認証関連のキーワード（キーワード: 表示名）
         const authKeywords = {
             'nemophila': '社内情報アクセスパスワード',
@@ -780,10 +797,12 @@
         function loadHistory() {
             const searches = JSON.parse(localStorage.getItem('chatbot_searches') || '[]');
             const auths = JSON.parse(localStorage.getItem('chatbot_auths') || '[]');
+            const links = JSON.parse(localStorage.getItem('chatbot_links') || '[]');
             const keywords = JSON.parse(localStorage.getItem('chatbot_keywords') || '[]');
             
             updateSearchHistory(searches);
             updateAuthDiscoveries(auths);
+            updateDiscoveredLinks(links);
             updateImportantKeywords(keywords);
         }
 
@@ -823,6 +842,19 @@
                 if (keywords.length > 15) keywords.pop();
                 localStorage.setItem('chatbot_keywords', JSON.stringify(keywords));
                 updateImportantKeywords(keywords);
+            }
+        }
+
+        // サイトリンクを保存
+        function saveLink(url, description) {
+            const links = JSON.parse(localStorage.getItem('chatbot_links') || '[]');
+            const timestamp = new Date().toLocaleTimeString('ja-JP', {hour: '2-digit', minute: '2-digit'});
+            
+            // 重複チェック
+            if (!links.some(l => l.url === url)) {
+                links.unshift({url, description, timestamp});
+                localStorage.setItem('chatbot_links', JSON.stringify(links));
+                updateDiscoveredLinks(links);
             }
         }
 
@@ -883,6 +915,28 @@
             `).join('');
         }
 
+        // 発見したサイトの表示を更新
+        function updateDiscoveredLinks(links) {
+            const container = document.getElementById('discoveredLinks');
+            document.getElementById('linkCount').textContent = links.length;
+            
+            if (links.length === 0) {
+                container.innerHTML = '<div class="empty-state">サイトはまだ発見されていません</div>';
+                return;
+            }
+            
+            container.innerHTML = links.map(l => `
+                <div class="summary-item" onclick="window.open('${l.url}', '_blank')" style="cursor: pointer;">
+                    <span class="summary-item-icon">🔗</span>
+                    <span class="summary-item-text">
+                        <strong style="color: var(--accent);">${l.description}</strong><br>
+                        <span style="font-size: 0.8rem; opacity: 0.7;">${l.url}</span>
+                    </span>
+                    <span class="summary-item-time">${l.timestamp}</span>
+                </div>
+            `).join('');
+        }
+
         // サマリーの展開/折りたたみ
         function toggleSummary() {
             const content = document.getElementById('summaryContent');
@@ -913,6 +967,7 @@
             if (confirm('すべての分析データをクリアしますか?')) {
                 localStorage.removeItem('chatbot_searches');
                 localStorage.removeItem('chatbot_auths');
+                localStorage.removeItem('chatbot_links');
                 localStorage.removeItem('chatbot_keywords');
                 loadHistory();
             }
@@ -937,6 +992,33 @@
             
             messagesContainer.appendChild(messageDiv);
             messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            
+            // ボットのメッセージからリンクを検出
+            if (!isUser) {
+                detectLinksInMessage(text);
+            }
+        }
+
+        // メッセージ内のリンクを検出して保存
+        function detectLinksInMessage(text) {
+            // <a href="xxx.html"> パターンを検出
+            const hrefPattern = /href=["']([^"']+\.html)["']/gi;
+            let match;
+            
+            while ((match = hrefPattern.exec(text)) !== null) {
+                const url = match[1];
+                // siteLinksに登録されているURLか確認
+                if (siteLinks[url]) {
+                    saveLink(url, siteLinks[url]);
+                }
+            }
+            
+            // テキスト中の.htmlファイルを検出
+            Object.keys(siteLinks).forEach(url => {
+                if (text.includes(url)) {
+                    saveLink(url, siteLinks[url]);
+                }
+            });
         }
 
         function showTypingIndicator() {
