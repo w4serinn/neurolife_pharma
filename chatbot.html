@@ -22,13 +22,19 @@
             box-sizing: border-box;
         }
 
+        html {
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+            overscroll-behavior-y: none;
+        }
+
         body {
             font-family: 'Noto Sans JP', sans-serif;
             background: linear-gradient(135deg, var(--dark) 0%, var(--primary) 100%);
             color: var(--light);
             min-height: 100vh;
-            display: flex;
-            flex-direction: column;
+            -webkit-overflow-scrolling: touch;
+            overscroll-behavior-y: contain;
         }
 
         header {
@@ -79,13 +85,10 @@
         }
 
         .chat-container {
-            flex: 1;
             max-width: 900px;
             width: 100%;
-            margin: 2rem auto;
+            margin: 2rem auto 4rem auto;
             padding: 0 1rem;
-            display: flex;
-            flex-direction: column;
         }
 
         .chat-header {
@@ -133,13 +136,14 @@
         }
 
         .chat-messages {
-            flex: 1;
             background: rgba(5, 25, 35, 0.8);
             backdrop-filter: blur(10px);
             border-left: 1px solid var(--accent);
             border-right: 1px solid var(--accent);
             padding: 2rem;
             overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+            overscroll-behavior-y: contain;
             min-height: 400px;
             max-height: 500px;
         }
@@ -229,7 +233,7 @@
             backdrop-filter: blur(10px);
             border: 1px solid var(--accent);
             border-top: none;
-            border-radius: 0 0 12px 12px;
+            border-bottom: none;
             padding: 1.5rem;
             display: flex;
             gap: 1rem;
@@ -282,6 +286,7 @@
             color: var(--accent);
             font-style: italic;
             font-size: 0.9rem;
+            padding: 0 1.5rem;
         }
 
         .typing-indicator.active {
@@ -326,6 +331,172 @@
             transform: translateY(-2px);
         }
 
+        /* AI Summary Section */
+        .ai-summary {
+            background: rgba(10, 77, 104, 0.5);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--accent);
+            border-radius: 0 0 12px 12px;
+            overflow: hidden;
+            touch-action: pan-y;
+        }
+
+        .summary-header {
+            padding: 1rem 1.5rem;
+            background: rgba(5, 25, 35, 0.6);
+            border-bottom: 1px solid rgba(5, 195, 221, 0.3);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .summary-header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .summary-header:hover {
+            background: rgba(5, 25, 35, 0.8);
+        }
+
+        .summary-hint {
+            font-size: 0.75rem;
+            color: rgba(240, 249, 255, 0.5);
+            margin-top: 0.3rem;
+            font-family: 'Noto Sans JP', sans-serif;
+        }
+
+        .summary-title {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1rem;
+            color: var(--accent);
+        }
+
+        .summary-icon {
+            font-size: 1.2rem;
+            animation: rotate 3s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .summary-toggle {
+            font-size: 1.5rem;
+            color: var(--accent);
+            transition: transform 0.3s;
+        }
+
+        .summary-toggle.expanded {
+            transform: rotate(180deg);
+        }
+
+        .summary-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out;
+        }
+
+        .summary-content.expanded {
+            max-height: 3000px;
+        }
+
+        .summary-section {
+            padding: 1.5rem;
+            border-bottom: 1px solid rgba(5, 195, 221, 0.1);
+            touch-action: pan-y;
+        }
+
+        .summary-section:last-child {
+            border-bottom: none;
+        }
+
+        .summary-section-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.9rem;
+            color: var(--success);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .summary-badge {
+            background: rgba(81, 207, 102, 0.2);
+            border: 1px solid var(--success);
+            padding: 0.2rem 0.6rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .summary-item {
+            background: rgba(5, 25, 35, 0.6);
+            border: 1px solid rgba(5, 195, 221, 0.2);
+            border-radius: 6px;
+            padding: 0.8rem 1rem;
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .summary-item:hover {
+            border-color: var(--accent);
+            background: rgba(5, 25, 35, 0.8);
+            transform: translateX(5px);
+        }
+
+        .summary-item:active {
+            transform: translateX(5px) scale(0.98);
+        }
+
+        .summary-item-icon {
+            font-size: 1rem;
+        }
+
+        .summary-item-text {
+            flex: 1;
+            font-size: 0.9rem;
+        }
+
+        .summary-item-time {
+            font-size: 0.75rem;
+            color: rgba(240, 249, 255, 0.5);
+            font-family: 'Orbitron', monospace;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 2rem;
+            color: rgba(240, 249, 255, 0.5);
+            font-size: 0.9rem;
+        }
+
+        .clear-button {
+            background: rgba(255, 107, 107, 0.2);
+            border: 1px solid var(--warning);
+            color: var(--warning);
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Orbitron', sans-serif;
+            margin-top: 1rem;
+        }
+
+        .clear-button:hover {
+            background: rgba(255, 107, 107, 0.3);
+            transform: translateY(-2px);
+        }
+
         /* Mobile responsive */
         @media (max-width: 768px) {
             .notice-banner {
@@ -354,7 +525,7 @@
             }
 
             .chat-container {
-                margin: 1rem auto;
+                margin: 1rem auto 2rem auto;
                 padding: 0 0.5rem;
             }
 
@@ -398,6 +569,28 @@
             .quick-action {
                 width: 100%;
                 text-align: center;
+            }
+
+            .summary-section {
+                padding: 1rem;
+            }
+
+            .summary-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+
+            .summary-item:hover {
+                transform: none;
+            }
+
+            .summary-item:active {
+                transform: scale(0.98);
+            }
+
+            .summary-content.expanded {
+                max-height: 2500px;
             }
         }
     </style>
@@ -455,7 +648,58 @@
             <input type="text" id="userInput" placeholder="メッセージを入力..." onkeypress="handleKeyPress(event)">
             <button id="sendButton" onclick="sendMessage()">送信</button>
         </div>
+
+        <!-- AI Summary Section -->
+        <div class="ai-summary">
+            <div class="summary-header" onclick="toggleSummary()">
+                <div class="summary-header-content">
+                    <div class="summary-title">
+                        <span class="summary-icon">🤖</span>
+                        <span>AI 自動分析レポート</span>
+                    </div>
+                    <span class="summary-toggle" id="summaryToggle">▼</span>
+                </div>
+                <div class="summary-hint">💡 各項目をクリックすると検索フォームに自動入力されます</div>
+            </div>
+            <div class="summary-content" id="summaryContent">
+                <div class="summary-section">
+                    <div class="summary-section-title">
+                        🔍 検索履歴（最新10件）
+                        <span class="summary-badge" id="searchCount">0</span>
+                    </div>
+                    <div id="searchHistory">
+                        <div class="empty-state">まだ検索履歴がありません</div>
+                    </div>
+                </div>
+                <div class="summary-section">
+                    <div class="summary-section-title">
+                        🔐 発見した認証情報
+                        <span class="summary-badge" id="authCount">0</span>
+                    </div>
+                    <div id="authDiscoveries">
+                        <div class="empty-state">認証情報は見つかっていません</div>
+                    </div>
+                </div>
+                <div class="summary-section">
+                    <div class="summary-section-title">
+                        📌 重要キーワード
+                        <span class="summary-badge" id="keywordCount">0</span>
+                    </div>
+                    <div id="importantKeywords">
+                        <div class="empty-state">重要なキーワードはまだ検出されていません</div>
+                    </div>
+                    <button class="clear-button" onclick="clearAllData()">📊 データをクリア</button>
+                </div>
+            </div>
+        </div>
     </div>
+
+    <footer style="text-align: center; padding: 2rem; background: rgba(5, 25, 35, 0.9); border-top: 1px solid var(--accent); margin-top: 4rem; font-size: 0.9rem; opacity: 0.8;">
+        <p>&copy; 2025 ニューロライフ製薬株式会社 All rights reserved.</p>
+        <p style="margin-top: 0.5rem; font-size: 0.8rem; opacity: 0.6;">
+            本サイトの情報は医療従事者向けです | プライバシーポリシー | 利用規約
+        </p>
+    </footer>
 
     <script>
         // チャットボットの応答データベース
@@ -506,6 +750,174 @@
             'default': '申し訳ございません。その質問には回答できません。\n\n以下のトピックについてお答えできます:\n• 製品について\n• 研究開発\n• 会社情報\n\nまたは、特定のキーワードを入力してみてください。'
         };
 
+        // 重要キーワードのリスト
+        const importantKeywords = [
+            'nemophila',
+            'dl-x789-omega',
+            'x789',
+            '臨床試験',
+            '被験者',
+            '2847'
+        ];
+
+        // 認証関連のキーワード（キーワード: 表示名）
+        const authKeywords = {
+            'nemophila': '社内情報アクセスパスワード',
+            'dl-x789-omega': '制限製品コード'
+        };
+
+        // 検索フォームに単語を自動入力
+        function fillSearchInput(text) {
+            const input = document.getElementById('userInput');
+            input.value = text;
+            input.focus();
+            
+            // 入力フィールドまでスクロール
+            input.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        // LocalStorageから履歴を読み込み
+        function loadHistory() {
+            const searches = JSON.parse(localStorage.getItem('chatbot_searches') || '[]');
+            const auths = JSON.parse(localStorage.getItem('chatbot_auths') || '[]');
+            const keywords = JSON.parse(localStorage.getItem('chatbot_keywords') || '[]');
+            
+            updateSearchHistory(searches);
+            updateAuthDiscoveries(auths);
+            updateImportantKeywords(keywords);
+        }
+
+        // 検索履歴を保存
+        function saveSearch(query) {
+            const searches = JSON.parse(localStorage.getItem('chatbot_searches') || '[]');
+            const timestamp = new Date().toLocaleTimeString('ja-JP', {hour: '2-digit', minute: '2-digit'});
+            
+            searches.unshift({query, timestamp});
+            if (searches.length > 10) searches.pop(); // 最新10件まで保持
+            
+            localStorage.setItem('chatbot_searches', JSON.stringify(searches));
+            updateSearchHistory(searches);
+        }
+
+        // 認証情報を保存
+        function saveAuth(info, type) {
+            const auths = JSON.parse(localStorage.getItem('chatbot_auths') || '[]');
+            const timestamp = new Date().toLocaleTimeString('ja-JP', {hour: '2-digit', minute: '2-digit'});
+            
+            // 重複チェック
+            if (!auths.some(a => a.info === info)) {
+                auths.unshift({info, type, timestamp});
+                localStorage.setItem('chatbot_auths', JSON.stringify(auths));
+                updateAuthDiscoveries(auths);
+            }
+        }
+
+        // 重要キーワードを保存
+        function saveKeyword(keyword) {
+            const keywords = JSON.parse(localStorage.getItem('chatbot_keywords') || '[]');
+            const timestamp = new Date().toLocaleTimeString('ja-JP', {hour: '2-digit', minute: '2-digit'});
+            
+            // 重複チェック
+            if (!keywords.some(k => k.keyword === keyword)) {
+                keywords.unshift({keyword, timestamp});
+                if (keywords.length > 15) keywords.pop();
+                localStorage.setItem('chatbot_keywords', JSON.stringify(keywords));
+                updateImportantKeywords(keywords);
+            }
+        }
+
+        // 検索履歴の表示を更新
+        function updateSearchHistory(searches) {
+            const container = document.getElementById('searchHistory');
+            document.getElementById('searchCount').textContent = searches.length;
+            
+            if (searches.length === 0) {
+                container.innerHTML = '<div class="empty-state">まだ検索履歴がありません</div>';
+                return;
+            }
+            
+            container.innerHTML = searches.map(s => `
+                <div class="summary-item" onclick="fillSearchInput('${s.query.replace(/'/g, "\\'")}')">
+                    <span class="summary-item-icon">🔍</span>
+                    <span class="summary-item-text">${s.query}</span>
+                    <span class="summary-item-time">${s.timestamp}</span>
+                </div>
+            `).join('');
+        }
+
+        // 認証情報の表示を更新
+        function updateAuthDiscoveries(auths) {
+            const container = document.getElementById('authDiscoveries');
+            document.getElementById('authCount').textContent = auths.length;
+            
+            if (auths.length === 0) {
+                container.innerHTML = '<div class="empty-state">認証情報は見つかっていません</div>';
+                return;
+            }
+            
+            container.innerHTML = auths.map(a => `
+                <div class="summary-item" onclick="fillSearchInput('${a.info.replace(/'/g, "\\'")}')">
+                    <span class="summary-item-icon">🔐</span>
+                    <span class="summary-item-text">${a.info} <span style="color: var(--success); font-size: 0.8rem;">[${a.type}]</span></span>
+                    <span class="summary-item-time">${a.timestamp}</span>
+                </div>
+            `).join('');
+        }
+
+        // 重要キーワードの表示を更新
+        function updateImportantKeywords(keywords) {
+            const container = document.getElementById('importantKeywords');
+            document.getElementById('keywordCount').textContent = keywords.length;
+            
+            if (keywords.length === 0) {
+                container.innerHTML = '<div class="empty-state">重要なキーワードはまだ検出されていません</div>';
+                return;
+            }
+            
+            container.innerHTML = keywords.map(k => `
+                <div class="summary-item" onclick="fillSearchInput('${k.keyword.replace(/'/g, "\\'")}')">
+                    <span class="summary-item-icon">📌</span>
+                    <span class="summary-item-text">${k.keyword}</span>
+                    <span class="summary-item-time">${k.timestamp}</span>
+                </div>
+            `).join('');
+        }
+
+        // サマリーの展開/折りたたみ
+        function toggleSummary() {
+            const content = document.getElementById('summaryContent');
+            const toggle = document.getElementById('summaryToggle');
+            
+            content.classList.toggle('expanded');
+            toggle.classList.toggle('expanded');
+        }
+
+        // 検索フォームに自動入力
+        function fillSearchInput(text) {
+            const input = document.getElementById('userInput');
+            input.value = text;
+            input.focus();
+            
+            // モバイルではスクロールを軽くする
+            const isMobile = window.innerWidth <= 768;
+            if (!isMobile) {
+                // デスクトップのみスムーズスクロール
+                setTimeout(() => {
+                    input.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            }
+        }
+
+        // 全データをクリア
+        function clearAllData() {
+            if (confirm('すべての分析データをクリアしますか?')) {
+                localStorage.removeItem('chatbot_searches');
+                localStorage.removeItem('chatbot_auths');
+                localStorage.removeItem('chatbot_keywords');
+                loadHistory();
+            }
+        }
+
         function addMessage(text, isUser = false, isWarning = false) {
             const messagesContainer = document.getElementById('chatMessages');
             const messageDiv = document.createElement('div');
@@ -548,11 +960,50 @@
             return responses['default'];
         }
 
+        function analyzeMessage(message) {
+            const lowerMessage = message.toLowerCase();
+            
+            // 認証キーワードをチェック（カスタムラベル付き）
+            Object.keys(authKeywords).forEach(keyword => {
+                if (lowerMessage.includes(keyword.toLowerCase())) {
+                    const label = authKeywords[keyword]; // カスタムラベルを取得
+                    saveAuth(keyword, label);
+                }
+            });
+            
+            // 製品コードを検出（大文字小文字区別なし）
+            const productCodePattern = /[A-Z]{2,3}-[A-Z0-9]+-[A-Z]+/gi;
+            const matches = message.match(productCodePattern);
+            if (matches) {
+                matches.forEach(code => {
+                    // 大文字に正規化して保存
+                    const normalizedCode = code.toUpperCase();
+                    // dl-x789-omegaのみ保存（他の製品コードは除外）
+                    if (normalizedCode.includes('DL-X789') || normalizedCode === 'DL-X789-OMEGA') {
+                        saveAuth('dl-x789-omega', '制限製品コード');
+                    }
+                });
+            }
+            
+            // 重要キーワードをチェック
+            importantKeywords.forEach(keyword => {
+                if (lowerMessage.includes(keyword.toLowerCase())) {
+                    saveKeyword(keyword);
+                }
+            });
+        }
+
         function sendMessage() {
             const input = document.getElementById('userInput');
             const message = input.value.trim();
             
             if (message === '') return;
+            
+            // 検索履歴に保存
+            saveSearch(message);
+            
+            // メッセージを分析
+            analyzeMessage(message);
             
             // ユーザーメッセージを表示
             addMessage(message, true);
@@ -580,6 +1031,9 @@
                 sendMessage();
             }
         }
+
+        // ページ読み込み時に履歴をロード
+        window.addEventListener('DOMContentLoaded', loadHistory);
     </script>
 </body>
 </html>
