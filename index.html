@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ニューロライフ製薬株式会社 | 未来の健康を、今日から</title>
+    <title>依頼者とのチャット | 調査依頼</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Noto+Sans+JP:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -13,6 +13,9 @@
             --dark: #051923;
             --light: #f0f9ff;
             --warning: #ff6b6b;
+            --success: #51cf66;
+            --client-bubble: #3a3a3c;
+            --user-bubble: #0b7ce6;
         }
 
         * {
@@ -23,405 +26,734 @@
 
         body {
             font-family: 'Noto Sans JP', sans-serif;
-            background: linear-gradient(135deg, var(--dark) 0%, var(--primary) 100%);
+            background: #1c1c1e;
             color: var(--light);
             min-height: 100vh;
-            position: relative;
-            overflow-x: hidden;
-        }
-
-        /* Animated background particles */
-        .particles {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        .particle {
-            position: absolute;
-            width: 2px;
-            height: 2px;
-            background: var(--accent);
-            border-radius: 50%;
-            opacity: 0.3;
-            animation: float 15s infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0) translateX(0); }
-            50% { transform: translateY(-100px) translateX(50px); }
+            display: flex;
+            flex-direction: column;
         }
 
         header {
-            background: rgba(5, 25, 35, 0.9);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(5, 25, 35, 0.95);
             backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--accent);
-            padding: 1.5rem 2rem;
-            position: relative;
-            z-index: 10;
-            box-shadow: 0 4px 20px rgba(5, 195, 221, 0.1);
-        }
-
-        .header-content {
-            max-width: 1200px;
-            margin: 0 auto;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1rem 1.5rem;
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            gap: 1rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            z-index: 100;
         }
 
-        .logo {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.8rem;
-            font-weight: 900;
-            color: var(--accent);
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            text-shadow: 0 0 20px rgba(5, 195, 221, 0.5);
-            text-decoration: none;
+        .header-info {
+            flex: 1;
         }
 
-        .logo span {
-            color: var(--warning);
-            font-size: 0.7rem;
-            vertical-align: super;
-            /* Hidden message in data attribute */
-        }
-
-        nav {
-            display: flex;
-            gap: 2rem;
-        }
-
-        nav a {
+        .contact-name {
+            font-weight: 600;
+            font-size: 1.1rem;
             color: var(--light);
-            text-decoration: none;
-            font-weight: 400;
-            transition: all 0.3s;
-            padding: 0.5rem 1rem;
+        }
+
+        .contact-status {
+            font-size: 0.85rem;
+            color: rgba(240, 249, 255, 0.6);
+            margin-top: 0.2rem;
+        }
+
+        .status-indicator {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: var(--success);
+            border-radius: 50%;
+            margin-right: 0.5rem;
+            animation: pulse-status 2s infinite;
+        }
+
+        @keyframes pulse-status {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .chat-container {
+            position: fixed;
+            top: 60px;
+            bottom: 80px;
+            left: 0;
+            right: 0;
+            overflow-y: auto;
+            padding: 1.5rem;
+            background: #000;
+            scroll-behavior: smooth;
+        }
+
+        /* スクロールバーのスタイリング */
+        .chat-container::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .chat-container::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .chat-container::-webkit-scrollbar-thumb {
+            background: rgba(5, 195, 221, 0.3);
             border-radius: 4px;
         }
 
-        nav a:hover {
-            color: var(--accent);
-            background: rgba(5, 195, 221, 0.1);
+        .chat-container::-webkit-scrollbar-thumb:hover {
+            background: rgba(5, 195, 221, 0.5);
         }
 
-        nav a.disabled-link {
-            opacity: 0.4;
-            cursor: not-allowed;
-            pointer-events: none;
-            text-decoration: line-through;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 4rem 2rem;
-            position: relative;
-            z-index: 1;
-        }
-
-        .hero {
+        .date-separator {
             text-align: center;
-            margin-bottom: 4rem;
-            animation: fadeIn 1s ease-out;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        h1 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 3.5rem;
-            margin-bottom: 1rem;
-            background: linear-gradient(90deg, var(--accent), var(--light));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: glow 3s ease-in-out infinite;
-        }
-
-        @keyframes glow {
-            0%, 100% { filter: brightness(1); }
-            50% { filter: brightness(1.3); }
-        }
-
-        .tagline {
-            font-size: 1.3rem;
-            color: var(--accent);
-            margin-bottom: 3rem;
-            letter-spacing: 2px;
-        }
-
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-bottom: 4rem;
-        }
-
-        .card {
-            background: rgba(10, 77, 104, 0.3);
-            border: 1px solid var(--accent);
-            border-radius: 12px;
-            padding: 2rem;
-            backdrop-filter: blur(10px);
-            transition: all 0.3s;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .card::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(5, 195, 221, 0.1) 0%, transparent 70%);
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-
-        .card:hover::before {
-            opacity: 1;
-        }
-
-        .card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 10px 40px rgba(5, 195, 221, 0.3);
-            border-color: var(--light);
-        }
-
-        .card h3 {
-            font-family: 'Orbitron', sans-serif;
-            color: var(--accent);
-            margin-bottom: 1rem;
-            font-size: 1.5rem;
-        }
-
-        .card p {
-            line-height: 1.8;
-            color: rgba(240, 249, 255, 0.9);
-        }
-
-        .product-code {
-            font-family: 'Orbitron', monospace;
+            margin: 1.5rem 0;
+            color: rgba(240, 249, 255, 0.5);
             font-size: 0.8rem;
-            color: var(--warning);
-            margin-top: 1rem;
-            opacity: 0.7;
         }
 
-        .cta-button {
-            display: inline-block;
-            padding: 1rem 3rem;
-            background: linear-gradient(135deg, var(--secondary), var(--accent));
-            color: var(--dark);
-            text-decoration: none;
-            border-radius: 50px;
-            font-weight: 600;
-            font-size: 1.1rem;
+        .message {
+            display: flex;
+            margin-bottom: 1rem;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .message.client-message {
+            justify-content: flex-start;
+        }
+
+        .message.user-message {
+            justify-content: flex-end;
+        }
+
+        .message-bubble {
+            max-width: 70%;
+            padding: 0.8rem 1rem;
+            border-radius: 18px;
+            line-height: 1.5;
+            position: relative;
+            word-wrap: break-word;
+        }
+
+        .client-message .message-bubble {
+            background: var(--client-bubble);
+            border-bottom-left-radius: 4px;
+        }
+
+        .user-message .message-bubble {
+            background: var(--user-bubble);
+            border-bottom-right-radius: 4px;
+            color: white;
+        }
+
+        .message-time {
+            font-size: 0.7rem;
+            color: rgba(240, 249, 255, 0.5);
+            margin-top: 0.3rem;
+            text-align: right;
+        }
+
+        .client-message .message-time {
+            text-align: left;
+        }
+
+        .attachment {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            padding: 0.8rem;
+            margin-top: 0.5rem;
+            font-size: 0.85rem;
+            cursor: pointer;
             transition: all 0.3s;
-            box-shadow: 0 5px 20px rgba(5, 195, 221, 0.3);
-            animation: pulse 2s ease-in-out infinite;
         }
 
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
+        .attachment:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: var(--accent);
         }
 
-        .cta-button:hover {
+        .attachment-icon {
+            margin-right: 0.5rem;
+        }
+
+        .typing-indicator {
+            display: none;
+            padding: 0.8rem 1rem;
+            background: var(--client-bubble);
+            border-radius: 18px;
+            border-bottom-left-radius: 4px;
+            max-width: 60px;
+            margin-bottom: 1rem;
+        }
+
+        .typing-indicator.active {
+            display: inline-block;
+        }
+
+        .typing-dots {
+            display: flex;
+            gap: 4px;
+        }
+
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            background: rgba(240, 249, 255, 0.6);
+            border-radius: 50%;
+            animation: typing 1.4s infinite;
+        }
+
+        .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes typing {
+            0%, 60%, 100% { transform: translateY(0); opacity: 0.6; }
+            30% { transform: translateY(-8px); opacity: 1; }
+        }
+
+        .input-container {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(5, 25, 35, 0.95);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1rem 1.5rem;
+            display: flex;
+            gap: 0.8rem;
+            align-items: center;
+            z-index: 100;
+        }
+
+        #userInput {
+            flex: 1;
+            background: rgba(58, 58, 60, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 0.8rem 1.2rem;
+            color: var(--light);
+            font-family: 'Noto Sans JP', sans-serif;
+            font-size: 0.95rem;
+            outline: none;
+            transition: all 0.3s;
+        }
+
+        #userInput:focus {
+            border-color: var(--accent);
+            background: rgba(58, 58, 60, 1);
+        }
+
+        #sendButton {
+            background: var(--accent);
+            color: var(--dark);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+        }
+
+        #sendButton:hover {
             transform: scale(1.1);
-            box-shadow: 0 8px 30px rgba(5, 195, 221, 0.5);
+            background: var(--light);
         }
 
-        footer {
-            text-align: center;
-            padding: 2rem;
-            background: rgba(5, 25, 35, 0.9);
-            border-top: 1px solid var(--accent);
-            margin-top: 4rem;
-            font-size: 0.9rem;
-            opacity: 0.8;
+        #sendButton:active {
+            transform: scale(0.95);
         }
 
-        /* Hidden morse code hint in CSS */
-        .morse::after {
-            content: '•••−•−−− •••−•−− ••−−− ••• −'; /* SOS in morse */
-            position: absolute;
-            opacity: 0;
+        .notification {
+            position: fixed;
+            top: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--warning);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(255, 107, 107, 0.4);
+            z-index: 1000;
+            animation: slideDown 0.3s ease-out;
+            display: none;
+        }
+
+        .notification.show {
+            display: block;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateX(-50%) translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0);
+            }
+        }
+
+        .quick-replies {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-top: 0.5rem;
+        }
+
+        .quick-reply {
+            background: rgba(5, 195, 221, 0.2);
+            border: 1px solid var(--accent);
+            padding: 0.5rem 1rem;
+            border-radius: 16px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: var(--accent);
+        }
+
+        .quick-reply:hover {
+            background: rgba(5, 195, 221, 0.3);
+            transform: translateY(-2px);
         }
 
         /* Mobile responsive */
         @media (max-width: 768px) {
-            .notice-banner {
-                font-size: 0.8rem !important;
-                padding: 0.8rem !important;
-                line-height: 1.5 !important;
+            .message-bubble {
+                max-width: 85%;
             }
 
-            header {
-                padding: 1rem;
+            .chat-container {
+                top: 55px;
+                bottom: 75px;
             }
 
-            .header-content {
-                flex-direction: column;
-                gap: 1rem;
-                align-items: flex-start;
+            .input-container {
+                padding: 0.8rem 1rem;
             }
 
-            .logo {
-                font-size: 1.3rem;
-            }
-
-            nav {
-                flex-wrap: wrap;
-                gap: 0.5rem;
-                width: 100%;
-            }
-
-            nav a {
-                padding: 0.4rem 0.8rem;
+            #userInput {
                 font-size: 0.9rem;
             }
+        }
 
-            h1 {
-                font-size: 2rem;
-            }
+        /* 画像表示用 */
+        .message-image {
+            max-width: 100%;
+            border-radius: 8px;
+            margin-top: 0.5rem;
+            cursor: pointer;
+        }
 
-            .tagline {
-                font-size: 1rem;
-            }
-
-            .container {
-                padding: 2rem 1rem;
-            }
-
-            .grid {
-                grid-template-columns: 1fr;
-            }
-
-            .cta-button {
-                padding: 0.8rem 2rem;
-                font-size: 1rem;
-            }
+        .evidence-tag {
+            display: inline-block;
+            background: rgba(255, 107, 107, 0.2);
+            color: var(--warning);
+            padding: 0.3rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            margin-top: 0.5rem;
+            border: 1px solid var(--warning);
         }
     </style>
 </head>
 <body>
-    <!-- Background particles -->
-    <div class="particles" id="particles"></div>
-
-    <!-- Notice Banner -->
-    <div class="notice-banner" style="background: rgba(255, 107, 107, 0.2); border-bottom: 2px solid var(--warning); padding: 1rem; text-align: center; font-size: 0.95rem; color: var(--warning); backdrop-filter: blur(10px); line-height: 1.6;">
-        ⚠️ 諸事情により本ページの更新は止まっております。新サイトの開設をお待ちください。<br>
-        なお、AIサポートシステムについては2024年11月までの情報ですが稼働いたします。
+    <div class="notification" id="notification">
+        📩 新しい情報が届きました
     </div>
 
     <header>
-        <div class="header-content">
-            <div class="logo">
-                NeuroLife<span style="font-size: 0.5em; font-weight: 400; margin-left: 0.3rem;">Pharmaceuticals</span><span data-hint="NL-X789">®</span>
+        <div class="header-info">
+            <div class="contact-name">依頼者（匿名希望）</div>
+            <div class="contact-status">
+                <span class="status-indicator"></span>オンライン
             </div>
-            <nav>
-                <a href="index.html">ホーム</a>
-                <a href="#products" class="disabled-link">製品情報</a>
-                <a href="#research" class="disabled-link">研究開発</a>
-                <a href="#clinical-trial" class="disabled-link">臨床試験被験者の方へ</a>
-                <a href="chatbot.html">サポート</a>
-            </nav>
         </div>
     </header>
 
-    <div class="container">
-        <div class="hero">
-            <h1>ニューロライフ製薬</h1>
-            <p class="tagline">未来の健康を、今日から</p>
-            <p style="max-width: 700px; margin: 0 auto 2rem; line-height: 1.8;">
-                最先端の神経科学とバイオテクノロジーを駆使し、<br>
-                人類の可能性を拡張する革新的な医薬品を開発しています。
-            </p>
-        </div>
+    <div class="chat-container" id="chatContainer">
+        <div class="date-separator">今日</div>
+        
+        <!-- 初期メッセージはJavaScriptで追加 -->
+    </div>
 
-        <div class="grid" id="products">
-            <div class="card morse">
-                <h3>NeuroSync™</h3>
-                <p>
-                    脳神経の最適化により、認知機能を向上させる次世代の神経調整薬。
-                    集中力、記憶力、創造性を飛躍的に高めます。
-                </p>
-                <div class="product-code">製品コード: NS-2847-ALPHA</div>
-            </div>
-
-            <div class="card">
-                <h3>MemoriaPlus™</h3>
-                <p>
-                    長期記憶の形成と保持をサポート。アルツハイマー病予防にも期待される
-                    革新的な記憶増強剤です。
-                </p>
-                <div class="product-code">製品コード: MP-1923-BETA</div>
-            </div>
-
-            <div class="card">
-                <h3>DreamLink™</h3>
-                <p>
-                    睡眠の質を向上させ、明晰夢を誘導。深い休息と創造的な夢体験を
-                    同時に実現する画期的な睡眠調整薬。
-                </p>
-                <div class="product-code">製品コード: DL-X789-OMEGA</div>
-                <!-- 注意: 臨床試験段階 - 一般使用禁止 -->
-            </div>
-        </div>
-
-        <div style="text-align: center; margin: 4rem 0;">
-            <a href="chatbot.html" class="cta-button">
-                AIサポートに相談する
-            </a>
-        </div>
-
-        <div class="card" style="max-width: 800px; margin: 0 auto;">
-            <h3>私たちのミッション</h3>
-            <p style="line-height: 2;">
-                ニューロライフ製薬は、2015年に設立された先端医療研究企業です。
-                「人間の潜在能力を解放する」という理念のもと、脳科学、神経学、
-                バイオテクノロジーの最前線で研究開発を続けています。
-            </p>
-            <p style="line-height: 2; margin-top: 1rem; opacity: 0.8; font-size: 0.9rem;">
-                ※当社の製品は厳格な臨床試験と倫理審査を経て開発されています。
-                <!-- データ: 実験記録 #2847 参照 -->
-            </p>
+    <div class="typing-indicator" id="typingIndicator">
+        <div class="typing-dots">
+            <div class="typing-dot"></div>
+            <div class="typing-dot"></div>
+            <div class="typing-dot"></div>
         </div>
     </div>
 
-    <footer>
-        <p>&copy; 2025 ニューロライフ製薬株式会社 All rights reserved.</p>
-        <p style="margin-top: 0.5rem; font-size: 0.8rem; opacity: 0.6;">
-            本サイトの情報は医療従事者向けです | プライバシーポリシー | 利用規約
-        </p>
-        <!-- アクセスコード: NL2847X -->
-    </footer>
+    <div class="input-container">
+        <input type="text" id="userInput" placeholder="メッセージを入力..." onkeypress="handleKeyPress(event)">
+        <button id="sendButton" onclick="sendMessage()">↑</button>
+    </div>
 
     <script>
-        // Create floating particles
-        const particlesContainer = document.getElementById('particles');
-        for (let i = 0; i < 50; i++) {
-            const particle = document.createElement('div');
-            particle.className = 'particle';
-            particle.style.left = Math.random() * 100 + '%';
-            particle.style.top = Math.random() * 100 + '%';
-            particle.style.animationDelay = Math.random() * 15 + 's';
-            particle.style.animationDuration = (10 + Math.random() * 10) + 's';
-            particlesContainer.appendChild(particle);
+        // ストーリー進行状態を管理
+        let storyState = {
+            phase: 0,
+            foundNemophila: false,
+            foundCode2847: false,
+            accessedInternal: false,
+            knowsDreamLink: false,
+            askedAboutFacility: false,
+            askedAboutPassword: false,
+            hintCount: 0
+        };
+
+        // LocalStorageから状態を読み込み
+        function loadState() {
+            const saved = localStorage.getItem('investigationState');
+            if (saved) {
+                storyState = JSON.parse(saved);
+            }
         }
+
+        // LocalStorageに状態を保存
+        function saveState() {
+            localStorage.setItem('investigationState', JSON.stringify(storyState));
+        }
+
+        // ページ読み込み時に状態を復元
+        loadState();
+
+        // メッセージ履歴を保存・復元
+        let messageHistory = [];
+
+        function saveMessages() {
+            localStorage.setItem('chatHistory', JSON.stringify(messageHistory));
+        }
+
+        function loadMessages() {
+            const saved = localStorage.getItem('chatHistory');
+            if (saved) {
+                messageHistory = JSON.parse(saved);
+                messageHistory.forEach(msg => {
+                    addMessageToDOM(msg.text, msg.isUser, msg.hasAttachment, msg.hasQuickReplies, msg.timestamp);
+                });
+                // 履歴読み込み後にスクロール
+                setTimeout(() => {
+                    scrollToBottom();
+                }, 500);
+            } else {
+                // 初回訪問時の初期メッセージ
+                showInitialMessages();
+            }
+        }
+
+        function showInitialMessages() {
+            setTimeout(() => {
+                addMessage('あの、なんでも相談にのるってSNSに書いてたので連絡しています。', false);
+                setTimeout(scrollToBottom, 400);
+            }, 500);
+
+            setTimeout(() => {
+                addMessage('友人の前田ユウスケが先月、NeuroLife製薬という会社の治験バイトに参加してから連絡が取れなくなりました。最後に「すごい報酬だから3週間頑張ってくる」って連絡を最後に、既読もつきません。', false);
+                setTimeout(scrollToBottom, 400);
+            }, 2500);
+
+            setTimeout(() => {
+                addMessage('会社のホームページを見つけたんですが、今は臨床試験の募集もしていないみたいで…', false);
+                setTimeout(scrollToBottom, 400);
+            }, 5000);
+
+            setTimeout(() => {
+                addMessage('何かおかしいんです。調べてもらえませんか？', false, true);
+                setTimeout(scrollToBottom, 400);
+            }, 7000);
+        }
+
+        function scrollToBottom() {
+            const container = document.getElementById('chatContainer');
+            setTimeout(() => {
+                // スムーズにスクロール
+                container.scrollTo({
+                    top: container.scrollHeight,
+                    behavior: 'smooth'
+                });
+            }, 350);
+        }
+
+        function addMessageToDOM(text, isUser = false, hasAttachment = false, hasQuickReplies = false, timestamp = null) {
+            const container = document.getElementById('chatContainer');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${isUser ? 'user-message' : 'client-message'}`;
+
+            const time = timestamp || new Date().toLocaleTimeString('ja-JP', { hour: '2-digit', minute: '2-digit' });
+
+            let attachmentHTML = '';
+            if (hasAttachment && !isUser) {
+                attachmentHTML = `
+                    <div class="attachment" onclick="window.open('company-site.html', '_blank')">
+                        <span class="attachment-icon">🔗</span>
+                        NeuroLife製薬 公式サイト
+                    </div>
+                `;
+            }
+
+            let quickRepliesHTML = '';
+            if (hasQuickReplies && !isUser) {
+                quickRepliesHTML = `
+                    <div class="quick-replies">
+                        <div class="quick-reply" onclick="sendQuickReply('調べてみます')">調べてみます</div>
+                        <div class="quick-reply" onclick="sendQuickReply('詳しく教えてください')">詳しく教えてください</div>
+                    </div>
+                `;
+            }
+
+            messageDiv.innerHTML = `
+                <div class="message-bubble">
+                    ${text.replace(/\n/g, '<br>')}
+                    ${attachmentHTML}
+                    <div class="message-time">${time}</div>
+                </div>
+                ${quickRepliesHTML}
+            `;
+
+            container.appendChild(messageDiv);
+            
+            // アニメーション完了後（350ms）にスムーズにスクロール
+            setTimeout(() => {
+                container.scrollTo({
+                    top: container.scrollHeight,
+                    behavior: 'smooth'
+                });
+            }, 350);
+        }
+
+        function addMessage(text, isUser = false, hasAttachment = false, hasQuickReplies = false) {
+            const msg = {
+                text: text,
+                isUser: isUser,
+                hasAttachment: hasAttachment,
+                hasQuickReplies: hasQuickReplies,
+                timestamp: new Date().toLocaleTimeString('ja-JP', { hour: '2-digit', minute: '2-digit' })
+            };
+            
+            messageHistory.push(msg);
+            saveMessages();
+            addMessageToDOM(text, isUser, hasAttachment, hasQuickReplies, msg.timestamp);
+        }
+
+        function showTyping() {
+            document.getElementById('typingIndicator').classList.add('active');
+        }
+
+        function hideTyping() {
+            document.getElementById('typingIndicator').classList.remove('active');
+        }
+
+        function showNotification(text = '📩 新しい情報が届きました') {
+            const notification = document.getElementById('notification');
+            notification.textContent = text;
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+
+        function getBotResponse(userMessage) {
+            const message = userMessage.toLowerCase().trim();
+
+            // 全Phase共通: 詳細を求める
+            if (message.includes('詳しく') || message.includes('もっと') || message.includes('詳細') || message.includes('警察')) {
+                return {
+                    text: 'ユウスケとは大学の同級生で、いつも連絡を取り合っていたんです。\n\n先月「お金が必要だから治験バイトやる」って言ってから、ぱったり連絡が途絶えて…\n\n心配で警察にも相談したんですが、成人だし事件性がないって取り合ってもらえなくて。',
+                    delay: 1000
+                };
+            }
+
+            // Phase 0: 初期対応
+            if (storyState.phase === 0) {
+                if (message.includes('調べ') || message.includes('わかり') || message.includes('わかった') || message.includes('分かり') || message.includes('分かった') || message.includes('はい') || message.includes('協力') || message.includes('うん')) {
+                    storyState.phase = 1;
+                    saveState();
+                    return {
+                        text: 'ありがとうございます！ユウスケが参加したのは「DreamLink」という睡眠薬の治験だったと思います。\n僕もサイトを調べますので一緒に調査をお願いします！',
+                        delay: 1000
+                    };
+                }
+            }
+
+            // Phase 1専用: ユーザーが自由に調査
+            if (storyState.phase === 1) {
+                // 製品について
+                if (message.includes('製品') || message.includes('neurosync') || message.includes('memoriaplus')) {
+                    return {
+                        text: 'dreamlink以外にもいくつか製品があるんですね。',
+                        delay: 1000
+                    };
+                }
+
+                // DreamLinkについて
+                if (message.includes('dreamlink')) {
+                    return {
+                        text: '臨床試験中とは記載があるものの、どこかに詳細が無いのでしょうか。',
+                        delay: 1000
+                    };
+                }
+
+                // 製品コード DL-X789について
+                if (message.includes('dl-x789-omega') || message.includes('dl-x789') || message.includes('x789')) {
+                    return {
+                        text: 'さすがに中身については社内情報システムサイトに行かないとだめみたいですね。このサイトも見つけたいです。',
+                        delay: 1000
+                    };
+                }
+
+                // 臨床試験について
+                if (message.includes('臨床試験') && !message.includes('被験者')) {
+                    return {
+                        text: '「臨床試験被験者の方へ」というページはもうリンク切れ？ってことですかね。',
+                        delay: 1000
+                    };
+                }
+
+                // 臨床試験被験者の方へ
+                if (message.includes('臨床試験被験者') || message.includes('被験者の方へ')) {
+                    return {
+                        text: '新サイトにはこのページがありそうですね。どうにかして見つけましょう。',
+                        delay: 1000
+                    };
+                }
+
+                // 新サイト・社内情報システムサイト
+                if (message.includes('新サイト') || message.includes('社内情報システム')) {
+                    return {
+                        text: 'どうやらパスワードを入れる必要があるみたいですね。',
+                        delay: 1000
+                    };
+                }
+
+                // パスワード
+                if (message.includes('パスワード')) {
+                    storyState.askedAboutPassword = true;
+                    storyState.hintCount = 0;
+                    saveState();
+                    return {
+                        text: 'パスワードについてAIサポートが教えてくれますが、どういう意味だろ。。。\n僕の方でも考えてみます。もし詰まったらその時点でお互いのわかっている「手がかり」を共有しましょうか。',
+                        delay: 1000
+                    };
+                }
+
+                // ヒント・手がかり（パスワードの返答後のみ）
+                if (storyState.askedAboutPassword && 
+                    (message.includes('ヒント') || message.includes('手がかり') || 
+                     message.includes('わからない') || message.includes('分からない'))) {
+                    storyState.hintCount++;
+                    saveState();
+                    
+                    if (storyState.hintCount === 1) {
+                        return {
+                            text: '5955->メモとかはヒントなんでしょうね。。。そのままだと文字数が合わないですし。。。',
+                            delay: 1000
+                        };
+                    } else if (storyState.hintCount === 2) {
+                        return {
+                            text: '数字の色分けも意味がありそうですよね。青と赤ってなんだろ。',
+                            delay: 1000
+                        };
+                    } else {
+                        return {
+                            text: '青と赤で記載された文字があればいいんですけど。。。',
+                            delay: 1000
+                        };
+                    }
+                }
+
+                // nemophila・新サイトのリンク → Phase 2に移行
+                if (message.includes('nemophila') || message.includes('neurolife-pharma.com/internal')) {
+                    storyState.phase = 2;
+                    saveState();
+                    return {
+                        text: 'サイト上部のNEUROLIFE PHARMACEUTICALSの文字に色と数字が対応してたということですね！\n新サイトに行けました。詳しくサイトを見てみましょう！',
+                        delay: 1000
+                    };
+                }
+            }
+
+            // 一般的な応答
+            if (message.includes('大丈夫') || message.includes('心配')) {
+                return {
+                    text: '心配してくれてありがとうございます。\n\nユウスケのこと、絶対に見つけます。',
+                    delay: 1000
+                };
+            }
+
+            // デフォルト応答
+            return {
+                text: '何か新しい情報を見つけたら、すぐに教えてください。\n\n一緒にユウスケを探しましょう。',
+                delay: 1000
+            };
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('userInput');
+            const message = input.value.trim();
+
+            if (message === '') return;
+
+            addMessage(message, true);
+            input.value = '';
+
+            showTyping();
+
+            const response = getBotResponse(message);
+
+            setTimeout(() => {
+                hideTyping();
+                addMessage(response.text, false);
+                // addMessageのアニメーション完了を待ってスクロール
+                setTimeout(() => {
+                    scrollToBottom();
+                }, 400);
+                
+                if (response.callback) {
+                    response.callback();
+                }
+            }, response.delay || 1000);
+        }
+
+        function sendQuickReply(text) {
+            document.getElementById('userInput').value = text;
+            sendMessage();
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        }
+
+        // ページ読み込み時
+        window.addEventListener('DOMContentLoaded', function() {
+            loadMessages();
+        });
     </script>
 </body>
 </html>
