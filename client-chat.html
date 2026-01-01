@@ -34,6 +34,10 @@
         }
 
         header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
             background: rgba(5, 25, 35, 0.95);
             backdrop-filter: blur(10px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
@@ -42,6 +46,7 @@
             align-items: center;
             gap: 1rem;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            z-index: 100;
         }
 
         .header-info {
@@ -76,10 +81,33 @@
         }
 
         .chat-container {
-            flex: 1;
+            position: fixed;
+            top: 60px;
+            bottom: 80px;
+            left: 0;
+            right: 0;
             overflow-y: auto;
             padding: 1.5rem;
             background: #000;
+            scroll-behavior: smooth;
+        }
+
+        /* スクロールバーのスタイリング */
+        .chat-container::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .chat-container::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .chat-container::-webkit-scrollbar-thumb {
+            background: rgba(5, 195, 221, 0.3);
+            border-radius: 4px;
+        }
+
+        .chat-container::-webkit-scrollbar-thumb:hover {
+            background: rgba(5, 195, 221, 0.5);
         }
 
         .date-separator {
@@ -201,6 +229,10 @@
         }
 
         .input-container {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
             background: rgba(5, 25, 35, 0.95);
             backdrop-filter: blur(10px);
             border-top: 1px solid rgba(255, 255, 255, 0.1);
@@ -208,6 +240,7 @@
             display: flex;
             gap: 0.8rem;
             align-items: center;
+            z-index: 100;
         }
 
         #userInput {
@@ -312,6 +345,11 @@
                 max-width: 85%;
             }
 
+            .chat-container {
+                top: 55px;
+                bottom: 75px;
+            }
+
             .input-container {
                 padding: 0.8rem 1rem;
             }
@@ -382,7 +420,9 @@
             foundCode2847: false,
             accessedInternal: false,
             knowsDreamLink: false,
-            askedAboutFacility: false
+            askedAboutFacility: false,
+            askedAboutPassword: false,
+            hintCount: 0
         };
 
         // LocalStorageから状態を読み込み
@@ -415,6 +455,10 @@
                 messageHistory.forEach(msg => {
                     addMessageToDOM(msg.text, msg.isUser, msg.hasAttachment, msg.hasQuickReplies, msg.timestamp);
                 });
+                // 履歴読み込み後にスクロール
+                setTimeout(() => {
+                    scrollToBottom();
+                }, 500);
             } else {
                 // 初回訪問時の初期メッセージ
                 showInitialMessages();
@@ -423,24 +467,35 @@
 
         function showInitialMessages() {
             setTimeout(() => {
-                addMessage('助けてください。', false);
+                addMessage('あの、なんでも相談にのるってSNSに書いてたので連絡しています。', false);
+                setTimeout(scrollToBottom, 400);
             }, 500);
 
             setTimeout(() => {
-                addMessage('友人の田中ユウキが先月、NeuroLife製薬という会社の治験バイトに参加してから連絡が取れなくなりました。', false);
-            }, 2000);
-
-            setTimeout(() => {
-                addMessage('最後に「すごい報酬だから3週間頑張ってくる」ってLINEが来たきり、既読もつきません。', false);
-            }, 4000);
+                addMessage('友人の前田ユウスケが先月、NeuroLife製薬という会社の治験バイトに参加してから連絡が取れなくなりました。最後に「すごい報酬だから3週間頑張ってくる」って連絡を最後に、既読もつきません。', false);
+                setTimeout(scrollToBottom, 400);
+            }, 2500);
 
             setTimeout(() => {
                 addMessage('会社のホームページを見つけたんですが、今は臨床試験の募集もしていないみたいで…', false);
-            }, 6000);
+                setTimeout(scrollToBottom, 400);
+            }, 5000);
 
             setTimeout(() => {
                 addMessage('何かおかしいんです。調べてもらえませんか？', false, true);
-            }, 8000);
+                setTimeout(scrollToBottom, 400);
+            }, 7000);
+        }
+
+        function scrollToBottom() {
+            const container = document.getElementById('chatContainer');
+            setTimeout(() => {
+                // スムーズにスクロール
+                container.scrollTo({
+                    top: container.scrollHeight,
+                    behavior: 'smooth'
+                });
+            }, 350);
         }
 
         function addMessageToDOM(text, isUser = false, hasAttachment = false, hasQuickReplies = false, timestamp = null) {
@@ -480,7 +535,14 @@
             `;
 
             container.appendChild(messageDiv);
-            container.scrollTop = container.scrollHeight;
+            
+            // アニメーション完了後（350ms）にスムーズにスクロール
+            setTimeout(() => {
+                container.scrollTo({
+                    top: container.scrollHeight,
+                    behavior: 'smooth'
+                });
+            }, 350);
         }
 
         function addMessage(text, isUser = false, hasAttachment = false, hasQuickReplies = false) {
@@ -518,47 +580,135 @@
         function getBotResponse(userMessage) {
             const message = userMessage.toLowerCase().trim();
 
+            // 全Phase共通: 詳細を求める
+            if (message.includes('詳しく') || message.includes('もっと') || message.includes('詳細') || message.includes('警察')) {
+                return {
+                    text: 'ユウスケとは大学の同級生で、いつも連絡を取り合っていたんです。\n\n先月「お金が必要だから治験バイトやる」って言ってから、ぱったり連絡が途絶えて…\n\n心配で警察にも相談したんですが、成人だし事件性がないって取り合ってもらえなくて。',
+                    delay: 1000
+                };
+            }
+
             // Phase 0: 初期対応
             if (storyState.phase === 0) {
-                if (message.includes('調べ') || message.includes('わかり') || message.includes('はい') || message.includes('協力') || message.includes('うん')) {
+                if (message.includes('調べ') || message.includes('わかり') || message.includes('わかった') || message.includes('分かり') || message.includes('分かった') || message.includes('はい') || message.includes('協力') || message.includes('うん')) {
                     storyState.phase = 1;
                     saveState();
                     return {
-                        text: 'ありがとうございます！\n\n田中が参加したのは「DreamLink」という睡眠薬の治験だったと思います。\n\n会社のサイトを調べてもらえますか？',
+                        text: 'ありがとうございます！ユウスケが参加したのは「DreamLink」という睡眠薬の治験だったと思います。\n僕もサイトを調べますので一緒に調査をお願いします！',
                         delay: 1000
-                    };
-                }
-                
-                if (message.includes('詳しく') || message.includes('もっと')) {
-                    return {
-                        text: '田中とは大学の同級生で、いつも連絡を取り合っていたんです。\n\n先月「お金が必要だから治験バイトやる」って言ってから、ぱったり連絡が途絶えて…\n\n心配で警察にも相談したんですが、成人だし事件性がないって取り合ってもらえなくて。',
-                        delay: 1500
                     };
                 }
             }
 
-            // Phase 1以降: ユーザーが自由に調査
-            // 汎用的な応答のみ
+            // Phase 1専用: ユーザーが自由に調査
+            if (storyState.phase === 1) {
+                // 製品について
+                if (message.includes('製品') || message.includes('neurosync') || message.includes('memoriaplus')) {
+                    return {
+                        text: 'dreamlink以外にもいくつか製品があるんですね。',
+                        delay: 1000
+                    };
+                }
+
+                // DreamLinkについて
+                if (message.includes('dreamlink')) {
+                    return {
+                        text: '臨床試験中とは記載があるものの、どこかに詳細が無いのでしょうか。',
+                        delay: 1000
+                    };
+                }
+
+                // 製品コード DL-X789について
+                if (message.includes('dl-x789-omega') || message.includes('dl-x789') || message.includes('x789')) {
+                    return {
+                        text: 'さすがに中身については社内情報システムサイトに行かないとだめみたいですね。このサイトも見つけたいです。',
+                        delay: 1000
+                    };
+                }
+
+                // 臨床試験について
+                if (message.includes('臨床試験') && !message.includes('被験者')) {
+                    return {
+                        text: '「臨床試験被験者の方へ」というページはもうリンク切れ？ってことですかね。',
+                        delay: 1000
+                    };
+                }
+
+                // 臨床試験被験者の方へ
+                if (message.includes('臨床試験被験者') || message.includes('被験者の方へ')) {
+                    return {
+                        text: '新サイトにはこのページがありそうですね。どうにかして見つけましょう。',
+                        delay: 1000
+                    };
+                }
+
+                // 新サイト・社内情報システムサイト
+                if (message.includes('新サイト') || message.includes('社内情報システム')) {
+                    return {
+                        text: 'どうやらパスワードを入れる必要があるみたいですね。',
+                        delay: 1000
+                    };
+                }
+
+                // パスワード
+                if (message.includes('パスワード')) {
+                    storyState.askedAboutPassword = true;
+                    storyState.hintCount = 0;
+                    saveState();
+                    return {
+                        text: 'パスワードについてAIサポートが教えてくれますが、どういう意味だろ。。。\n僕の方でも考えてみます。もし詰まったらその時点でお互いのわかっている「手がかり」を共有しましょうか。',
+                        delay: 1000
+                    };
+                }
+
+                // ヒント・手がかり（パスワードの返答後のみ）
+                if (storyState.askedAboutPassword && 
+                    (message.includes('ヒント') || message.includes('手がかり') || 
+                     message.includes('わからない') || message.includes('分からない'))) {
+                    storyState.hintCount++;
+                    saveState();
+                    
+                    if (storyState.hintCount === 1) {
+                        return {
+                            text: '5955->メモとかはヒントなんでしょうね。。。そのままだと文字数が合わないですし。。。',
+                            delay: 1000
+                        };
+                    } else if (storyState.hintCount === 2) {
+                        return {
+                            text: '数字の色分けも意味がありそうですよね。青と赤ってなんだろ。',
+                            delay: 1000
+                        };
+                    } else {
+                        return {
+                            text: '青と赤で記載された文字があればいいんですけど。。。',
+                            delay: 1000
+                        };
+                    }
+                }
+
+                // nemophila・新サイトのリンク → Phase 2に移行
+                if (message.includes('nemophila') || message.includes('neurolife-pharma.com/internal')) {
+                    storyState.phase = 2;
+                    saveState();
+                    return {
+                        text: 'サイト上部のNEUROLIFE PHARMACEUTICALSの文字に色と数字が対応してたということですね！\n新サイトに行けました。詳しくサイトを見てみましょう！',
+                        delay: 1000
+                    };
+                }
+            }
 
             // 一般的な応答
             if (message.includes('大丈夫') || message.includes('心配')) {
                 return {
-                    text: '心配してくれてありがとうございます。\n\n田中のこと、絶対に見つけます。',
-                    delay: 800
-                };
-            }
-
-            if (message.includes('ありがとう') || message.includes('感謝')) {
-                return {
-                    text: 'こちらこそ、本当にありがとうございます。\n\nあなたの協力がなければ、ここまで調べられませんでした。',
+                    text: '心配してくれてありがとうございます。\n\nユウスケのこと、絶対に見つけます。',
                     delay: 1000
                 };
             }
 
             // デフォルト応答
             return {
-                text: '何か新しい情報を見つけたら、すぐに教えてください。\n\n一緒に田中を探しましょう。',
-                delay: 800
+                text: '何か新しい情報を見つけたら、すぐに教えてください。\n\n一緒にユウスケを探しましょう。',
+                delay: 1000
             };
         }
 
@@ -578,6 +728,10 @@
             setTimeout(() => {
                 hideTyping();
                 addMessage(response.text, false);
+                // addMessageのアニメーション完了を待ってスクロール
+                setTimeout(() => {
+                    scrollToBottom();
+                }, 400);
                 
                 if (response.callback) {
                     response.callback();
