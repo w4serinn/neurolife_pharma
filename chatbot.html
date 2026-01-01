@@ -276,7 +276,11 @@
             color: var(--accent);
             font-style: italic;
             font-size: 0.9rem;
-            padding: 0 1.5rem;
+            padding: 0.5rem 1.5rem;
+            background: rgba(10, 77, 104, 0.5);
+            backdrop-filter: blur(10px);
+            border-left: 1px solid var(--accent);
+            border-right: 1px solid var(--accent);
         }
 
         .typing-indicator.active {
@@ -906,13 +910,29 @@
             'パスワード nemophila': '✓ パスワード認証成功\n\nアクセスを許可します。\n\n新サイトはこちら:\n<a href="newsite.html" style="color: var(--accent); text-decoration: underline;">https://neurolife-pharma.com/internal</a>',
             'パスワード': 'パスワードは<span style="color: #05c3dd;">12</span><span style="color: #ff6b6b;">5</span><span style="color: #05c3dd;">5</span><span style="color: #ff6b6b;">12</span><span style="color: #05c3dd;">76</span><span style="color: #ff6b6b;">3</span>\n\n<span style="color: #ff6b6b;">5</span><span style="color: #05c3dd;">9</span><span style="color: #ff6b6b;">5</span><span style="color: #05c3dd;">5</span> ->メモ\n<span style="color: #ff6b6b;">723</span><span style="color: #05c3dd;">745</span>->茶色\n<span style="color: #ff6b6b;">5372</span><span style="color: #05c3dd;">71</span><span style="color: #ff6b6b;">65</span><span style="color: #05c3dd;">7</span> -> 街並み',
             '会社情報': 'ニューロライフ製薬株式会社\n設立: 2015年\n本社: 東京\n従業員数: 347名\n\nミッション: 人間の潜在能力を解放する\n\n詳細については公式ウェブサイトをご覧ください。',
+            '進捗報告 no.7': function() {
+                saveLink('archive.html', '進捗報告アーカイブ No.7');
+                return '📁 アーカイブサイトを発見しました。\n\n<a href="archive.html" style="color: var(--accent); text-decoration: underline;">進捗報告 No.7 アーカイブ</a>';
+            },
+            '進捗報告 no7': function() {
+                saveLink('archive.html', '進捗報告アーカイブ No.7');
+                return '📁 アーカイブサイトを発見しました。\n\n<a href="archive.html" style="color: var(--accent); text-decoration: underline;">進捗報告 No.7 アーカイブ</a>';
+            },
+            'tatsumilog': function() {
+                // AI分析レポートに情報を追加
+                saveKeyword('tatsumilog');
+                saveAuth('iris', 'ニューロライフ職員用パスワード');
+                
+                return 'このメッセージを見ている人がいるということは俺はいくつかの賭けに成功したということだろう。\n\nどこまで知っているかわからないが、俺には時間が無い。いくつか端的に話す。\n\n進捗報告のページにあったように機密情報が外部に漏れるインシデントが発生した。その調査の時に俺もその内容を見てしまったのだがこれがどうもまずかったらしい。\n\n俺の記憶を消すよう薬物投与をする流れになってしまってな。それからというもの、この会社の闇を暴こうにも俺にはデカすぎると思い策を練った。\n\n旧サイトのAIシステムを使って外部からの協力者の助けを借りる方法、うまくいくかはわからないが、もうこれしかない。\n\nとりあえず新サイトのAIシステムに俺が調べれた情報をダミーとして配置した。これで奴らの目は新サイトのシステムに向くだろう。\n\n一方旧サイトにはいくつかの単語を引っかけてアーカイブページや機密情報が出るように仕掛けておいた。うまく動くはAI次第なのだが、テストの時は研究レポートと製品コードの組み合わせで一部ヒットすることは確認できたからきっとうまくいくはず。\n\nこれを読んでいるとき、俺はどうなっているか分からない。後のことはこれを読んでいるお前に託そうと思う。よろしく。';
+            },
             'default': '申し訳ございません。その質問には回答できません。\n\n以下のトピックについてお答えできます:\n• 製品について\n• 研究開発\n• 会社情報\n\nまたは、特定のキーワードを入力してみてください。'
         };
 
         // 認証関連のキーワード（キーワード: 表示名）
         const authKeywords = {
             'nemophila': '社内情報アクセスパスワード',
-            'dl-x789-omega': '制限製品コード'
+            'dl-x789-omega': '制限製品コード',
+            'iris': 'ニューロライフ職員用パスワード'
         };
 
         // 重要キーワードのリスト
@@ -922,7 +942,9 @@
             'x789',
             '臨床試験',
             '被験者',
-            '2847'
+            '2847',
+            'tatsumilog',
+            'iris'
         ];
 
         // 発見可能なサイトのマッピング
@@ -930,7 +952,8 @@
             'newsite.html': '社内情報システム（構築中）',
             'clinical-trial.html': '臨床試験被験者ページ',
             'research.html': '研究開発資料',
-            'protocol.html': 'プロトコル文書'
+            'protocol.html': 'プロトコル文書',
+            'archive.html': '進捗報告アーカイブ No.7'
         };
 
         // メモモーダルの状態管理
@@ -1354,7 +1377,9 @@
             
             for (let key in responses) {
                 if (message.includes(key)) {
-                    return responses[key];
+                    const response = responses[key];
+                    // 関数の場合は実行、文字列の場合はそのまま返す
+                    return typeof response === 'function' ? response() : response;
                 }
             }
             

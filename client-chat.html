@@ -422,7 +422,9 @@
             knowsDreamLink: false,
             askedAboutFacility: false,
             askedAboutPassword: false,
-            hintCount: 0
+            hintCount: 0,
+            askedAboutPassword2: false,
+            hintCount2: 0
         };
 
         // LocalStorageから状態を読み込み
@@ -692,6 +694,118 @@
                     saveState();
                     return {
                         text: 'サイト上部のNEUROLIFE PHARMACEUTICALSの文字に色と数字が対応してたということですね！\n新サイトに行けました。詳しくサイトを見てみましょう！',
+                        delay: 1000
+                    };
+                }
+            }
+
+            // Phase 2専用: 新サイト内の調査
+            if (storyState.phase === 2) {
+                // 社員認証
+                if (message.includes('社員認証')) {
+                    return {
+                        text: '内容を見るためにはIDとパスワードを見つける必要がありそうですね。',
+                        delay: 1000
+                    };
+                }
+
+                // 製品情報、neurosync、memoriaplus、dreamlink
+                if (message.includes('製品情報') || message.includes('製品') || 
+                    message.includes('neurosync') || message.includes('memoriaplus') || message.includes('dreamlink')) {
+                    return {
+                        text: '製品に関する情報が欲しいですけど、そのためには社員認証を突破しないと。',
+                        delay: 1000
+                    };
+                }
+
+                // 研究レポート
+                if (message.includes('研究レポート') || message.includes('レポート')) {
+                    return {
+                        text: '研究レポートも社員認証がかかってますね。',
+                        delay: 1000
+                    };
+                }
+
+                // サイト進捗報告
+                if (message.includes('サイト進捗報告') || (message.includes('進捗報告') && !message.includes('no.7') && !message.includes('no7'))) {
+                    return {
+                        text: 'ここだけは制限なく見れますね！ちょっと調べてみましょう。',
+                        delay: 1000
+                    };
+                }
+
+                // パスワード
+                if (message.includes('パスワード')) {
+                    storyState.askedAboutPassword2 = true;
+                    storyState.hintCount2 = 0;
+                    saveState();
+                    return {
+                        text: 'パスワードに関してはヒントからわかったりするんですかね。僕も調べてみます。詰まったらさっきと同じで「手がかり」を共有しましょう。',
+                        delay: 1000
+                    };
+                }
+
+                // ヒント・手がかり（パスワードの返答後のみ）
+                if (storyState.askedAboutPassword2 && 
+                    (message.includes('ヒント') || message.includes('手がかり') || 
+                     message.includes('わからない') || message.includes('分からない'))) {
+                    storyState.hintCount2++;
+                    saveState();
+                    
+                    if (storyState.hintCount2 === 1) {
+                        return {
+                            text: '線を辿るとlemonという文字ができるということなんでしょうか。',
+                            delay: 1000
+                        };
+                    } else if (storyState.hintCount2 === 2) {
+                        return {
+                            text: '大きい四角と小さい四角がありますね。これは何が違うんだろう。',
+                            delay: 1000
+                        };
+                    } else {
+                        return {
+                            text: '3種類のアルファベット表記のものが見つかればいいんですけど。',
+                            delay: 1000
+                        };
+                    }
+                }
+
+                // 臨床試験被験者ポータル
+                if (message.includes('臨床試験被験者ポータル') || message.includes('被験者ポータル')) {
+                    return {
+                        text: '中身を見たくても認証がかかってますね。',
+                        delay: 1000
+                    };
+                }
+
+                // セキュリティインシデント
+                if (message.includes('セキュリティインシデント') || message.includes('インシデント')) {
+                    return {
+                        text: 'どうやら過去に臨床試験の内部情報がAIシステムから漏れたようですね。',
+                        delay: 1000
+                    };
+                }
+
+                // iris
+                if (message.includes('iris')) {
+                    return {
+                        text: 'なるほど！製品情報がそれぞれに入るんですね。でもパスワードだけわかってもって感じですよね。',
+                        delay: 1000
+                    };
+                }
+
+                // 進捗報告 No.7
+                if (message.includes('進捗報告') && (message.includes('no.7') || message.includes('no7') || message.includes('7'))) {
+                    return {
+                        text: 'AIサポートから消された進捗報告のアーカイブが見れそうなのですが、パスワードでロックされてますね。',
+                        delay: 1000
+                    };
+                }
+
+                // tatsumilog
+                if (message.includes('tatsumilog')) {
+                    return {
+                        text: 'これって。。。とんでもないことに足を踏み入れたかもしれないですね。。。とりあえず、AIサポートでいろいろ調べるしかないでしょうか。',
                         delay: 1000
                     };
                 }
