@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>サイト進捗報告用 | NeuroLife Pharmaceuticals</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Noto+Sans+JP:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0a4d68;
+            --secondary: #088395;
+            --accent: #05c3dd;
+            --dark: #051923;
+            --light: #f0f9ff;
+            --warning: #ff6b6b;
+            --success: #51cf66;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background: #051923;
+            color: var(--light);
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        .background-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            background: linear-gradient(135deg, #051923 0%, #0a4d68 50%, #088395 100%);
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(5, 25, 35, 0.7);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(5, 195, 221, 0.2);
+            padding: 1.5rem 3rem;
+            z-index: 100;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--accent), var(--secondary));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 900;
+            font-size: 1.5rem;
+            color: var(--dark);
+            box-shadow: 0 4px 20px rgba(5, 195, 221, 0.4);
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 20px rgba(5, 195, 221, 0.5);
+        }
+
+        .logo-subtitle {
+            font-size: 0.7rem;
+            color: rgba(240, 249, 255, 0.6);
+            letter-spacing: 3px;
+            font-weight: 300;
+        }
+
+        .header-nav {
+            display: flex;
+            gap: 1rem;
+            flex: 1;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .header-nav a {
+            color: var(--light);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            padding: 0.5rem 0.8rem;
+            border-radius: 8px;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+
+        .header-nav a:hover {
+            color: var(--accent);
+            background: rgba(5, 195, 221, 0.2);
+        }
+
+        .header-nav a.active {
+            color: var(--accent);
+            background: rgba(5, 195, 221, 0.15);
+        }
+
+        .system-status {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: rgba(81, 207, 102, 0.1);
+            border: 1px solid rgba(81, 207, 102, 0.3);
+            border-radius: 20px;
+            font-size: 0.85rem;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--success);
+            border-radius: 50%;
+            animation: blink 2s infinite;
+        }
+
+        @keyframes blink {
+            0%, 50%, 100% { opacity: 1; }
+            25%, 75% { opacity: 0.3; }
+        }
+
+        .content-wrapper {
+            position: relative;
+            z-index: 1;
+        }
+
+        .incident-banner {
+            position: relative;
+            background: rgba(139, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 2px solid #ff4444;
+            padding: 1rem 2rem;
+            z-index: 98;
+            box-shadow: 0 4px 20px rgba(255, 68, 68, 0.4);
+        }
+
+        .incident-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .incident-icon {
+            font-size: 1.5rem;
+        }
+
+        .incident-text {
+            color: #ffcccc;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .incident-text strong {
+            color: #ff6b6b;
+            font-weight: 700;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        main {
+            position: relative;
+            z-index: 2;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 3rem 6rem;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .page-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3rem;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        .page-subtitle {
+            color: rgba(240, 249, 255, 0.8);
+            font-size: 1.2rem;
+        }
+
+        .reports-container {
+            display: flex;
+            flex-direction: column;
+            gap: 3rem;
+        }
+
+        .report-thread {
+            background: rgba(5, 25, 35, 0.3);
+            border-radius: 20px;
+            padding: 1.5rem;
+            border: 1px solid rgba(5, 195, 221, 0.2);
+        }
+
+        .incident-thread {
+            border-color: rgba(255, 107, 107, 0.5);
+            background: rgba(139, 0, 0, 0.1);
+        }
+
+        .report-card {
+            background: rgba(10, 77, 104, 0.5);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(5, 195, 221, 0.4);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .incident-report {
+            border-color: rgba(255, 107, 107, 0.6);
+            background: rgba(139, 0, 0, 0.3);
+        }
+
+        .report-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+            gap: 1rem;
+        }
+
+        .report-title-section {
+            flex: 1;
+        }
+
+        .report-title {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--light);
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .report-subtitle {
+            color: var(--accent);
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+
+        .report-meta {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+
+        .report-date {
+            font-family: 'Orbitron', monospace;
+            color: rgba(240, 249, 255, 0.6);
+            font-size: 0.9rem;
+        }
+
+        .report-body {
+            color: rgba(240, 249, 255, 0.9);
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        .report-body p {
+            margin-bottom: 1rem;
+        }
+
+        .report-body ul {
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+            line-height: 2;
+        }
+
+        .report-footer {
+            border-top: 1px solid rgba(5, 195, 221, 0.2);
+            padding-top: 1rem;
+        }
+
+        .reporter-info {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--accent);
+            font-weight: 500;
+        }
+
+        .reporter-icon {
+            font-size: 1.2rem;
+        }
+
+        .reporter-name {
+            font-size: 0.95rem;
+        }
+
+        /* Reply Cards */
+        .reply-card {
+            background: rgba(5, 25, 35, 0.6);
+            border-left: 3px solid var(--accent);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .reply-card:last-child {
+            margin-bottom: 0;
+        }
+
+        .urgent-reply {
+            border-left-color: var(--warning);
+            background: rgba(139, 0, 0, 0.2);
+        }
+
+        .reply-header {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .replier-icon {
+            font-size: 1.1rem;
+        }
+
+        .replier-name {
+            font-weight: 600;
+            color: var(--light);
+            font-size: 0.95rem;
+        }
+
+        .reply-date {
+            margin-left: auto;
+            font-family: 'Orbitron', monospace;
+            color: rgba(240, 249, 255, 0.5);
+            font-size: 0.85rem;
+        }
+
+        .reply-body {
+            color: rgba(240, 249, 255, 0.9);
+            line-height: 1.7;
+        }
+
+        footer {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            padding: 3rem 2rem;
+            background: rgba(5, 25, 35, 0.8);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(5, 195, 221, 0.2);
+            margin-top: 5rem;
+        }
+
+        .footer-logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.2rem;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        .copyright {
+            color: rgba(240, 249, 255, 0.4);
+            font-size: 0.85rem;
+            margin-top: 1.5rem;
+        }
+
+        @media (max-width: 1024px) {
+            .header-content {
+                gap: 1rem;
+            }
+
+            .header-nav {
+                gap: 0.5rem;
+            }
+
+            .header-nav a {
+                font-size: 0.8rem;
+                padding: 0.4rem 0.6rem;
+            }
+
+            .incident-banner {
+                padding: 0.8rem 1.5rem;
+            }
+
+            .incident-text {
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .incident-banner {
+                padding: 1rem;
+            }
+
+            .incident-content {
+                flex-direction: column;
+                text-align: center;
+                gap: 0.5rem;
+            }
+
+            .incident-text {
+                font-size: 0.85rem;
+            }
+
+            header {
+                padding: 1rem 1.5rem;
+            }
+
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: flex-start;
+            }
+
+            .header-nav {
+                flex-direction: column;
+                width: 100%;
+                gap: 0.5rem;
+                align-items: stretch;
+            }
+
+            .header-nav a {
+                width: 100%;
+                text-align: left;
+                font-size: 0.9rem;
+                padding: 0.7rem 1rem;
+            }
+
+            .logo-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+            }
+
+            .logo {
+                font-size: 1.2rem;
+            }
+
+            .page-title {
+                font-size: 2rem;
+            }
+
+            .page-subtitle {
+                font-size: 1rem;
+            }
+
+            .container {
+                padding: 2rem 1.5rem 4rem;
+            }
+
+            .report-thread {
+                padding: 1rem;
+            }
+
+            .report-card {
+                padding: 1.5rem;
+            }
+
+            .report-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .report-meta {
+                align-items: flex-start;
+                width: 100%;
+            }
+
+            .reply-card {
+                margin-left: 0.5rem;
+                padding: 1rem;
+            }
+
+            .reply-header {
+                font-size: 0.9rem;
+            }
+
+            .reply-date {
+                margin-left: 0;
+                width: 100%;
+                margin-top: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="background-animation"></div>
+
+    <header>
+        <div class="header-content">
+            <div class="logo-container">
+                <div class="logo-icon">NL</div>
+                <div class="logo-text">
+                    <div class="logo">NEUROLIFE</div>
+                    <div class="logo-subtitle">INTERNAL SYSTEM</div>
+                </div>
+            </div>
+            <nav class="header-nav">
+                <a href="company-site.html">ホーム</a>
+                <a href="clinical-trial.html">臨床試験被験者の方へ</a>
+                <a href="products.html">各種製品情報</a>
+                <a href="research.html">研究レポート</a>
+                <a href="progress.html" class="active">サイト進捗報告用</a>
+            </nav>
+            <div class="system-status">
+                <div class="status-dot"></div>
+                <span>ONLINE</span>
+            </div>
+        </div>
+    </header>
+
+    <div class="content-wrapper">
+        <div class="incident-banner">
+            <div class="incident-content">
+                <span class="incident-icon">⚠️</span>
+                <span class="incident-text">
+                    <strong>2025/10/17</strong> 社内インシデント発生のため更新を中断。また、情報の閲覧権限をM-導入済の者のみに変更。
+                </span>
+            </div>
+        </div>
+
+        <main>
+            <div class="container">
+                <div class="page-header">
+                    <h1 class="page-title">サイト進捗報告</h1>
+                    <p class="page-subtitle">System Development Progress</p>
+                </div>
+
+                <div class="reports-container">
+                    <!-- Report Thread 1 -->
+                    <div class="report-thread">
+                        <div class="report-card main-report">
+                            <div class="report-header">
+                                <div class="report-title-section">
+                                    <h3 class="report-title">進捗報告 No.1</h3>
+                                    <p class="report-subtitle">新サイト初期実装完了</p>
+                                </div>
+                                <div class="report-meta">
+                                    <span class="report-date">2025/01/15 14:32</span>
+                                </div>
+                            </div>
+                            <div class="report-body">
+                                <p>
+                                    本日、社内情報システムの初期実装が完了いたしました。
+                                    以下の機能を実装済みです：
+                                </p>
+                                <ul>
+                                    <li>トップページのデザイン</li>
+                                    <li>各種ページへのナビゲーション</li>
+                                    <li>レスポンシブ対応</li>
+                                    <li>基本的な認証システム</li>
+                                </ul>
+                                <p>ご確認をお願いいたします。</p>
+                            </div>
+                            <div class="report-footer">
+                                <div class="reporter-info">
+                                    <span class="reporter-icon">👤</span>
+                                    <span class="reporter-name">報告者：辰己</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="reply-card">
+                            <div class="reply-header">
+                                <span class="replier-icon">💼</span>
+                                <span class="replier-name">管理者：田中（研究開発部）</span>
+                                <span class="reply-date">2025/01/15 16:45</span>
+                            </div>
+                            <div class="reply-body">
+                                確認しました。良好です。次の段階として、製品情報データベースの実装をお願いします。
+                            </div>
+                        </div>
+
+                        <div class="reply-card">
+                            <div class="reply-header">
+                                <span class="replier-icon">👤</span>
+                                <span class="replier-name">辰己</span>
+                                <span class="reply-date">2025/01/16 10:20</span>
+                            </div>
+                            <div class="reply-body">
+                                承知しました。製品情報データベースの実装に着手します。
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Report Thread 2 -->
+                    <div class="report-thread">
+                        <div class="report-card main-report">
+                            <div class="report-header">
+                                <div class="report-title-section">
+                                    <h3 class="report-title">進捗報告 No.2</h3>
+                                    <p class="report-subtitle">製品情報ページ実装完了</p>
+                                </div>
+                                <div class="report-meta">
+                                    <span class="report-date">2025/01/18 11:15</span>
+                                </div>
+                            </div>
+                            <div class="report-body">
+                                <p>
+                                    製品情報ページの実装が完了しました。
+                                    NeuroSync、MemoriaPlus、DreamLinkの3製品について、
+                                    製品コードと詳細情報を掲載しております。
+                                </p>
+                                <p>
+                                    特にDL-X789-OMEGAについては、アクセス制限の表示を追加しました。
+                                </p>
+                            </div>
+                            <div class="report-footer">
+                                <div class="reporter-info">
+                                    <span class="reporter-icon">👤</span>
+                                    <span class="reporter-name">報告者：辰己</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="reply-card">
+                            <div class="reply-header">
+                                <span class="replier-icon">💼</span>
+                                <span class="replier-name">管理者：山本（品質保証部）</span>
+                                <span class="reply-date">2025/01/18 14:30</span>
+                            </div>
+                            <div class="reply-body">
+                                確認しました。DreamLinkの情報については特に慎重な扱いが必要です。
+                                社員ID、パスワードの認証を追加してください。
+                            </div>
+                        </div>
+
+                        <div class="reply-card">
+                            <div class="reply-header">
+                                <span class="replier-icon">👤</span>
+                                <span class="replier-name">辰己</span>
+                                <span class="reply-date">2025/01/18 15:50</span>
+                            </div>
+                            <div class="reply-body">
+                                承知しました。バックエンド側担当はNEUROLIFE様チームメンバーのため、認証システムの詳細を教えていただけますか？
+                            </div>
+                        </div>
+
+                        <div class="reply-card">
+                            <div class="reply-header">
+                                <span class="replier-icon">💼</span>
+                                <span class="replier-name">管理者：山本（品質保証部）</span>
+                                <span class="reply-date">2025/01/18 16:15</span>
+                            </div>
+                            <div class="reply-body">
+                                別途資料をお送りいたします。
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Report Thread 3 -->
+                    <div class="report-thread">
+                        <div class="report-card main-report">
+                            <div class="report-header">
+                                <div class="report-title-section">
+                                    <h3 class="report-title">進捗報告 No.3</h3>
+                                    <p class="report-subtitle">研究レポートページ実装</p>
+                                </div>
+                                <div class="report-meta">
+                                    <span class="report-date">2025/09/20 09:45</span>
+                                </div>
+                            </div>
+                            <div class="report-body">
+                                <p>
+                                    研究レポートページの実装が完了しました。
+                                    レポートID NL-RES-2024-M2847 を含む、計5件のレポートを掲載しています。
+                                </p>
+                                <p>
+                                    一部指示がありましたレポートについては、アクセス制限を設けています。
+                                </p>
+                            </div>
+                            <div class="report-footer">
+                                <div class="reporter-info">
+                                    <span class="reporter-icon">👤</span>
+                                    <span class="reporter-name">報告者：辰己</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="reply-card">
+                            <div class="reply-header">
+                                <span class="replier-icon">💼</span>
+                                <span class="replier-name">管理者：田中（研究開発部）</span>
+                                <span class="reply-date">2025/09/20 13:20</span>
+                            </div>
+                            <div class="reply-body">
+                                以前作成いただいた認証ですが、ユーザ単位でのパスワード管理の方式から全社員同一パスワードを利用との仕様変更をお願いします。詳細は別途連絡します。
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Report Thread 4 -->
+                    <div class="report-thread">
+                        <div class="report-card main-report">
+                            <div class="report-header">
+                                <div class="report-title-section">
+                                    <h3 class="report-title">進捗報告 No.4</h3>
+                                    <p class="report-subtitle">臨床試験被験者ポータル実装</p>
+                                </div>
+                                <div class="report-meta">
+                                    <span class="report-date">2025/10/12 16:00</span>
+                                </div>
+                            </div>
+                            <div class="report-body">
+                                <p>
+                                    臨床試験被験者向けポータルの実装が完了しました。
+                                    被験者コードによる認証システムを実装済みです。
+                                </p>
+                                <p>
+                                    現在、テスト環境で動作確認中です。
+                                </p>
+                            </div>
+                            <div class="report-footer">
+                                <div class="reporter-info">
+                                    <span class="reporter-icon">👤</span>
+                                    <span class="reporter-name">報告者：辰己</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="reply-card">
+                            <div class="reply-header">
+                                <span class="replier-icon">💼</span>
+                                <span class="replier-name">管理者：佐藤（臨床試験部）</span>
+                                <span class="reply-date">2025/10/13 10:30</span>
+                            </div>
+                            <div class="reply-body">
+                                確認しました。被験者によるアクセスについては、優先的に対応をお願いします。
+                            </div>
+                        </div>
+
+                        <div class="reply-card">
+                            <div class="reply-header">
+                                <span class="replier-icon">👤</span>
+                                <span class="replier-name">辰己</span>
+                                <span class="reply-date">2025/10/13 14:15</span>
+                            </div>
+                            <div class="reply-body">
+                                承知しました。パスワードを忘れた場合の挙動については社員用認証システムと同じ方式でよいでしょうか。
+                            </div>
+                        </div>
+
+                        <div class="reply-card">
+                            <div class="reply-header">
+                                <span class="replier-icon">💼</span>
+                                <span class="replier-name">管理者：佐藤（臨床試験部）</span>
+                                <span class="reply-date">2025/10/13 15:00</span>
+                            </div>
+                            <div class="reply-body">
+                                はい。同じ画面に被験者用、社員用のリカバリ方法を記載する形でお願いします。
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Report Thread 5 - Incident -->
+                    <div class="report-thread incident-thread">
+                        <div class="report-card main-report incident-report">
+                            <div class="report-header">
+                                <div class="report-title-section">
+                                    <h3 class="report-title">🚨 進捗報告 No.5</h3>
+                                    <p class="report-subtitle">セキュリティインシデント発生</p>
+                                </div>
+                                <div class="report-meta">
+                                    <span class="report-date">2025/10/17 08:00</span>
+                                </div>
+                            </div>
+                            <div class="report-body">
+                                <p style="color: var(--warning);">
+                                    <strong>緊急事態：</strong>
+                                    本日早朝、AIチャットボットが臨床試験の内容を返答に含むインシデントが発生。
+                                </p>
+                                <p>
+                                    RAG生成チームと緊急会議を行い、臨床試験含む機密事項のデータを排除することに成功。
+                                </p>
+                                <p>
+                                    AIの取得DB先の自動更新は現在止めており、2025年10月16日までのデータを基に返答するよう変更しました。
+                                </p>
+                            </div>
+                            <div class="report-footer">
+                                <div class="reporter-info">
+                                    <span class="reporter-icon">👤</span>
+                                    <span class="reporter-name">報告者：辰己</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="reply-card urgent-reply">
+                            <div class="reply-header">
+                                <span class="replier-icon">⚠️</span>
+                                <span class="replier-name">管理者：田中（研究開発部）</span>
+                                <span class="reply-date">2025/10/17 08:30</span>
+                            </div>
+                            <div class="reply-body">
+                                緊急対応ありがとうございます。
+                                セキュリティチーム、バックエンドチームと連携して原因を調査してください。
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Report Thread 6 - Investigation Results -->
+                    <div class="report-thread">
+                        <div class="report-card main-report">
+                            <div class="report-header">
+                                <div class="report-title-section">
+                                    <h3 class="report-title">進捗報告 No.6</h3>
+                                    <p class="report-subtitle">インシデント調査結果報告</p>
+                                </div>
+                                <div class="report-meta">
+                                    <span class="report-date">2025/10/18 14:20</span>
+                                </div>
+                            </div>
+                            <div class="report-body">
+                                <p>
+                                    先日のインシデントの原因について調査完了したため報告いたします。
+                                </p>
+                                <p>
+                                    RAGデータ作成用の日時DB取り込みプログラムにて誤って機密情報が混入しておりました。
+                                    混入経路は職員（職員ID：0763521）によるファイル配置ミスとなります。
+                                </p>
+                                <p>
+                                    こちら恒久対策についてご意見お願いします。
+                                </p>
+                            </div>
+                            <div class="report-footer">
+                                <div class="reporter-info">
+                                    <span class="reporter-icon">👤</span>
+                                    <span class="reporter-name">報告者：辰己</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="reply-card">
+                            <div class="reply-header">
+                                <span class="replier-icon">💼</span>
+                                <span class="replier-name">管理者：山本（品質保証部）</span>
+                                <span class="reply-date">2025/10/18 16:45</span>
+                            </div>
+                            <div class="reply-body">
+                                ご確認ありがとうございます。サイトの全データについてM-導入済の者のみ閲覧できるよう認証設定を変更して下さい。
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Report Thread 8 - Skipping 7 intentionally -->
+                    <div class="report-thread">
+                        <div class="report-card main-report">
+                            <div class="report-header">
+                                <div class="report-title-section">
+                                    <h3 class="report-title">進捗報告 No.8</h3>
+                                    <p class="report-subtitle">M-導入済認証設定の完了</p>
+                                </div>
+                                <div class="report-meta">
+                                    <span class="report-date">2025/10/20 11:30</span>
+                                </div>
+                            </div>
+                            <div class="report-body">
+                                <p>
+                                    インシデント恒久対策完了いたしました。
+                                </p>
+                            </div>
+                            <div class="report-footer">
+                                <div class="reporter-info">
+                                    <span class="reporter-icon">💼</span>
+                                    <span class="reporter-name">報告者：管理者：山本（品質保証部）</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="reply-card">
+                            <div class="reply-header">
+                                <span class="replier-icon">💼</span>
+                                <span class="replier-name">管理者：佐藤（臨床試験部）</span>
+                                <span class="reply-date">2025/10/20 13:15</span>
+                            </div>
+                            <div class="reply-body">
+                                ありがとうございます。例の発言もあるのでAIチャットボットは封鎖しておきましょうか？
+                            </div>
+                        </div>
+
+                        <div class="reply-card">
+                            <div class="reply-header">
+                                <span class="replier-icon">💼</span>
+                                <span class="replier-name">管理者：山本（品質保証部）</span>
+                                <span class="reply-date">2025/10/20 14:00</span>
+                            </div>
+                            <div class="reply-body">
+                                はい、念のためお願いします。旧サイトは一般公開のため封鎖は不要です。
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <footer>
+        <div class="footer-logo">NEUROLIFE PHARMACEUTICALS</div>
+        <div class="copyright">
+            &copy; 2025 NeuroLife Pharmaceuticals株式会社 All rights reserved.<br>
+            <span style="font-size: 0.75rem; opacity: 0.6;">
+                Progress Report System v1.0 | Last Updated: 2025-01-01
+            </span>
+        </div>
+    </footer>
+
+    <script>
+        function adjustContentSpacing() {
+            const header = document.querySelector('header');
+            const contentWrapper = document.querySelector('.content-wrapper');
+            
+            if (header && contentWrapper) {
+                const headerHeight = header.offsetHeight;
+                contentWrapper.style.paddingTop = headerHeight + 'px';
+            }
+        }
+
+        window.addEventListener('load', adjustContentSpacing);
+        window.addEventListener('resize', adjustContentSpacing);
+    </script>
+</body>
+</html>

@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>各種製品情報 | NeuroLife Pharmaceuticals</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Noto+Sans+JP:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0a4d68;
+            --secondary: #088395;
+            --accent: #05c3dd;
+            --dark: #051923;
+            --light: #f0f9ff;
+            --warning: #ff6b6b;
+            --success: #51cf66;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background: #051923;
+            color: var(--light);
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        .background-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            background: linear-gradient(135deg, #051923 0%, #0a4d68 50%, #088395 100%);
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(5, 25, 35, 0.7);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(5, 195, 221, 0.2);
+            padding: 1.5rem 3rem;
+            z-index: 100;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--accent), var(--secondary));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 900;
+            font-size: 1.5rem;
+            color: var(--dark);
+            box-shadow: 0 4px 20px rgba(5, 195, 221, 0.4);
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 20px rgba(5, 195, 221, 0.5);
+        }
+
+        .logo-subtitle {
+            font-size: 0.7rem;
+            color: rgba(240, 249, 255, 0.6);
+            letter-spacing: 3px;
+            font-weight: 300;
+        }
+
+        .header-nav {
+            display: flex;
+            gap: 1rem;
+            flex: 1;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .header-nav a {
+            color: var(--light);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            padding: 0.5rem 0.8rem;
+            border-radius: 8px;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+
+        .header-nav a:hover {
+            color: var(--accent);
+            background: rgba(5, 195, 221, 0.2);
+        }
+
+        .header-nav a.active {
+            color: var(--accent);
+            background: rgba(5, 195, 221, 0.15);
+        }
+
+        .system-status {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: rgba(81, 207, 102, 0.1);
+            border: 1px solid rgba(81, 207, 102, 0.3);
+            border-radius: 20px;
+            font-size: 0.85rem;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--success);
+            border-radius: 50%;
+            animation: blink 2s infinite;
+        }
+
+        @keyframes blink {
+            0%, 50%, 100% { opacity: 1; }
+            25%, 75% { opacity: 0.3; }
+        }
+
+        .content-wrapper {
+            position: relative;
+            z-index: 1;
+        }
+
+        .incident-banner {
+            position: relative;
+            background: rgba(139, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 2px solid #ff4444;
+            padding: 1rem 2rem;
+            z-index: 98;
+            box-shadow: 0 4px 20px rgba(255, 68, 68, 0.4);
+        }
+
+        .incident-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .incident-icon {
+            font-size: 1.5rem;
+        }
+
+        .incident-text {
+            color: #ffcccc;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .incident-text strong {
+            color: #ff6b6b;
+            font-weight: 700;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        main {
+            position: relative;
+            z-index: 2;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 3rem 6rem;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .page-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3rem;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        .page-subtitle {
+            color: rgba(240, 249, 255, 0.8);
+            font-size: 1.2rem;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .product-card {
+            background: rgba(10, 77, 104, 0.5);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(5, 195, 221, 0.4);
+            border-radius: 20px;
+            padding: 2.5rem;
+            transition: all 0.3s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(5, 195, 221, 0.3);
+        }
+
+        .product-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .product-icon {
+            font-size: 3rem;
+        }
+
+        .product-card h2 {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--light);
+            font-size: 1.8rem;
+        }
+
+        .product-code {
+            font-family: 'Orbitron', monospace;
+            font-size: 0.9rem;
+            color: var(--accent);
+            margin-top: 0.5rem;
+        }
+
+        .product-card p {
+            line-height: 1.8;
+            color: rgba(240, 249, 255, 0.9);
+            margin-bottom: 1rem;
+        }
+
+        .product-tags {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-top: 1.5rem;
+        }
+
+        .tag {
+            padding: 0.4rem 0.8rem;
+            background: rgba(5, 195, 221, 0.25);
+            border: 1px solid rgba(5, 195, 221, 0.6);
+            border-radius: 12px;
+            font-size: 0.75rem;
+            color: var(--light);
+        }
+
+        .status-restricted {
+            padding: 0.4rem 0.8rem;
+            background: rgba(255, 107, 107, 0.25);
+            border: 1px solid rgba(255, 107, 107, 0.8);
+            border-radius: 12px;
+            font-size: 0.75rem;
+            color: #ffb3b3;
+            font-weight: 600;
+        }
+
+        footer {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            padding: 3rem 2rem;
+            background: rgba(5, 25, 35, 0.8);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(5, 195, 221, 0.2);
+            margin-top: 5rem;
+        }
+
+        .footer-logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.2rem;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        .copyright {
+            color: rgba(240, 249, 255, 0.4);
+            font-size: 0.85rem;
+            margin-top: 1.5rem;
+        }
+
+        /* Authentication Overlay */
+        .auth-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(5, 25, 35, 0.98);
+            backdrop-filter: blur(10px);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .auth-overlay.hidden {
+            display: none;
+        }
+
+        .auth-container {
+            background: linear-gradient(135deg, rgba(10, 77, 104, 0.8), rgba(8, 131, 149, 0.8));
+            backdrop-filter: blur(20px);
+            border: 2px solid var(--accent);
+            border-radius: 20px;
+            padding: 3rem;
+            max-width: 450px;
+            width: 90%;
+            box-shadow: 0 20px 60px rgba(5, 195, 221, 0.3);
+        }
+
+        .auth-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .auth-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .auth-header h2 {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--accent);
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .auth-header p {
+            color: rgba(240, 249, 255, 0.7);
+            font-size: 0.95rem;
+        }
+
+        .auth-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .form-group label {
+            color: var(--light);
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .form-group input {
+            background: rgba(5, 25, 35, 0.8);
+            border: 1px solid rgba(5, 195, 221, 0.4);
+            border-radius: 10px;
+            padding: 1rem;
+            color: var(--light);
+            font-family: 'Noto Sans JP', sans-serif;
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 20px rgba(5, 195, 221, 0.3);
+        }
+
+        .error-message {
+            color: var(--warning);
+            font-size: 0.9rem;
+            text-align: center;
+            min-height: 1.5rem;
+        }
+
+        .auth-button {
+            background: linear-gradient(135deg, var(--secondary), var(--accent));
+            color: var(--dark);
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Orbitron', sans-serif;
+            margin-top: 1rem;
+        }
+
+        .auth-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(5, 195, 221, 0.4);
+        }
+
+        .auth-button:active {
+            transform: translateY(0);
+        }
+
+        .forgot-password {
+            text-align: right;
+            margin-top: 0.5rem;
+        }
+
+        .forgot-password a {
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+
+        .forgot-password a:hover {
+            color: var(--light);
+            text-decoration: underline;
+        }
+
+        /* Hint Modal */
+        .hint-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 10000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hint-modal.active {
+            display: flex;
+        }
+
+        .hint-container {
+            background: linear-gradient(135deg, rgba(10, 77, 104, 0.95), rgba(8, 131, 149, 0.95));
+            backdrop-filter: blur(20px);
+            border: 2px solid var(--accent);
+            border-radius: 15px;
+            padding: 2rem;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 20px 60px rgba(5, 195, 221, 0.5);
+        }
+
+        .hint-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .hint-header h3 {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--accent);
+            font-size: 1.5rem;
+        }
+
+        .hint-close {
+            background: none;
+            border: none;
+            color: var(--light);
+            font-size: 2rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            padding: 0;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hint-close:hover {
+            color: var(--warning);
+            transform: rotate(90deg);
+        }
+
+        .hint-body {
+            color: rgba(240, 249, 255, 0.9);
+            line-height: 1.8;
+        }
+
+        .hint-body p {
+            margin-bottom: 1rem;
+        }
+
+        .hint-body ul {
+            margin-left: 2rem;
+            line-height: 2;
+        }
+
+        @media (max-width: 1024px) {
+            .header-content {
+                gap: 1rem;
+            }
+
+            .header-nav {
+                gap: 0.5rem;
+            }
+
+            .header-nav a {
+                font-size: 0.8rem;
+                padding: 0.4rem 0.6rem;
+            }
+
+            .incident-banner {
+                padding: 0.8rem 1.5rem;
+            }
+
+            .incident-text {
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .incident-banner {
+                padding: 1rem;
+            }
+
+            .incident-content {
+                flex-direction: column;
+                text-align: center;
+                gap: 0.5rem;
+            }
+
+            .incident-text {
+                font-size: 0.85rem;
+            }
+
+            header {
+                padding: 1rem 1.5rem;
+            }
+
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: flex-start;
+            }
+
+            .header-nav {
+                flex-direction: column;
+                width: 100%;
+                gap: 0.5rem;
+                align-items: stretch;
+            }
+
+            .header-nav a {
+                width: 100%;
+                text-align: left;
+                font-size: 0.9rem;
+                padding: 0.7rem 1rem;
+            }
+
+            .logo-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+            }
+
+            .logo {
+                font-size: 1.2rem;
+            }
+
+            .page-title {
+                font-size: 2rem;
+            }
+
+            .page-subtitle {
+                font-size: 1rem;
+            }
+
+            .container {
+                padding: 2rem 1.5rem 4rem;
+            }
+
+            .product-card {
+                padding: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="background-animation"></div>
+
+    <!-- Authentication Overlay -->
+    <div class="auth-overlay" id="authOverlay">
+        <div class="auth-container">
+            <div class="auth-header">
+                <div class="auth-icon">🔐</div>
+                <h2>社員認証</h2>
+                <p>アクセスには社員IDとパスワードが必要です</p>
+            </div>
+            <form class="auth-form" id="authForm" onsubmit="return authenticate(event)">
+                <div class="form-group">
+                    <label for="employeeId">社員ID</label>
+                    <input type="text" id="employeeId" placeholder="社員IDを入力" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">パスワード</label>
+                    <input type="password" id="password" placeholder="パスワードを入力" required>
+                </div>
+                <div class="error-message" id="errorMessage"></div>
+                <button type="submit" class="auth-button">ログイン</button>
+                <div class="forgot-password">
+                    <a href="#" onclick="showPasswordHint(event)">パスワードを忘れた場合</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Password Hint Modal -->
+    <div class="hint-modal" id="hintModal">
+        <div class="hint-container">
+            <div class="hint-header">
+                <h3>💡 パスワードヒント</h3>
+                <button class="hint-close" onclick="closeHint()">×</button>
+            </div>
+            <div class="hint-body">
+                <p>パスワードは以下のヒントを参考にしてください：</p>
+                <ul>
+                    <li>製品に関連する単語です</li>
+                    <li>春に咲く青い花の名前</li>
+                    <li>全て小文字で入力してください</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <header>
+        <div class="header-content">
+            <div class="logo-container">
+                <div class="logo-icon">NL</div>
+                <div class="logo-text">
+                    <div class="logo">NEUROLIFE</div>
+                    <div class="logo-subtitle">INTERNAL SYSTEM</div>
+                </div>
+            </div>
+            <nav class="header-nav">
+                <a href="company-site.html">ホーム</a>
+                <a href="clinical-trial.html">臨床試験被験者の方へ</a>
+                <a href="products.html" class="active">各種製品情報</a>
+                <a href="research.html">研究レポート</a>
+                <a href="progress.html">サイト進捗報告用</a>
+            </nav>
+            <div class="system-status">
+                <div class="status-dot"></div>
+                <span>ONLINE</span>
+            </div>
+        </div>
+    </header>
+
+    <div class="content-wrapper">
+        <div class="incident-banner">
+            <div class="incident-content">
+                <span class="incident-icon">⚠️</span>
+                <span class="incident-text">
+                    <strong>2025/10/17</strong> 社内インシデント発生のため更新を中断。また、情報の閲覧権限をM-導入済の者のみに変更。
+                </span>
+            </div>
+        </div>
+
+        <main>
+            <div class="container">
+                <div class="page-header">
+                    <h1 class="page-title">各種製品情報</h1>
+                    <p class="page-subtitle">Product Information Database</p>
+                </div>
+
+                <div class="product-grid">
+                    <div class="product-card">
+                        <div class="product-header">
+                            <div class="product-icon">🧠</div>
+                            <div>
+                                <h2>NeuroSync™</h2>
+                                <div class="product-code">製品コード: NS-2847-ALPHA</div>
+                            </div>
+                        </div>
+                        <p>
+                            脳神経の最適化により認知機能を向上させる次世代の神経調整薬。
+                            集中力、記憶力、創造性を飛躍的に高めます。
+                        </p>
+                        <p>
+                            神経可塑性の増強により、学習効率と情報処理速度が向上。
+                            健常者の認知パフォーマンス向上を目的とした革新的な製品です。
+                        </p>
+                        <div class="product-tags">
+                            <span class="tag">Cognitive Enhancement</span>
+                            <span class="tag">Neuroplasticity</span>
+                            <span class="status-restricted">臨床試験中</span>
+                        </div>
+                    </div>
+
+                    <div class="product-card">
+                        <div class="product-header">
+                            <div class="product-icon">💭</div>
+                            <div>
+                                <h2>MemoriaPlus™</h2>
+                                <div class="product-code">製品コード: MP-1923-BETA</div>
+                            </div>
+                        </div>
+                        <p>
+                            長期記憶の形成と保持をサポート。アルツハイマー病予防にも期待される
+                            革新的な記憶増強剤です。
+                        </p>
+                        <p>
+                            海馬のシナプス強化により、記憶の定着率を改善。
+                            一般向けには2026年春の販売開始を予定しています。
+                        </p>
+                        <div class="product-tags">
+                            <span class="tag">Memory Enhancement</span>
+                            <span class="tag">Alzheimer's Prevention</span>
+                            <span class="status-restricted">審査中</span>
+                        </div>
+                    </div>
+
+                    <div class="product-card">
+                        <div class="product-header">
+                            <div class="product-icon">🌙</div>
+                            <div>
+                                <h2>DreamLink™</h2>
+                                <div class="product-code">製品コード: DL-X789-OMEGA</div>
+                            </div>
+                        </div>
+                        <p>
+                            睡眠の質を向上させ、明晰夢を誘導。深い休息と創造的な夢体験を
+                            同時に実現する画期的な睡眠調整薬。
+                        </p>
+                        <p style="color: var(--warning);">
+                            ⚠️ 警告: この製品は現在、厳格な監視下での臨床試験段階です。
+                            一般使用は禁止されています。
+                        </p>
+                        <div class="product-tags">
+                            <span class="tag">Sleep Quality</span>
+                            <span class="tag">Lucid Dreaming</span>
+                            <span class="status-restricted">アクセス制限</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <footer>
+        <div class="footer-logo">NEUROLIFE PHARMACEUTICALS</div>
+        <div class="copyright">
+            &copy; 2025 NeuroLife Pharmaceuticals株式会社 All rights reserved.<br>
+            <span style="font-size: 0.75rem; opacity: 0.6;">
+                Product Database v1.0 | Last Updated: 2025-01-01
+            </span>
+        </div>
+    </footer>
+
+    <script>
+        function authenticate(event) {
+            event.preventDefault();
+            
+            const employeeId = document.getElementById('employeeId').value;
+            const password = document.getElementById('password').value;
+            const errorMessage = document.getElementById('errorMessage');
+            
+            // Temporary authentication - to be implemented with actual logic
+            if (employeeId && password) {
+                // Hide auth overlay
+                document.getElementById('authOverlay').classList.add('hidden');
+                errorMessage.textContent = '';
+            } else {
+                errorMessage.textContent = '社員IDとパスワードを入力してください';
+            }
+            
+            return false;
+        }
+
+        function showPasswordHint(event) {
+            event.preventDefault();
+            document.getElementById('hintModal').classList.add('active');
+        }
+
+        function closeHint() {
+            document.getElementById('hintModal').classList.remove('active');
+        }
+
+        function adjustContentSpacing() {
+            const header = document.querySelector('header');
+            const contentWrapper = document.querySelector('.content-wrapper');
+            
+            if (header && contentWrapper) {
+                const headerHeight = header.offsetHeight;
+                contentWrapper.style.paddingTop = headerHeight + 'px';
+            }
+        }
+
+        window.addEventListener('load', adjustContentSpacing);
+        window.addEventListener('resize', adjustContentSpacing);
+    </script>
+</body>
+</html>
