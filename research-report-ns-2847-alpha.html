@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NS-2847-ALPHA 研究レポート | ニューロライフ製薬</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Noto+Sans+JP:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0a4d68;
+            --secondary: #088395;
+            --accent: #05c3dd;
+            --dark: #051923;
+            --light: #f0f9ff;
+            --warning: #ff6b6b;
+            --success: #51cf66;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background: linear-gradient(135deg, var(--dark) 0%, var(--primary) 100%);
+            color: var(--light);
+            min-height: 100vh;
+            line-height: 1.8;
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(5, 25, 35, 0.7);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(5, 195, 221, 0.2);
+            padding: 1.5rem 3rem;
+            z-index: 100;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--accent), var(--secondary));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 900;
+            font-size: 1.5rem;
+            color: var(--dark);
+            box-shadow: 0 4px 20px rgba(5, 195, 221, 0.4);
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 20px rgba(5, 195, 221, 0.5);
+        }
+
+        .logo-subtitle {
+            font-size: 0.7rem;
+            color: rgba(240, 249, 255, 0.6);
+            letter-spacing: 3px;
+            font-weight: 300;
+        }
+
+        nav a {
+            color: var(--light);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--accent);
+            background: rgba(5, 195, 221, 0.1);
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 120px 2rem 0;
+        }
+
+        .document-header {
+            background: rgba(10, 77, 104, 0.3);
+            backdrop-filter: blur(10px);
+            border: 2px solid var(--accent);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .doc-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        .doc-code {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            color: var(--success);
+            margin-bottom: 1rem;
+        }
+
+        .doc-meta {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+            font-size: 0.9rem;
+            color: rgba(240, 249, 255, 0.7);
+        }
+
+        .doc-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            background: rgba(255, 107, 107, 0.2);
+            border: 1px solid var(--warning);
+            color: var(--warning);
+        }
+
+        .content-section {
+            background: rgba(5, 25, 35, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(5, 195, 221, 0.3);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--accent);
+        }
+
+        .subsection-title {
+            font-size: 1.2rem;
+            color: var(--success);
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+
+        .data-table th,
+        .data-table td {
+            padding: 0.75rem;
+            border: 1px solid rgba(5, 195, 221, 0.3);
+            text-align: left;
+        }
+
+        .data-table th {
+            background: rgba(5, 195, 221, 0.2);
+            font-weight: 600;
+            color: var(--accent);
+        }
+
+        .warning-box {
+            background: rgba(255, 107, 107, 0.1);
+            border: 2px solid var(--warning);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .warning-box h3 {
+            color: var(--warning);
+            margin-bottom: 0.5rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(5, 25, 35, 0.9);
+            border-top: 1px solid var(--accent);
+            margin-top: 4rem;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 1rem 1.5rem;
+            }
+
+            .logo-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+            }
+
+            .logo {
+                font-size: 1.2rem;
+            }
+
+            .container {
+                padding: 0 1rem;
+            }
+
+            .doc-title {
+                font-size: 1.5rem;
+            }
+
+            .data-table {
+                font-size: 0.85rem;
+            }
+        }
+    </style>
+</head>
+<body>
+        <header>
+        <div class="header-content">
+            <div class="logo-container">
+                <div class="logo-icon">NL</div>
+                <div class="logo-text">
+                    <div class="logo">NeuroLife</div>
+                    <div class="logo-subtitle">PHARMACEUTICALS</div>
+                </div>
+            </div>
+            <nav>
+                <a href="archive-library.html">アーカイブに戻る</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="document-header">
+            <div class="doc-code">NS-2847-ALPHA</div>
+            <div class="doc-title">NeuroSync™ 研究レポート</div>
+            <div class="doc-meta">
+                <div class="doc-meta-item">📅 作成日: 2024年10月15日</div>
+                <div class="doc-meta-item">👤 研究責任者: 神経科学部門</div>
+                <div class="doc-meta-item">🔄 最終更新: 2024年10月28日</div>
+            </div>
+            <div style="margin-top: 1rem;">
+                <span class="status-badge">機密情報 - レベル3</span>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">📋 研究概要</h2>
+            <p>
+                NeuroSync™（製品コード: NS-2847-ALPHA）は、神経可塑性を促進し、認知機能を向上させることを目的とした次世代神経調整薬です。本研究レポートは、2022年から2024年にかけて実施された前臨床試験および第I相臨床試験の結果をまとめたものです。
+            </p>
+
+            <h3 class="subsection-title">研究目的</h3>
+            <ul style="margin-left: 2rem; margin-top: 0.5rem;">
+                <li>神経シナプスの可塑性増強効果の検証</li>
+                <li>認知機能向上における有効性の評価</li>
+                <li>長期使用における安全性プロファイルの確立</li>
+                <li>最適投与量および投与スケジュールの決定</li>
+            </ul>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">🔬 研究方法</h2>
+            
+            <h3 class="subsection-title">前臨床試験</h3>
+            <p>
+                動物モデル（マウス、ラット）を用いた前臨床試験を実施しました。投与量は0.5mg/kg、1.0mg/kg、2.0mg/kgの3段階で評価を行いました。
+            </p>
+
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>試験項目</th>
+                        <th>対象</th>
+                        <th>期間</th>
+                        <th>サンプル数</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>急性毒性試験</td>
+                        <td>マウス</td>
+                        <td>14日間</td>
+                        <td>n=120</td>
+                    </tr>
+                    <tr>
+                        <td>反復投与毒性試験</td>
+                        <td>ラット</td>
+                        <td>90日間</td>
+                        <td>n=80</td>
+                    </tr>
+                    <tr>
+                        <td>神経可塑性評価</td>
+                        <td>ラット</td>
+                        <td>28日間</td>
+                        <td>n=60</td>
+                    </tr>
+                    <tr>
+                        <td>行動学的評価</td>
+                        <td>マウス/ラット</td>
+                        <td>56日間</td>
+                        <td>n=100</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3 class="subsection-title">第I相臨床試験</h3>
+            <p>
+                健常成人ボランティア（n=48）を対象とした単回投与試験および反復投与試験を実施しました。
+            </p>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">📊 主要な研究結果</h2>
+
+            <h3 class="subsection-title">有効性</h3>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>評価項目</th>
+                        <th>プラセボ群</th>
+                        <th>NS-2847-ALPHA群</th>
+                        <th>改善率</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>作業記憶スコア</td>
+                        <td>72.3 ± 8.1</td>
+                        <td>89.7 ± 6.4</td>
+                        <td>+24.1%</td>
+                    </tr>
+                    <tr>
+                        <td>注意力持続時間（分）</td>
+                        <td>42.5 ± 5.2</td>
+                        <td>58.3 ± 4.8</td>
+                        <td>+37.2%</td>
+                    </tr>
+                    <tr>
+                        <td>情報処理速度</td>
+                        <td>1.82 ± 0.21</td>
+                        <td>2.34 ± 0.18</td>
+                        <td>+28.6%</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3 class="subsection-title">安全性プロファイル</h3>
+            <p>
+                第I相臨床試験において、重篤な有害事象は報告されませんでした。軽度の有害事象として、以下が観察されました：
+            </p>
+            <ul style="margin-left: 2rem; margin-top: 0.5rem;">
+                <li>軽度の頭痛（発現率: 8.3%）</li>
+                <li>一時的な不眠（発現率: 4.2%）</li>
+                <li>軽度の消化器症状（発現率: 6.3%）</li>
+            </ul>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">💡 結論</h2>
+            <p>
+                NS-2847-ALPHA（NeuroSync™）は、前臨床試験および第I相臨床試験において、良好な安全性プロファイルと有意な認知機能向上効果を示しました。これらの結果は、第II相臨床試験への進展を支持するものです。
+            </p>
+
+            <div class="warning-box">
+                <h3>⚠️ 重要な注意事項</h3>
+                <p>本研究レポートは社内限定の機密情報です。外部への開示は厳禁です。本製品は現在開発段階にあり、一般使用は認可されていません。</p>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">📎 関連文書</h2>
+            <ul style="margin-left: 2rem;">
+                <li><a href="experiment-data-ns-2847-alpha.html" style="color: var(--accent);">NS-2847-ALPHA 実験データベース</a></li>
+                <li><a href="analysis-report-ns-2847-alpha.html" style="color: var(--accent);">NS-2847-ALPHA 統計分析レポート</a></li>
+                <li><a href="product-clinical-ns-2847-alpha.html" style="color: var(--accent);">NS-2847-ALPHA 臨床試験データ</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 ニューロライフ製薬株式会社 All rights reserved.</p>
+        <p style="margin-top: 0.5rem; font-size: 0.8rem; opacity: 0.6;">
+            機密情報 - 社内限定 | 文書番号: NL-RR-2024-1015-NS2847A
+        </p>
+    </footer>
+</body>
+</html>

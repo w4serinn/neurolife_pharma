@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>アーカイブ - 進捗報告 No.7 | NeuroLife Pharmaceuticals</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Noto+Sans+JP:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0a4d68;
+            --secondary: #088395;
+            --accent: #05c3dd;
+            --dark: #051923;
+            --light: #f0f9ff;
+            --warning: #ff6b6b;
+            --success: #51cf66;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background: #051923;
+            color: var(--light);
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        .background-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            background: linear-gradient(135deg, #051923 0%, #0a4d68 50%, #088395 100%);
+        }
+
+        /* 認証画面のスタイル */
+        .auth-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(5, 25, 35, 0.95);
+            backdrop-filter: blur(20px);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .auth-overlay.hidden {
+            display: none;
+        }
+
+        .auth-container {
+            background: rgba(10, 77, 104, 0.4);
+            backdrop-filter: blur(20px);
+            border: 2px solid var(--accent);
+            border-radius: 20px;
+            padding: 3rem;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 20px 60px rgba(5, 195, 221, 0.3);
+        }
+
+        .auth-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .auth-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .auth-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .auth-subtitle {
+            color: rgba(240, 249, 255, 0.7);
+            font-size: 0.9rem;
+        }
+
+        .auth-form {
+            margin-top: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--accent);
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 1rem;
+            background: rgba(5, 25, 35, 0.8);
+            border: 2px solid rgba(5, 195, 221, 0.3);
+            border-radius: 12px;
+            color: var(--light);
+            font-size: 1rem;
+            font-family: 'Noto Sans JP', sans-serif;
+            transition: all 0.3s;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 20px rgba(5, 195, 221, 0.2);
+        }
+
+        .auth-button {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, var(--secondary), var(--accent));
+            border: none;
+            border-radius: 12px;
+            color: var(--dark);
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .auth-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(5, 195, 221, 0.4);
+        }
+
+        .auth-error {
+            color: var(--warning);
+            font-size: 0.85rem;
+            margin-top: 1rem;
+            text-align: center;
+            display: none;
+        }
+
+        .auth-error.show {
+            display: block;
+        }
+
+        /* メインコンテンツ */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(5, 25, 35, 0.7);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(5, 195, 221, 0.2);
+            padding: 1.5rem 3rem;
+            z-index: 100;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--accent), var(--secondary));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 900;
+            font-size: 1.5rem;
+            color: var(--dark);
+            box-shadow: 0 4px 20px rgba(5, 195, 221, 0.4);
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 20px rgba(5, 195, 221, 0.5);
+        }
+
+        .logo-subtitle {
+            font-size: 0.7rem;
+            color: rgba(240, 249, 255, 0.6);
+            letter-spacing: 3px;
+            font-weight: 300;
+        }
+
+        nav a {
+            color: var(--light);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--accent);
+            background: rgba(5, 195, 221, 0.1);
+        }
+
+        main {
+            position: relative;
+            z-index: 1;
+            padding-top: 120px;
+            padding-bottom: 4rem;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .page-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            color: var(--accent);
+            margin-bottom: 1rem;
+            text-shadow: 0 0 30px rgba(5, 195, 221, 0.5);
+        }
+
+        .page-subtitle {
+            color: rgba(240, 249, 255, 0.7);
+            font-size: 1.1rem;
+        }
+
+        .archive-notice {
+            background: rgba(255, 107, 107, 0.1);
+            border: 2px solid var(--warning);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+
+        .archive-notice-title {
+            color: var(--warning);
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .archive-notice-text {
+            color: rgba(240, 249, 255, 0.8);
+            font-size: 0.9rem;
+        }
+
+        .report-thread {
+            background: rgba(10, 77, 104, 0.2);
+            border: 1px solid rgba(5, 195, 221, 0.3);
+            border-radius: 20px;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+            margin-bottom: 2rem;
+        }
+
+        .report-card {
+            background: rgba(5, 25, 35, 0.6);
+            border: 2px solid rgba(5, 195, 221, 0.4);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .main-report {
+            border-color: var(--accent);
+            box-shadow: 0 8px 32px rgba(5, 195, 221, 0.2);
+        }
+
+        .report-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .report-title-section {
+            flex: 1;
+        }
+
+        .report-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .report-subtitle {
+            color: rgba(240, 249, 255, 0.7);
+            font-size: 0.95rem;
+        }
+
+        .report-meta {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .report-date {
+            font-family: 'Orbitron', monospace;
+            color: rgba(240, 249, 255, 0.6);
+            font-size: 0.85rem;
+        }
+
+        .report-body {
+            line-height: 1.8;
+            color: rgba(240, 249, 255, 0.95);
+            margin-bottom: 1.5rem;
+        }
+
+        .report-body p {
+            margin-bottom: 1rem;
+        }
+
+        .report-body p:last-child {
+            margin-bottom: 0;
+        }
+
+        .report-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(5, 195, 221, 0.2);
+        }
+
+        .reporter-info {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .reporter-icon {
+            font-size: 1.2rem;
+        }
+
+        .reply-card {
+            background: rgba(8, 131, 149, 0.15);
+            border: 1px solid rgba(5, 195, 221, 0.2);
+            border-left: 3px solid var(--accent);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            margin-left: 2rem;
+        }
+
+        .reply-header {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .replier-icon {
+            font-size: 1.1rem;
+        }
+
+        .replier-name {
+            color: var(--accent);
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .reply-date {
+            font-family: 'Orbitron', monospace;
+            color: rgba(240, 249, 255, 0.5);
+            font-size: 0.75rem;
+            margin-left: auto;
+        }
+
+        .reply-body {
+            color: rgba(240, 249, 255, 0.9);
+            line-height: 1.7;
+            font-size: 0.95rem;
+        }
+
+        .system-reply {
+            border-left-color: var(--warning);
+            background: rgba(255, 107, 107, 0.1);
+        }
+
+        .system-reply .replier-name {
+            color: var(--warning);
+        }
+
+        footer {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            padding: 2rem;
+            background: rgba(5, 25, 35, 0.9);
+            border-top: 1px solid rgba(5, 195, 221, 0.2);
+            margin-top: 4rem;
+        }
+
+        @media (max-width: 768px) {
+            .auth-container {
+                padding: 2rem;
+            }
+
+            .auth-title {
+                font-size: 1.4rem;
+            }
+
+            header {
+                padding: 1rem 1.5rem;
+            }
+
+            .page-title {
+                font-size: 1.8rem;
+            }
+
+            .report-card {
+                padding: 1.5rem;
+            }
+
+            .reply-card {
+                margin-left: 1rem;
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="background-animation"></div>
+
+    <!-- 認証画面 -->
+    <div class="auth-overlay" id="authOverlay">
+        <div class="auth-container">
+            <div class="auth-header">
+                <div class="auth-icon">🔐</div>
+                <h1 class="auth-title">アーカイブアクセス</h1>
+                <p class="auth-subtitle">進捗報告 No.7 - アーカイブ閲覧</p>
+            </div>
+            <form class="auth-form" id="authForm" onsubmit="authenticate(event)">
+                <div class="form-group">
+                    <label class="form-label">パスワード</label>
+                    <input type="password" class="form-input" id="passwordInput" placeholder="パスワードを入力してください" required>
+                </div>
+                <button type="submit" class="auth-button">アクセス</button>
+                <div class="auth-error" id="authError">
+                    ⚠️ パスワードが正しくありません
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- メインコンテンツ -->
+    <div id="mainContent" style="display: none;">
+        <header>
+            <div class="header-content">
+                <div class="logo-container">
+                    <div class="logo-icon">NL</div>
+                    <div class="logo-text">
+                        <div class="logo">NeuroLife</div>
+                        <div class="logo-subtitle">PHARMACEUTICALS</div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <div class="container">
+                <div class="page-header">
+                    <h1 class="page-title">📁 アーカイブ閲覧</h1>
+                    <p class="page-subtitle">削除された進捗報告の復元データ</p>
+                </div>
+
+                <div class="archive-notice">
+                    <div class="archive-notice-title">⚠️ アーカイブデータ</div>
+                    <div class="archive-notice-text">
+                        このページは削除された進捗報告のアーカイブです。<br>
+                        システムによって自動的に復元されました。
+                    </div>
+                </div>
+
+                <div class="report-thread">
+                    <div class="report-card main-report">
+                        <div class="report-header">
+                            <div class="report-title-section">
+                                <h3 class="report-title">進捗報告 No.7</h3>
+                                <p class="report-subtitle">先ほどの会話について。</p>
+                            </div>
+                            <div class="report-meta">
+                                <span class="report-date">2025/10/18 17:30</span>
+                            </div>
+                        </div>
+                        <div class="report-body">
+                            <p>
+                                先ほどの会議の決定事項について、もう一度検討いただけないでしょうか。
+                            </p>
+                        </div>
+                        <div class="report-footer">
+                            <div class="reporter-info">
+                                <span class="reporter-icon">👤</span>
+                                <span class="reporter-name">報告者：辰己</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="reply-card">
+                        <div class="reply-header">
+                            <span class="replier-icon">💼</span>
+                            <span class="replier-name">管理者：佐藤（臨床試験部）</span>
+                            <span class="reply-date">2025/10/18 18:15</span>
+                        </div>
+                        <div class="reply-body">
+                            すみませんが、決定事項に変わりはないです。ご安心ください。すでに臨床試験済のため副作用等はございません。
+                        </div>
+                    </div>
+
+                    <div class="reply-card">
+                        <div class="reply-header">
+                            <span class="replier-icon">👤</span>
+                            <span class="replier-name">辰己</span>
+                            <span class="reply-date">2025/10/18 18:45</span>
+                        </div>
+                        <div class="reply-body">
+                            誰かAIチャットボットに裏報告書と入力してくれ!
+                        </div>
+                    </div>
+
+                    <div class="reply-card">
+                        <div class="reply-header">
+                            <span class="replier-icon">💼</span>
+                            <span class="replier-name">管理者：山本（品質保証部）</span>
+                            <span class="reply-date">2025/10/18 19:20</span>
+                        </div>
+                        <div class="reply-body">
+                            該当単語を入力したところ、新AIサポートシステムにて機密事項記載のページを確認、該当ページを削除し、AIシステムからも単語検索ができないように設定済。旧サイトの方はページが検出されなかった。
+                        </div>
+                    </div>
+
+                    <div class="reply-card system-reply">
+                        <div class="reply-header">
+                            <span class="replier-icon">🤖</span>
+                            <span class="replier-name">システムによる自動送信</span>
+                            <span class="reply-date">2025/11/25 03:42</span>
+                        </div>
+                        <div class="reply-body">
+                            tatsumilog
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>&copy; 2025 NeuroLife Pharmaceuticals. All rights reserved.</p>
+            <p style="margin-top: 0.5rem; font-size: 0.8rem; opacity: 0.6;">
+                アーカイブシステム | 機密情報取扱注意
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        // ページ読み込み時に認証状態をチェック
+        window.addEventListener('DOMContentLoaded', function() {
+            const isAuthenticated = localStorage.getItem('archive_no7_auth');
+            if (isAuthenticated === 'true') {
+                // 認証済みの場合は直接表示
+                document.getElementById('authOverlay').classList.add('hidden');
+                document.getElementById('mainContent').style.display = 'block';
+            } else {
+                // 未認証の場合はパスワード入力にフォーカス
+                document.getElementById('passwordInput').focus();
+            }
+        });
+
+        // 認証処理
+        function authenticate(event) {
+            event.preventDefault();
+            
+            const password = document.getElementById('passwordInput').value.toLowerCase().trim();
+            const authError = document.getElementById('authError');
+            
+            if (password === 'iris') {
+                // 認証成功
+                localStorage.setItem('archive_no7_auth', 'true');
+                document.getElementById('authOverlay').classList.add('hidden');
+                document.getElementById('mainContent').style.display = 'block';
+                
+                // スムーズにスクロール
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            } else {
+                // 認証失敗
+                authError.classList.add('show');
+                document.getElementById('passwordInput').value = '';
+                document.getElementById('passwordInput').focus();
+                
+                // エラーメッセージを3秒後に非表示
+                setTimeout(() => {
+                    authError.classList.remove('show');
+                }, 3000);
+            }
+        }
+
+        // Enterキーでフォーム送信
+        document.getElementById('passwordInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                authenticate(e);
+            }
+        });
+    </script>
+</body>
+</html>

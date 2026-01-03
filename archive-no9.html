@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>アーカイブ - 進捗報告 No.9 | NeuroLife Pharmaceuticals</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Noto+Sans+JP:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0a4d68;
+            --secondary: #088395;
+            --accent: #05c3dd;
+            --dark: #051923;
+            --light: #f0f9ff;
+            --warning: #ff6b6b;
+            --success: #51cf66;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background: #051923;
+            color: var(--light);
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        .background-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            background: linear-gradient(135deg, #051923 0%, #0a4d68 50%, #088395 100%);
+        }
+
+        /* メインコンテンツ */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(5, 25, 35, 0.7);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(5, 195, 221, 0.2);
+            padding: 1.5rem 3rem;
+            z-index: 100;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--accent), var(--secondary));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 900;
+            font-size: 1.5rem;
+            color: var(--dark);
+            box-shadow: 0 4px 20px rgba(5, 195, 221, 0.4);
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 20px rgba(5, 195, 221, 0.5);
+        }
+
+        .logo-subtitle {
+            font-size: 0.7rem;
+            color: rgba(240, 249, 255, 0.6);
+            letter-spacing: 3px;
+            font-weight: 300;
+        }
+
+        nav a {
+            color: var(--light);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--accent);
+            background: rgba(5, 195, 221, 0.1);
+        }
+
+        main {
+            position: relative;
+            z-index: 1;
+            padding-top: 120px;
+            padding-bottom: 4rem;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .page-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            color: var(--accent);
+            margin-bottom: 1rem;
+            text-shadow: 0 0 30px rgba(5, 195, 221, 0.5);
+        }
+
+        .page-subtitle {
+            color: rgba(240, 249, 255, 0.7);
+            font-size: 1.1rem;
+        }
+
+        .archive-notice {
+            background: rgba(255, 107, 107, 0.1);
+            border: 2px solid var(--warning);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+
+        .archive-notice-title {
+            color: var(--warning);
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .archive-notice-text {
+            color: rgba(240, 249, 255, 0.8);
+            font-size: 0.9rem;
+        }
+
+        .report-thread {
+            background: rgba(10, 77, 104, 0.2);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(5, 195, 221, 0.3);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .report-card {
+            background: rgba(5, 25, 35, 0.6);
+            border: 2px solid rgba(5, 195, 221, 0.3);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .main-report {
+            border-color: var(--accent);
+            box-shadow: 0 5px 25px rgba(5, 195, 221, 0.2);
+        }
+
+        .report-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .report-title-section {
+            flex: 1;
+        }
+
+        .report-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .report-subtitle {
+            color: rgba(240, 249, 255, 0.7);
+            font-size: 1rem;
+        }
+
+        .report-meta {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .report-date {
+            font-family: 'Orbitron', monospace;
+            color: rgba(240, 249, 255, 0.5);
+            font-size: 0.85rem;
+            background: rgba(5, 195, 221, 0.1);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+        }
+
+        .report-body {
+            color: rgba(240, 249, 255, 0.9);
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            font-size: 1rem;
+        }
+
+        .password-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            background: rgba(5, 25, 35, 0.5);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .password-table th,
+        .password-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(5, 195, 221, 0.2);
+        }
+
+        .password-table th {
+            background: rgba(5, 195, 221, 0.2);
+            color: var(--accent);
+            font-weight: 700;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .password-table td {
+            font-family: 'Orbitron', monospace;
+            color: rgba(240, 249, 255, 0.9);
+        }
+
+        .password-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .report-footer {
+            border-top: 1px solid rgba(5, 195, 221, 0.2);
+            padding-top: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .reporter-info {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .reporter-icon {
+            font-size: 1.2rem;
+        }
+
+        .reporter-name {
+            color: var(--success);
+            font-weight: 600;
+        }
+
+        .reply-card {
+            background: rgba(8, 131, 149, 0.15);
+            border: 1px solid rgba(5, 195, 221, 0.2);
+            border-left: 3px solid var(--accent);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            margin-left: 2rem;
+        }
+
+        .reply-header {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .replier-icon {
+            font-size: 1.1rem;
+        }
+
+        .replier-name {
+            color: var(--accent);
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .reply-date {
+            font-family: 'Orbitron', monospace;
+            color: rgba(240, 249, 255, 0.5);
+            font-size: 0.75rem;
+            margin-left: auto;
+        }
+
+        .reply-body {
+            color: rgba(240, 249, 255, 0.9);
+            line-height: 1.7;
+            font-size: 0.95rem;
+        }
+
+        .internal-memo {
+            border-left-color: var(--warning);
+            background: rgba(255, 107, 107, 0.08);
+        }
+
+        .internal-memo .replier-name {
+            color: var(--warning);
+        }
+
+        footer {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            padding: 2rem;
+            background: rgba(5, 25, 35, 0.9);
+            border-top: 1px solid rgba(5, 195, 221, 0.2);
+            margin-top: 4rem;
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 1rem 1.5rem;
+            }
+
+            .page-title {
+                font-size: 1.8rem;
+            }
+
+            .report-card {
+                padding: 1.5rem;
+            }
+
+            .reply-card {
+                margin-left: 1rem;
+                padding: 1rem;
+            }
+
+            .password-table {
+                font-size: 0.85rem;
+            }
+
+            .password-table th,
+            .password-table td {
+                padding: 0.75rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="background-animation"></div>
+
+    <!-- メインコンテンツ -->
+    <header>
+        <div class="header-content">
+            <div class="logo-container">
+                <div class="logo-icon">NL</div>
+                <div class="logo-text">
+                    <div class="logo">NeuroLife</div>
+                    <div class="logo-subtitle">PHARMACEUTICALS</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <div class="page-header">
+                <h1 class="page-title">📁 アーカイブ閲覧</h1>
+                <p class="page-subtitle">削除された進捗報告の復元データ</p>
+            </div>
+
+            <div class="archive-notice">
+                <div class="archive-notice-title">⚠️ アーカイブデータ</div>
+                <div class="archive-notice-text">
+                    このページは削除された進捗報告のアーカイブです。<br>
+                    システムによって自動的に復元されました。
+                </div>
+            </div>
+
+            <div class="report-thread">
+                <div class="report-card main-report">
+                    <div class="report-header">
+                        <div class="report-title-section">
+                            <h3 class="report-title">進捗報告 No.9</h3>
+                            <p class="report-subtitle">自動パスワードリセットシステムの結果報告</p>
+                        </div>
+                        <div class="report-meta">
+                            <span class="report-date">2024/10/22 14:35</span>
+                        </div>
+                    </div>
+                    <div class="report-body">
+                        <p>
+                            週次で稼働しているパスワードリセットプログラムにて、下記のリセットが検知されました。検知自体は初めてなので対応について相談させてください。
+                        </p>
+                        
+                        <table class="password-table">
+                            <thead>
+                                <tr>
+                                    <th>変更前パスワード</th>
+                                    <th>変更後パスワード</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>osmanthus</td>
+                                    <td>h7uas7*ja[</td>
+                                </tr>
+                                <tr>
+                                    <td>yarrow</td>
+                                    <td>fnah8a7@vba</td>
+                                </tr>
+                                <tr>
+                                    <td>hydrangea</td>
+                                    <td>oeb9p>2uv</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="report-footer">
+                        <div class="reporter-info">
+                            <span class="reporter-icon">👤</span>
+                            <span class="reporter-name">報告者：管理者：山本（品質保証部）</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="reply-card">
+                    <div class="reply-header">
+                        <span class="replier-icon">💼</span>
+                        <span class="replier-name">管理者：田中（研究開発部）</span>
+                        <span class="reply-date">2024/10/22 15:18</span>
+                    </div>
+                    <div class="reply-body">
+                        おそらくしばらく使用されていないためのリセットなので静観で大丈夫です。
+                    </div>
+                </div>
+
+                <div class="reply-card">
+                    <div class="reply-header">
+                        <span class="replier-icon">💼</span>
+                        <span class="replier-name">管理者：山本（品質保証部）</span>
+                        <span class="reply-date">2024/10/22 16:42</span>
+                    </div>
+                    <div class="reply-body">
+                        承知しました。
+                    </div>
+                </div>
+
+                <div class="reply-card internal-memo">
+                    <div class="reply-header">
+                        <span class="replier-icon">📝</span>
+                        <span class="replier-name">管理者：山本（品質保証部）</span>
+                        <span class="reply-date">2024/10/22 17:05</span>
+                    </div>
+                    <div class="reply-body">
+                        <strong>内部メモ：</strong>パスワード情報のため内部アーカイブに移管
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 NeuroLife Pharmaceuticals. All rights reserved.</p>
+        <p style="margin-top: 0.5rem; font-size: 0.8rem; opacity: 0.6;">
+            アーカイブシステム | 機密情報取扱注意
+        </p>
+    </footer>
+</body>
+</html>

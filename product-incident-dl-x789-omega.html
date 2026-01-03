@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⚠️ DL-X789-OMEGA インシデント報告 | ニューロライフ製薬</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Noto+Sans+JP:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0a4d68;
+            --secondary: #088395;
+            --accent: #05c3dd;
+            --dark: #051923;
+            --light: #f0f9ff;
+            --warning: #ff6b6b;
+            --success: #51cf66;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background: linear-gradient(135deg, #1a0000 0%, #3d0000 100%);
+            color: var(--light);
+            min-height: 100vh;
+            line-height: 1.8;
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(5, 25, 35, 0.7);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(5, 195, 221, 0.2);
+            padding: 1.5rem 3rem;
+            z-index: 100;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--accent), var(--secondary));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 900;
+            font-size: 1.5rem;
+            color: var(--dark);
+            box-shadow: 0 4px 20px rgba(5, 195, 221, 0.4);
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 20px rgba(5, 195, 221, 0.5);
+        }
+
+        .logo-subtitle {
+            font-size: 0.7rem;
+            color: rgba(240, 249, 255, 0.6);
+            letter-spacing: 3px;
+            font-weight: 300;
+        }
+
+        nav a {
+            color: var(--light);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--accent);
+            background: rgba(5, 195, 221, 0.1);
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 120px 2rem 0;
+        }
+
+        .alert-banner {
+            background: rgba(255, 107, 107, 0.3);
+            border: 3px solid var(--warning);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .alert-banner h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            color: var(--warning);
+            margin-bottom: 1rem;
+        }
+
+        .document-header {
+            background: rgba(61, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+            border: 2px solid var(--warning);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .doc-code {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            color: var(--warning);
+            margin-bottom: 1rem;
+        }
+
+        .doc-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            color: var(--light);
+            margin-bottom: 1rem;
+        }
+
+        .doc-meta {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+            font-size: 0.9rem;
+            color: rgba(240, 249, 255, 0.7);
+        }
+
+        .content-section {
+            background: rgba(61, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 107, 107, 0.5);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            color: var(--warning);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--warning);
+        }
+
+        .incident-box {
+            background: rgba(0, 0, 0, 0.5);
+            border-left: 4px solid var(--warning);
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .incident-box h3 {
+            color: var(--warning);
+            margin-bottom: 0.75rem;
+        }
+
+        .redacted {
+            background: rgba(0, 0, 0, 0.9);
+            color: rgba(0, 0, 0, 0.9);
+            padding: 0 0.5rem;
+            user-select: none;
+            cursor: help;
+        }
+
+        .redacted:hover {
+            background: rgba(255, 107, 107, 0.2);
+            color: var(--warning);
+        }
+
+        .case-report {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 107, 107, 0.3);
+            border-radius: 6px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .case-id {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--accent);
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(61, 0, 0, 0.9);
+            border-top: 2px solid var(--warning);
+            margin-top: 4rem;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 1rem 1.5rem;
+            }
+
+            .logo-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+            }
+
+            .logo {
+                font-size: 1.2rem;
+            }
+
+            .container {
+                padding: 0 1rem;
+            }
+
+            .alert-banner h1 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+        <header>
+        <div class="header-content">
+            <div class="logo-container">
+                <div class="logo-icon">NL</div>
+                <div class="logo-text">
+                    <div class="logo">NeuroLife</div>
+                    <div class="logo-subtitle">PHARMACEUTICALS</div>
+                </div>
+            </div>
+            <nav>
+                <a href="archive-library.html">アーカイブに戻る</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="alert-banner">
+            <h1>⚠️ 重大インシデント報告書</h1>
+            <p style="color: var(--warning); font-size: 1.2rem; font-weight: 600;">
+                最高機密 - クリアランスレベル5以上のみ閲覧可能
+            </p>
+        </div>
+
+        <div class="document-header">
+            <div class="doc-code">DL-X789-OMEGA INCIDENT REPORT</div>
+            <div class="doc-title">DreamLink™ 重大有害事象調査報告</div>
+            <div class="doc-meta">
+                <div>📅 インシデント発生日: 2024年10月27日</div>
+                <div>📝 報告書作成日: 2024年11月03日</div>
+                <div>👤 調査責任者: <span class="redacted">████████████</span></div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">📋 インシデント概要</h2>
+            <p>
+                製品コードDL-X789-OMEGA（DreamLink™）の第I相臨床試験において、被験者の一部に重篤な有害事象が発生しました。
+                本報告書は、インシデントの詳細、原因分析、および今後の対応策をまとめたものです。
+            </p>
+
+            <div class="incident-box">
+                <h3>⚠️ インシデントの性質</h3>
+                <p>
+                    <strong>発生件数:</strong> 42名中<span class="redacted">██</span>名<br>
+                    <strong>重症度:</strong> Grade 3〜4（重篤）<br>
+                    <strong>主要症状:</strong> 現実認識障害、持続性解離症状、<span class="redacted">████████████</span><br>
+                    <strong>試験中断:</strong> 2024年10月27日 23:47（即時中断）
+                </p>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">📊 詳細ケースレポート</h2>
+
+            <div class="case-report">
+                <div class="case-id">症例 #DL-001</div>
+                <p><strong>年齢/性別:</strong> 28歳 / 男性</p>
+                <p><strong>投与量:</strong> 2.5mg/day × 14日間</p>
+                <p><strong>症状経過:</strong></p>
+                <ul style="margin-left: 2rem; margin-top: 0.5rem;">
+                    <li>投与7日目: 明晰夢の頻度増加（予期された効果）</li>
+                    <li>投与10日目: 夢と現実の境界が曖昧になる感覚を訴える</li>
+                    <li>投与14日目: <span class="redacted">覚醒時にも夢の中にいると主張</span></li>
+                    <li>投与中止後: 症状は<span class="redacted">██日間</span>持続</li>
+                </ul>
+            </div>
+
+            <div class="case-report">
+                <div class="case-id">症例 #DL-007</div>
+                <p><strong>年齢/性別:</strong> 35歳 / 女性</p>
+                <p><strong>投与量:</strong> 3.0mg/day × 21日間</p>
+                <p><strong>症状経過:</strong></p>
+                <ul style="margin-left: 2rem; margin-top: 0.5rem;">
+                    <li>投与12日目: 明晰夢中に<span class="redacted">████████</span>を経験</li>
+                    <li>投与18日目: 重度の見当識障害が発現</li>
+                    <li>投与21日目: <span class="redacted">緊急入院措置</span></li>
+                    <li>現在の状態: <span class="redacted">██████中、予後不明</span></li>
+                </ul>
+            </div>
+
+            <div class="case-report">
+                <div class="case-id">症例 #DL-013</div>
+                <p><strong>年齢/性別:</strong> <span class="redacted">██</span>歳 / <span class="redacted">██</span></p>
+                <p><strong>投与量:</strong> 3.0mg/day × <span class="redacted">██</span>日間</p>
+                <p><strong>症状経過:</strong></p>
+                <ul style="margin-left: 2rem; margin-top: 0.5rem;">
+                    <li><span class="redacted">████████████████████████</span></li>
+                    <li><span class="redacted">████████████████████████</span></li>
+                    <li><span class="redacted">████████████████████████</span></li>
+                    <li>現在の状態: <span class="redacted">████████████████</span></li>
+                </ul>
+                <p style="color: var(--warning); margin-top: 1rem; font-weight: 600;">
+                    ⚠️ 本症例の詳細はクリアランスレベル7以上に制限されています
+                </p>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">🔬 原因分析</h2>
+            
+            <h3 style="color: var(--accent); margin-top: 1rem; margin-bottom: 0.75rem;">推定メカニズム</h3>
+            <p>
+                DL-X789-OMEGAは、前頭前皮質と海馬の間の<span class="redacted">████████経路</span>に
+                予想以上に強く作用することが判明しました。これにより、夢と現実の認識を司る
+                <span class="redacted">████████領域</span>の機能が長期的に障害される可能性があります。
+            </p>
+
+            <h3 style="color: var(--accent); margin-top: 1.5rem; margin-bottom: 0.75rem;">リスク因子</h3>
+            <ul style="margin-left: 2rem; margin-top: 0.5rem;">
+                <li>投与量2.5mg/day以上での発現率が有意に上昇</li>
+                <li>投与期間14日以上で重症化リスクが増加</li>
+                <li><span class="redacted">████████████████</span></li>
+                <li><span class="redacted">████████████████</span></li>
+            </ul>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">📝 今後の対応</h2>
+
+            <div class="incident-box">
+                <h3>即時対応</h3>
+                <ul style="margin-left: 2rem; margin-top: 0.5rem;">
+                    <li>✓ 全ての臨床試験を即時中断</li>
+                    <li>✓ 被験者全員のフォローアップを継続</li>
+                    <li>✓ 倫理委員会への報告完了</li>
+                    <li>✓ <span class="redacted">████████</span>への通報（法的義務）</li>
+                </ul>
+            </div>
+
+            <div class="incident-box">
+                <h3>長期対応</h3>
+                <ul style="margin-left: 2rem; margin-top: 0.5rem;">
+                    <li>製品開発の全面的な見直し</li>
+                    <li>新たな安全性試験プロトコルの策定</li>
+                    <li>被験者への補償および医療支援</li>
+                    <li><span class="redacted">████████████████</span></li>
+                </ul>
+            </div>
+
+            <div class="incident-box" style="background: rgba(255, 107, 107, 0.2); border-color: var(--warning);">
+                <h3>⚠️ 機密保持に関する警告</h3>
+                <p>
+                    本インシデントに関する情報は、会社の評判および進行中の<span class="redacted">████████</span>に
+                    重大な影響を及ぼす可能性があります。本報告書の内容を、権限のない第三者と共有することは
+                    <strong>厳重に禁止</strong>されており、違反者は法的措置の対象となります。
+                </p>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">📎 関連文書</h2>
+            <ul style="margin-left: 2rem;">
+                <li><a href="research-report-dl-x789-omega.html" style="color: var(--accent);">DL-X789-OMEGA 研究レポート</a></li>
+                <li><a href="product-clinical-dl-x789-omega.html" style="color: var(--accent);">DL-X789-OMEGA 臨床試験データ</a></li>
+                <li><a href="archive-library.html" style="color: var(--accent);">アーカイブシステムに戻る</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <footer>
+        <p style="color: var(--warning); font-weight: 600;">&copy; 2025 ニューロライフ製薬株式会社</p>
+        <p style="margin-top: 0.5rem; font-size: 0.8rem;">
+            最高機密 | 文書番号: NL-INCIDENT-2024-1103-DLX789O<br>
+            無断開示は刑事訴追の対象となります
+        </p>
+    </footer>
+</body>
+</html>

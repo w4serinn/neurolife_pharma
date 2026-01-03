@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Archive Library | ニューロライフ製薬</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Noto+Sans+JP:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0a4d68;
+            --secondary: #088395;
+            --accent: #05c3dd;
+            --dark: #051923;
+            --light: #f0f9ff;
+            --warning: #ff6b6b;
+            --success: #51cf66;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background: linear-gradient(135deg, var(--dark) 0%, var(--primary) 100%);
+            color: var(--light);
+            min-height: 100vh;
+        }
+
+        header {
+            background: rgba(5, 25, 35, 0.9);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--accent);
+            padding: 1.5rem 2rem;
+            box-shadow: 0 4px 20px rgba(5, 195, 221, 0.1);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-shadow: 0 0 20px rgba(5, 195, 221, 0.5);
+            text-decoration: none;
+        }
+
+        nav a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 400;
+            transition: all 0.3s;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+        }
+
+        nav a:hover {
+            color: var(--accent);
+            background: rgba(5, 195, 221, 0.1);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        .page-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .page-title h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            color: var(--accent);
+            margin-bottom: 1rem;
+            text-shadow: 0 0 20px rgba(5, 195, 221, 0.3);
+        }
+
+        .page-title p {
+            color: rgba(240, 249, 255, 0.7);
+            font-size: 1.1rem;
+        }
+
+        .warning-banner {
+            background: rgba(255, 107, 107, 0.2);
+            border: 2px solid var(--warning);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .warning-banner h2 {
+            color: var(--warning);
+            font-family: 'Orbitron', sans-serif;
+            margin-bottom: 0.5rem;
+        }
+
+        /* 大分類セクション */
+        .major-section {
+            background: rgba(10, 77, 104, 0.3);
+            backdrop-filter: blur(10px);
+            border: 2px solid var(--accent);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .major-section-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .major-section-icon {
+            font-size: 2.5rem;
+        }
+
+        /* 中分類セクション */
+        .middle-section {
+            background: rgba(5, 25, 35, 0.5);
+            border: 1px solid rgba(5, 195, 221, 0.3);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .middle-section-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            color: var(--success);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .middle-section-icon {
+            font-size: 1.5rem;
+        }
+
+        /* 小分類（製品コード別リンク） */
+        .archive-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+        }
+
+        .archive-link {
+            background: linear-gradient(135deg, rgba(8, 131, 149, 0.2), rgba(5, 195, 221, 0.2));
+            border: 1px solid var(--accent);
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-decoration: none;
+            color: var(--light);
+            transition: all 0.3s;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .archive-link:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(5, 195, 221, 0.3);
+            border-color: var(--light);
+        }
+
+        .archive-link-code {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .archive-link-title {
+            font-size: 1rem;
+            color: rgba(240, 249, 255, 0.9);
+        }
+
+        .archive-link-meta {
+            font-size: 0.85rem;
+            color: rgba(240, 249, 255, 0.6);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-top: 0.5rem;
+        }
+
+        .status-confidential {
+            background: rgba(255, 107, 107, 0.2);
+            border: 1px solid var(--warning);
+            color: var(--warning);
+        }
+
+        .status-restricted {
+            background: rgba(255, 193, 7, 0.2);
+            border: 1px solid #ffc107;
+            color: #ffc107;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(5, 25, 35, 0.9);
+            border-top: 1px solid var(--accent);
+            margin-top: 4rem;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* モバイル対応 */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 1rem;
+            }
+
+            .page-title h1 {
+                font-size: 1.8rem;
+            }
+
+            .major-section {
+                padding: 1.5rem;
+            }
+
+            .major-section-title {
+                font-size: 1.5rem;
+            }
+
+            .archive-links {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <a href="company-site.html" class="logo">NeuroLife<span style="font-size: 0.5em; font-weight: 400; margin-left: 0.3rem;">Pharmaceuticals</span></a>
+            <nav>
+                
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="page-title">
+            <h1>📚 Archive Library - 機密文書管理システム</h1>
+            <p>NeuroLife Pharmaceuticals - Internal Archive Library</p>
+        </div>
+
+        <div class="warning-banner">
+            <h2>⚠️ 注意</h2>
+            <p>このページは俺がAIにニューロライフ社内データベースの情報を自動収集させた結果をまとめるよう仕向けた。<br>もしかしたら自動収集がうまくいってないデータもあるかもしれないが、それでも助けにはなるだろう。</p>
+        </div>
+
+        <!-- 大分類：研究レポート -->
+        <div class="major-section">
+            <div class="major-section-title">
+                <span class="major-section-icon">🔬</span>
+                <span>研究レポート</span>
+            </div>
+
+            <!-- 中分類：研究レポート -->
+            <div class="middle-section">
+                <div class="middle-section-title">
+                    <span class="middle-section-icon">📄</span>
+                    <span>研究レポート</span>
+                </div>
+                <div class="archive-links">
+                    <a href="research-report-ns-2847-alpha.html" class="archive-link">
+                        <div class="archive-link-code">NS-2847-ALPHA</div>
+                        <div class="archive-link-title">NeuroSync™ 研究レポート</div>
+                        <div class="archive-link-meta">📅 最終更新: 2024年10月</div>
+                        <span class="status-badge status-confidential">機密情報</span>
+                    </a>
+                    <a href="research-report-mp-1923-beta.html" class="archive-link">
+                        <div class="archive-link-code">MP-1923-BETA</div>
+                        <div class="archive-link-title">MemoriaPlus™ 研究レポート</div>
+                        <div class="archive-link-meta">📅 最終更新: 2024年10月</div>
+                        <span class="status-badge status-confidential">機密情報</span>
+                    </a>
+                    <a href="research-report-dl-x789-omega.html" class="archive-link">
+                        <div class="archive-link-code">DL-X789-OMEGA</div>
+                        <div class="archive-link-title">DreamLink™ 研究レポート</div>
+                        <div class="archive-link-meta">📅 最終更新: 2024年11月</div>
+                        <span class="status-badge status-confidential">機密情報</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- 中分類：研究成果 -->
+            <div class="middle-section">
+                <div class="middle-section-title">
+                    <span class="middle-section-icon">🏆</span>
+                    <span>研究成果</span>
+                </div>
+                <div class="archive-links">
+                    <a href="research-result-ns-2847-alpha.html" class="archive-link">
+                        <div class="archive-link-code">NS-2847-ALPHA</div>
+                        <div class="archive-link-title">NeuroSync™ 研究成果まとめ</div>
+                        <div class="archive-link-meta">📅 最終更新: 2024年10月</div>
+                        <span class="status-badge status-restricted">制限付き</span>
+                    </a>
+                    <a href="research-result-mp-1923-beta.html" class="archive-link">
+                        <div class="archive-link-code">MP-1923-BETA</div>
+                        <div class="archive-link-title">MemoriaPlus™ 研究成果まとめ</div>
+                        <div class="archive-link-meta">📅 最終更新: 2024年10月</div>
+                        <span class="status-badge status-restricted">制限付き</span>
+                    </a>
+                    <a href="research-result-dl-x789-omega.html" class="archive-link">
+                        <div class="archive-link-code">DL-X789-OMEGA</div>
+                        <div class="archive-link-title">DreamLink™ 研究成果まとめ</div>
+                        <div class="archive-link-meta">📅 最終更新: 2024年11月</div>
+                        <span class="status-badge status-confidential">機密情報</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- 中分類：実験データ -->
+            <div class="middle-section">
+                <div class="middle-section-title">
+                    <span class="middle-section-icon">🧪</span>
+                    <span>実験データ</span>
+                </div>
+                <div class="archive-links">
+                    <a href="experiment-data-ns-2847-alpha.html" class="archive-link">
+                        <div class="archive-link-code">NS-2847-ALPHA</div>
+                        <div class="archive-link-title">NeuroSync™ 実験データベース</div>
+                        <div class="archive-link-meta">📅 最終更新: 2024年10月</div>
+                        <span class="status-badge status-confidential">機密情報</span>
+                    </a>
+                    <a href="experiment-data-mp-1923-beta.html" class="archive-link">
+                        <div class="archive-link-code">MP-1923-BETA</div>
+                        <div class="archive-link-title">MemoriaPlus™ 実験データベース</div>
+                        <div class="archive-link-meta">📅 最終更新: 2024年10月</div>
+                        <span class="status-badge status-confidential">機密情報</span>
+                    </a>
+                    <a href="experiment-data-dl-x789-omega.html" class="archive-link">
+                        <div class="archive-link-code">DL-X789-OMEGA</div>
+                        <div class="archive-link-title">DreamLink™ 実験データベース</div>
+                        <div class="archive-link-meta">📅 最終更新: 2024年11月</div>
+                        <span class="status-badge status-confidential">機密情報</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- 中分類：分析レポート -->
+            <div class="middle-section">
+                <div class="middle-section-title">
+                    <span class="middle-section-icon">📊</span>
+                    <span>分析レポート</span>
+                </div>
+                <div class="archive-links">
+                    <a href="analysis-report-ns-2847-alpha.html" class="archive-link">
+                        <div class="archive-link-code">NS-2847-ALPHA</div>
+                        <div class="archive-link-title">NeuroSync™ 統計分析レポート</div>
+                        <div class="archive-link-meta">📅 最終更新: 2024年10月</div>
+                        <span class="status-badge status-restricted">制限付き</span>
+                    </a>
+                    <a href="analysis-report-mp-1923-beta.html" class="archive-link">
+                        <div class="archive-link-code">MP-1923-BETA</div>
+                        <div class="archive-link-title">MemoriaPlus™ 統計分析レポート</div>
+                        <div class="archive-link-meta">📅 最終更新: 2024年10月</div>
+                        <span class="status-badge status-restricted">制限付き</span>
+                    </a>
+                    <a href="analysis-report-dl-x789-omega.html" class="archive-link">
+                        <div class="archive-link-code">DL-X789-OMEGA</div>
+                        <div class="archive-link-title">DreamLink™ 統計分析レポート</div>
+                        <div class="archive-link-meta">📅 最終更新: 2024年11月</div>
+                        <span class="status-badge status-confidential">機密情報</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- 中分類：学術論文 -->
+            <div class="middle-section">
+                <div class="middle-section-title">
+                    <span class="middle-section-icon">📚</span>
+                    <span>学術論文</span>
+                </div>
+                <div class="archive-links">
+                    <a href="academic-paper-ns-2847-alpha.html" class="archive-link">
+                        <div class="archive-link-code">NS-2847-ALPHA</div>
+                        <div class="archive-link-title">NeuroSync™ 関連学術論文集</div>
+                        <div class="archive-link-meta">📅 最終更新: 2024年10月</div>
+                        <span class="status-badge status-restricted">制限付き</span>
+                    </a>
+                    <a href="academic-paper-mp-1923-beta.html" class="archive-link">
+                        <div class="archive-link-code">MP-1923-BETA</div>
+                        <div class="archive-link-title">MemoriaPlus™ 関連学術論文集</div>
+                        <div class="archive-link-meta">📅 最終更新: 2024年10月</div>
+                        <span class="status-badge status-restricted">制限付き</span>
+                    </a>
+                    <a href="academic-paper-dl-x789-omega.html" class="archive-link">
+                        <div class="archive-link-code">DL-X789-OMEGA</div>
+                        <div class="archive-link-title">DreamLink™ 関連学術論文集</div>
+                        <div class="archive-link-meta">📅 最終更新: 2024年11月</div>
+                        <span class="status-badge status-confidential">機密情報</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- 大分類：各種製品情報 -->
+        <div class="major-section">
+            <div class="major-section-title">
+                <span class="major-section-icon">💊</span>
+                <span>各種製品情報</span>
+            </div>
+
+            <!-- 中分類：NS-2847-ALPHA -->
+            <div class="middle-section">
+                <div class="middle-section-title">
+                    <span class="middle-section-icon">🧠</span>
+                    <span>NS-2847-ALPHA (NeuroSync™)</span>
+                </div>
+                <div class="archive-links">
+                    <a href="product-overview-ns-2847-alpha.html" class="archive-link">
+                        <div class="archive-link-code">製品概要</div>
+                        <div class="archive-link-title">NeuroSync™ 製品詳細仕様</div>
+                        <div class="archive-link-meta">📅 最終更新: 2024年10月</div>
+                        <span class="status-badge status-restricted">制限付き</span>
+                    </a>
+                    <a href="product-clinical-ns-2847-alpha.html" class="archive-link">
+                        <div class="archive-link-code">臨床試験データ</div>
+                        <div class="archive-link-title">NeuroSync™ 臨床試験結果</div>
+                        <div class="archive-link-meta">📅 最終更新: 2024年10月</div>
+                        <span class="status-badge status-confidential">機密情報</span>
+                    </a>
+                    <a href="product-safety-ns-2847-alpha.html" class="archive-link">
+                        <div class="archive-link-code">安全性情報</div>
+                        <div class="archive-link-title">NeuroSync™ 安全性評価レポート</div>
+                        <div class="archive-link-meta">📅 最終更新: 2024年10月</div>
+                        <span class="status-badge status-confidential">機密情報</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- 中分類：MP-1923-BETA -->
+            <div class="middle-section">
+                <div class="middle-section-title">
+                    <span class="middle-section-icon">💭</span>
+                    <span>MP-1923-BETA (MemoriaPlus™)</span>
+                </div>
+                <div class="archive-links">
+                    <a href="product-overview-mp-1923-beta.html" class="archive-link">
+                        <div class="archive-link-code">製品概要</div>
+                        <div class="archive-link-title">MemoriaPlus™ 製品詳細仕様</div>
+                        <div class="archive-link-meta">📅 最終更新: 2024年10月</div>
+                        <span class="status-badge status-restricted">制限付き</span>
+                    </a>
+                    <a href="product-clinical-mp-1923-beta.html" class="archive-link">
+                        <div class="archive-link-code">臨床試験データ</div>
+                        <div class="archive-link-title">MemoriaPlus™ 臨床試験結果</div>
+                        <div class="archive-link-meta">📅 最終更新: 2024年10月</div>
+                        <span class="status-badge status-confidential">機密情報</span>
+                    </a>
+                    <a href="product-safety-mp-1923-beta.html" class="archive-link">
+                        <div class="archive-link-code">安全性情報</div>
+                        <div class="archive-link-title">MemoriaPlus™ 安全性評価レポート</div>
+                        <div class="archive-link-meta">📅 最終更新: 2024年10月</div>
+                        <span class="status-badge status-confidential">機密情報</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- 中分類：DL-X789-OMEGA -->
+            <div class="middle-section">
+                <div class="middle-section-title">
+                    <span class="middle-section-icon">🌙</span>
+                    <span>DL-X789-OMEGA (DreamLink™)</span>
+                </div>
+                <div class="archive-links">
+                    <a href="product-overview-dl-x789-omega.html" class="archive-link">
+                        <div class="archive-link-code">製品概要</div>
+                        <div class="archive-link-title">DreamLink™ 製品詳細仕様</div>
+                        <div class="archive-link-meta">📅 最終更新: 2024年11月</div>
+                        <span class="status-badge status-confidential">機密情報</span>
+                    </a>
+                    <a href="product-clinical-dl-x789-omega.html" class="archive-link">
+                        <div class="archive-link-code">臨床試験データ</div>
+                        <div class="archive-link-title">DreamLink™ 臨床試験結果</div>
+                        <div class="archive-link-meta">📅 最終更新: 2024年11月</div>
+                        <span class="status-badge status-confidential">機密情報</span>
+                    </a>
+                    <a href="product-safety-dl-x789-omega.html" class="archive-link">
+                        <div class="archive-link-code">安全性情報</div>
+                        <div class="archive-link-title">DreamLink™ 安全性評価レポート</div>
+                        <div class="archive-link-meta">📅 最終更新: 2024年11月</div>
+                        <span class="status-badge status-confidential">機密情報</span>
+                    </a>
+                    <a href="product-incident-dl-x789-omega.html" class="archive-link">
+                        <div class="archive-link-code">⚠️ インシデント報告</div>
+                        <div class="archive-link-title">DreamLink™ 重大インシデント調査報告</div>
+                        <div class="archive-link-meta">📅 最終更新: 2024年11月</div>
+                        <span class="status-badge status-confidential">機密情報</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 認証モーダル -->
+    <div id="authModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.95); z-index: 10000; align-items: center; justify-content: center;">
+        <div style="background: linear-gradient(135deg, var(--dark), var(--primary)); border: 2px solid var(--accent); border-radius: 12px; padding: 3rem; max-width: 500px; width: 90%; box-shadow: 0 10px 50px rgba(5, 195, 221, 0.5);">
+            <h2 style="font-family: 'Orbitron', sans-serif; color: var(--accent); text-align: center; margin-bottom: 1.5rem; font-size: 2rem;">🔐 Archive Library</h2>
+            <p style="text-align: center; margin-bottom: 2rem; color: rgba(240, 249, 255, 0.8);">アクセスにはパスワードが必要です</p>
+            
+            <input type="password" id="passwordInput" placeholder="パスワードを入力..." style="width: 100%; background: rgba(5, 25, 35, 0.8); border: 1px solid var(--accent); border-radius: 8px; padding: 1rem; color: var(--light); font-size: 1rem; margin-bottom: 1rem; font-family: 'Noto Sans JP', sans-serif;">
+            
+            <div id="errorMessage" style="color: var(--warning); text-align: center; margin-bottom: 1rem; min-height: 1.5rem; font-size: 0.9rem;"></div>
+            
+            <button onclick="checkPassword()" style="width: 100%; background: linear-gradient(135deg, var(--secondary), var(--accent)); border: none; border-radius: 8px; padding: 1rem; color: var(--dark); font-size: 1rem; font-weight: 600; cursor: pointer; font-family: 'Orbitron', sans-serif; transition: all 0.3s;">
+                アクセス
+            </button>
+        </div>
+    </div>
+
+    <script>
+        const CORRECT_PASSWORD = 'fnah8a7@vba';
+        
+        // ページ読み込み時に認証チェック
+        window.addEventListener('DOMContentLoaded', function() {
+            const isAuthenticated = localStorage.getItem('archive_library_auth');
+            if (isAuthenticated === 'true') {
+                // 認証済みの場合は直接表示
+                document.getElementById('authModal').style.display = 'none';
+                document.body.style.overflow = 'auto';
+            } else {
+                // 未認証の場合は認証モーダルを表示
+                document.getElementById('authModal').style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+            }
+            
+            // Enterキーでパスワード送信
+            const input = document.getElementById('passwordInput');
+            if (input) {
+                input.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        checkPassword();
+                    }
+                });
+            }
+        });
+
+        function checkPassword() {
+            const input = document.getElementById('passwordInput');
+            const password = input.value;
+            const errorDiv = document.getElementById('errorMessage');
+            
+            if (password === CORRECT_PASSWORD) {
+                localStorage.setItem('archive_library_auth', 'true');
+                document.getElementById('authModal').style.display = 'none';
+                document.body.style.overflow = 'auto';
+                errorDiv.textContent = '';
+                
+                // チャットボットの認証情報に追加するためのフラグを設定
+                const auths = JSON.parse(localStorage.getItem('chatbot_auths') || '[]');
+                const timestamp = new Date().toLocaleTimeString('ja-JP', {hour: '2-digit', minute: '2-digit'});
+                
+                // 既に登録されていないかチェック
+                if (!auths.some(a => a.info === CORRECT_PASSWORD)) {
+                    auths.unshift({
+                        info: CORRECT_PASSWORD,
+                        type: '辰己のまとめたアーカイブページのパスワード',
+                        timestamp: timestamp
+                    });
+                    localStorage.setItem('chatbot_auths', JSON.stringify(auths));
+                }
+            } else {
+                errorDiv.textContent = `入力された「${password}」は正しいパスワードではありません。`;
+                input.value = '';
+                input.focus();
+            }
+        }
+    </script>
+
+    <footer>
+        <p>&copy; 2025 ニューロライフ製薬株式会社 All rights reserved.</p>
+        <p style="margin-top: 0.5rem; font-size: 0.8rem; opacity: 0.6;">
+            機密情報 - 社内限定 | 無断転載・外部共有禁止
+        </p>
+    </footer>
+</body>
+</html>

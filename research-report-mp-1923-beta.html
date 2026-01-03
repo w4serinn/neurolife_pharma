@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MP-1923-BETA 研究レポート | ニューロライフ製薬</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Noto+Sans+JP:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0a4d68;
+            --secondary: #088395;
+            --accent: #05c3dd;
+            --dark: #051923;
+            --light: #f0f9ff;
+            --warning: #ff6b6b;
+            --success: #51cf66;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background: linear-gradient(135deg, var(--dark) 0%, var(--primary) 100%);
+            color: var(--light);
+            min-height: 100vh;
+            line-height: 1.8;
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(5, 25, 35, 0.7);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(5, 195, 221, 0.2);
+            padding: 1.5rem 3rem;
+            z-index: 100;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--accent), var(--secondary));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 900;
+            font-size: 1.5rem;
+            color: var(--dark);
+            box-shadow: 0 4px 20px rgba(5, 195, 221, 0.4);
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 20px rgba(5, 195, 221, 0.5);
+        }
+
+        .logo-subtitle {
+            font-size: 0.7rem;
+            color: rgba(240, 249, 255, 0.6);
+            letter-spacing: 3px;
+            font-weight: 300;
+        }
+
+        nav a {
+            color: var(--light);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--accent);
+            background: rgba(5, 195, 221, 0.1);
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 120px 2rem 0;
+        }
+
+        .document-header {
+            background: rgba(10, 77, 104, 0.3);
+            backdrop-filter: blur(10px);
+            border: 2px solid var(--accent);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .doc-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        .doc-code {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            color: var(--success);
+            margin-bottom: 1rem;
+        }
+
+        .doc-meta {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+            font-size: 0.9rem;
+            color: rgba(240, 249, 255, 0.7);
+        }
+
+        .doc-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            background: rgba(255, 107, 107, 0.2);
+            border: 1px solid var(--warning);
+            color: var(--warning);
+        }
+
+        .content-section {
+            background: rgba(5, 25, 35, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(5, 195, 221, 0.3);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--accent);
+        }
+
+        .subsection-title {
+            font-size: 1.2rem;
+            color: var(--success);
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+
+        .data-table th,
+        .data-table td {
+            padding: 0.75rem;
+            border: 1px solid rgba(5, 195, 221, 0.3);
+            text-align: left;
+        }
+
+        .data-table th {
+            background: rgba(5, 195, 221, 0.2);
+            font-weight: 600;
+            color: var(--accent);
+        }
+
+        .warning-box {
+            background: rgba(255, 107, 107, 0.1);
+            border: 2px solid var(--warning);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .warning-box h3 {
+            color: var(--warning);
+            margin-bottom: 0.5rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(5, 25, 35, 0.9);
+            border-top: 1px solid var(--accent);
+            margin-top: 4rem;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 1rem 1.5rem;
+            }
+
+            .logo-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+            }
+
+            .logo {
+                font-size: 1.2rem;
+            }
+
+            .container {
+                padding: 0 1rem;
+            }
+
+            .doc-title {
+                font-size: 1.5rem;
+            }
+
+            .data-table {
+                font-size: 0.85rem;
+            }
+        }
+    </style>
+</head>
+<body>
+        <header>
+        <div class="header-content">
+            <div class="logo-container">
+                <div class="logo-icon">NL</div>
+                <div class="logo-text">
+                    <div class="logo">NeuroLife</div>
+                    <div class="logo-subtitle">PHARMACEUTICALS</div>
+                </div>
+            </div>
+            <nav>
+                <a href="archive-library.html">アーカイブに戻る</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="document-header">
+            <div class="doc-code">MP-1923-BETA</div>
+            <div class="doc-title">MemoriaPlus™ 研究レポート</div>
+            <div class="doc-meta">
+                <div class="doc-meta-item">📅 作成日: 2024年10月12日</div>
+                <div class="doc-meta-item">👤 研究責任者: 記憶科学研究部門</div>
+                <div class="doc-meta-item">🔄 最終更新: 2024年10月25日</div>
+            </div>
+            <div style="margin-top: 1rem;">
+                <span class="status-badge">機密情報 - レベル3</span>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">📋 研究概要</h2>
+            <p>
+                MemoriaPlus™（製品コード: MP-1923-BETA）は、海馬における長期記憶の形成を促進し、記憶の保持と想起能力を向上させることを目的とした記憶増強薬です。本研究レポートは、2023年から2024年にかけて実施された前臨床試験および第I相臨床試験の結果をまとめたものです。
+            </p>
+
+            <h3 class="subsection-title">研究目的</h3>
+            <ul style="margin-left: 2rem; margin-top: 0.5rem;">
+                <li>長期記憶エンコーディング機構の増強効果の検証</li>
+                <li>記憶保持能力向上における有効性の評価</li>
+                <li>海馬神経新生促進効果の測定</li>
+                <li>加齢に伴う記憶低下への効果の評価</li>
+            </ul>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">🔬 研究方法</h2>
+            
+            <h3 class="subsection-title">前臨床試験</h3>
+            <p>
+                動物モデル（マウス、ラット）を用いた記憶形成試験を実施しました。投与量は1.0mg/kg、2.5mg/kg、5.0mg/kgの3段階で評価を行いました。
+            </p>
+
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>試験項目</th>
+                        <th>対象</th>
+                        <th>期間</th>
+                        <th>サンプル数</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>モリス水迷路試験</td>
+                        <td>ラット</td>
+                        <td>21日間</td>
+                        <td>n=96</td>
+                    </tr>
+                    <tr>
+                        <td>物体認識記憶試験</td>
+                        <td>マウス</td>
+                        <td>14日間</td>
+                        <td>n=120</td>
+                    </tr>
+                    <tr>
+                        <td>海馬神経新生評価</td>
+                        <td>マウス</td>
+                        <td>42日間</td>
+                        <td>n=80</td>
+                    </tr>
+                    <tr>
+                        <td>長期増強（LTP）測定</td>
+                        <td>ラット海馬スライス</td>
+                        <td>in vitro</td>
+                        <td>n=60</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3 class="subsection-title">第I相臨床試験</h3>
+            <p>
+                健常成人ボランティア（n=54）を対象とした単回投与試験および反復投与試験を実施しました。
+            </p>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">📊 主要な研究結果</h2>
+
+            <h3 class="subsection-title">有効性</h3>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>評価項目</th>
+                        <th>プラセボ群</th>
+                        <th>MP-1923-BETA群</th>
+                        <th>改善率</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>言語記憶スコア</td>
+                        <td>68.4 ± 9.2</td>
+                        <td>91.2 ± 7.1</td>
+                        <td>+33.3%</td>
+                    </tr>
+                    <tr>
+                        <td>視覚記憶スコア</td>
+                        <td>71.8 ± 8.5</td>
+                        <td>93.6 ± 6.8</td>
+                        <td>+30.4%</td>
+                    </tr>
+                    <tr>
+                        <td>想起正確率（%）</td>
+                        <td>64.2 ± 7.8</td>
+                        <td>87.5 ± 5.2</td>
+                        <td>+36.3%</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3 class="subsection-title">安全性プロファイル</h3>
+            <p>
+                第I相臨床試験において、重篤な有害事象は報告されませんでした。軽度の有害事象として、以下が観察されました：
+            </p>
+            <ul style="margin-left: 2rem; margin-top: 0.5rem;">
+                <li>軽度の頭痛（発現率: 5.6%）</li>
+                <li>一時的な倦怠感（発現率: 7.4%）</li>
+                <li>軽度の食欲不振（発現率: 3.7%）</li>
+            </ul>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">💡 結論</h2>
+            <p>
+                MP-1923-BETA（MemoriaPlus™）は、前臨床試験および第I相臨床試験において、優れた記憶増強効果と良好な安全性プロファイルを示しました。特に長期記憶の形成と保持において顕著な改善が確認されており、第II相臨床試験への進展が強く支持されます。
+            </p>
+
+            <div class="warning-box">
+                <h3>⚠️ 重要な注意事項</h3>
+                <p>本研究レポートは社内限定の機密情報です。外部への開示は厳禁です。本製品は現在開発段階にあり、2026年春の一般販売開始を予定しています。</p>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">📎 関連文書</h2>
+            <ul style="margin-left: 2rem;">
+                <li><a href="experiment-data-mp-1923-beta.html" style="color: var(--accent);">MP-1923-BETA 実験データベース</a></li>
+                <li><a href="analysis-report-mp-1923-beta.html" style="color: var(--accent);">MP-1923-BETA 統計分析レポート</a></li>
+                <li><a href="product-clinical-mp-1923-beta.html" style="color: var(--accent);">MP-1923-BETA 臨床試験データ</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 ニューロライフ製薬株式会社 All rights reserved.</p>
+        <p style="margin-top: 0.5rem; font-size: 0.8rem; opacity: 0.6;">
+            機密情報 - 社内限定 | 文書番号: NL-RR-2024-1012-MP1923B
+        </p>
+    </footer>
+</body>
+</html>
