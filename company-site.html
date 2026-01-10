@@ -72,29 +72,31 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-wrap: wrap;
         }
 
         .logo {
             font-family: 'Orbitron', sans-serif;
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             font-weight: 900;
             color: var(--accent);
             text-transform: uppercase;
-            letter-spacing: 3px;
+            letter-spacing: 2px;
             text-shadow: 0 0 20px rgba(5, 195, 221, 0.5);
             text-decoration: none;
+            white-space: nowrap;
         }
 
         .logo span {
             color: var(--warning);
-            font-size: 0.7rem;
+            font-size: 0.6rem;
             vertical-align: super;
-            /* Hidden message in data attribute */
         }
 
         nav {
             display: flex;
-            gap: 2rem;
+            gap: 1.5rem;
+            flex-wrap: wrap;
         }
 
         nav a {
@@ -102,8 +104,10 @@
             text-decoration: none;
             font-weight: 400;
             transition: all 0.3s;
-            padding: 0.5rem 1rem;
+            padding: 0.5rem 0.8rem;
             border-radius: 4px;
+            font-size: 0.9rem;
+            white-space: nowrap;
         }
 
         nav a:hover {
@@ -116,6 +120,11 @@
             cursor: not-allowed;
             pointer-events: none;
             text-decoration: line-through;
+        }
+
+        nav a.active {
+            color: var(--accent);
+            background: rgba(5, 195, 221, 0.15);
         }
 
         .container {
@@ -323,8 +332,7 @@
 
     <!-- Notice Banner -->
     <div class="notice-banner" style="background: rgba(255, 107, 107, 0.2); border-bottom: 2px solid var(--warning); padding: 1rem; text-align: center; font-size: 0.95rem; color: var(--warning); backdrop-filter: blur(10px); line-height: 1.6;">
-        ⚠️ 諸事情により本ページの更新は止まっております。新サイトの開設をお待ちください。<br>
-        なお、AIサポートシステムについては2024年11月までの情報ですが稼働いたします。
+        ⚠️ 諸事情により本ページの更新は止まっております。新サイトの開設をお待ちください。
     </div>
 
     <header>
@@ -333,10 +341,11 @@
                 NeuroLife<span style="font-size: 0.5em; font-weight: 400; margin-left: 0.3rem;">Pharmaceuticals</span><span data-hint="NL-X789">®</span>
             </div>
             <nav>
-                <a href="company-site.html">ホーム</a>
+                <a href="company-site.html" class="active">ホーム</a>
                 <a href="#products" class="disabled-link">製品情報</a>
                 <a href="#research" class="disabled-link">研究開発</a>
                 <a href="#clinical-trial" class="disabled-link">臨床試験被験者の方へ</a>
+                <a href="access.html">アクセス</a>
                 <a href="chatbot.html">サポート</a>
             </nav>
         </div>

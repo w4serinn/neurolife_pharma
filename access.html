@@ -1,0 +1,1123 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>アクセス | ニューロライフ製薬株式会社</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Noto+Sans+JP:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0a4d68;
+            --secondary: #088395;
+            --accent: #05c3dd;
+            --dark: #051923;
+            --light: #f0f9ff;
+            --warning: #ff6b6b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background: linear-gradient(135deg, var(--dark) 0%, var(--primary) 100%);
+            color: var(--light);
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Animated background particles */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: var(--accent);
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: float 15s infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) translateX(0); }
+            50% { transform: translateY(-100px) translateX(50px); }
+        }
+
+        header {
+            background: rgba(5, 25, 35, 0.9);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--accent);
+            padding: 1.5rem 2rem;
+            position: relative;
+            z-index: 10;
+            box-shadow: 0 4px 20px rgba(5, 195, 221, 0.1);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 20px rgba(5, 195, 221, 0.5);
+            text-decoration: none;
+            white-space: nowrap;
+        }
+
+        .logo span {
+            color: var(--warning);
+            font-size: 0.6rem;
+            vertical-align: super;
+        }
+
+        nav {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 400;
+            transition: all 0.3s;
+            padding: 0.5rem 0.8rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            white-space: nowrap;
+        }
+
+        nav a:hover {
+            color: var(--accent);
+            background: rgba(5, 195, 221, 0.1);
+        }
+
+        nav a.disabled-link {
+            opacity: 0.4;
+            cursor: not-allowed;
+            pointer-events: none;
+            text-decoration: line-through;
+        }
+
+        nav a.active {
+            color: var(--accent);
+            background: rgba(5, 195, 221, 0.15);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero {
+            text-align: center;
+            margin-bottom: 3rem;
+            animation: fadeIn 1s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(90deg, var(--accent), var(--light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        h2 {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--accent);
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .card {
+            background: rgba(10, 77, 104, 0.3);
+            border: 1px solid var(--accent);
+            border-radius: 12px;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 2rem;
+        }
+
+        .access-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .info-icon {
+            font-size: 1.5rem;
+            color: var(--accent);
+            min-width: 2rem;
+        }
+
+        .info-content h3 {
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .info-content p {
+            line-height: 1.8;
+            color: rgba(240, 249, 255, 0.9);
+        }
+
+        /* Facility Map Styles */
+        .map-container {
+            margin-top: 3rem;
+        }
+
+        .floor-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .floor-tab {
+            padding: 0.8rem 2rem;
+            background: rgba(10, 77, 104, 0.5);
+            border: 1px solid var(--accent);
+            border-radius: 8px;
+            color: var(--light);
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+
+        .floor-tab:hover {
+            background: rgba(8, 131, 149, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .floor-tab.active {
+            background: var(--accent);
+            color: var(--dark);
+            box-shadow: 0 4px 15px rgba(5, 195, 221, 0.5);
+        }
+
+        .map-scroll-wrapper {
+            overflow-x: auto;
+            overflow-y: hidden;
+            padding: 1rem;
+            margin: 0 -1rem;
+            border-radius: 8px;
+        }
+
+        .facility-map.active {
+            display: block;
+        }
+
+        .floor-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--primary);
+        }
+
+        .floor-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            color: var(--primary);
+            font-weight: 900;
+            margin-bottom: 0.5rem;
+        }
+
+        .floor-map-image {
+            width: 80%;
+            max-width: 400px;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+            border: 2px solid var(--primary);
+            border-radius: 8px;
+        }
+
+        .building-layout {
+            display: grid;
+            grid-template-columns: 30px 130px 30px 140px 30px 130px 30px;
+            grid-template-rows: auto;
+            gap: 0;
+            margin: 2rem auto;
+            max-width: 550px;
+            min-height: 650px;
+        }
+
+        .building-section {
+            display: grid;
+            grid-template-rows: repeat(auto-fill, minmax(85px, 1fr));
+            gap: 0;
+            border: 3px solid var(--primary);
+            background: white;
+        }
+
+        .building-section.left-rooms {
+            grid-column: 2;
+        }
+
+        .building-section.right-rooms {
+            grid-column: 6;
+        }
+
+        .inner-corridor {
+            background: rgba(220, 220, 220, 0.7);
+            border-left: 3px solid var(--primary);
+            border-right: 3px solid var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            font-size: 0.65rem;
+            color: var(--primary);
+            font-weight: 700;
+            letter-spacing: 2px;
+        }
+
+        .inner-corridor.left {
+            grid-column: 1;
+            border-right: 3px solid var(--primary);
+            border-left: none;
+        }
+
+        .inner-corridor.left-right {
+            grid-column: 3;
+        }
+
+        .inner-corridor.right-left {
+            grid-column: 5;
+        }
+
+        .inner-corridor.right {
+            grid-column: 7;
+            border-left: 3px solid var(--primary);
+            border-right: none;
+        }
+
+        .room {
+            background: var(--light);
+            border: 2px solid var(--primary);
+            padding: 0.5rem;
+            text-align: center;
+            font-size: 1.2rem;
+            color: var(--dark);
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .room:hover {
+            background: rgba(5, 195, 221, 0.2);
+            z-index: 10;
+            box-shadow: 0 0 10px rgba(5, 195, 221, 0.5);
+        }
+
+        .room.research {
+            background: rgba(135, 206, 235, 0.4);
+        }
+
+        .room.clinical {
+            background: rgba(255, 182, 193, 0.4);
+        }
+
+        .room.common {
+            background: rgba(144, 238, 144, 0.4);
+        }
+
+        .room.special {
+            background: rgba(255, 222, 173, 0.5);
+        }
+
+        .room.large {
+            grid-row: span 2;
+        }
+
+        .room.xlarge {
+            grid-row: span 3;
+        }
+
+        .stairs-icon {
+            width: 30px;
+            height: 40px;
+            background: linear-gradient(
+                to bottom,
+                transparent 0%,
+                transparent 10%,
+                var(--primary) 10%,
+                var(--primary) 20%,
+                transparent 20%,
+                transparent 30%,
+                var(--primary) 30%,
+                var(--primary) 40%,
+                transparent 40%,
+                transparent 50%,
+                var(--primary) 50%,
+                var(--primary) 60%,
+                transparent 60%,
+                transparent 70%,
+                var(--primary) 70%,
+                var(--primary) 80%,
+                transparent 80%
+            );
+            border-left: 2px solid var(--primary);
+            border-right: 2px solid var(--primary);
+            display: inline-block;
+            margin: 0 5px;
+        }
+
+        .corridor-inner {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            gap: 10px;
+        }
+
+        .corridors {
+            grid-column: 4;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 0;
+        }
+
+        .corridor-wrapper {
+            display: flex;
+            align-items: center;
+        }
+
+        .corridor-wrapper.top {
+            align-self: flex-start;
+        }
+
+        .corridor-wrapper.bottom {
+            align-self: flex-end;
+        }
+
+        .corridor-wrapper.middle {
+            align-self: center;
+        }
+
+        .corridor {
+            background: rgba(200, 200, 200, 0.7);
+            border-top: 3px solid var(--primary);
+            border-bottom: 3px solid var(--primary);
+            height: 70px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            color: var(--primary);
+            font-weight: 700;
+            position: relative;
+        }
+
+        .corridor::before,
+        .corridor::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 3px;
+            background: var(--primary);
+            top: 50%;
+            transform: translateY(-1.5px);
+        }
+
+        .corridor::before {
+            left: -3px;
+        }
+
+        .corridor::after {
+            right: -3px;
+        }
+
+        .room-legend-table {
+            margin-top: 0;
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .room-legend-table th,
+        .room-legend-table td {
+            padding: 0.6rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(10, 77, 104, 0.3);
+            color: var(--dark);
+            font-size: 0.85rem;
+        }
+
+        .room-legend-table th {
+            background: rgba(10, 77, 104, 0.15);
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        .room-legend-table tbody tr {
+            cursor: pointer;
+        }
+
+        .room-legend-table tr:hover {
+            background: rgba(5, 195, 221, 0.1);
+        }
+
+        .room-legend-table thead tr {
+            cursor: default;
+        }
+
+        .room-legend-table thead tr:hover {
+            background: transparent;
+        }
+
+        .room-number {
+            font-weight: 700;
+            color: var(--primary);
+            min-width: 40px;
+            display: inline-block;
+        }
+
+        .room-name-link {
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .room-name-link:hover {
+            color: var(--accent);
+            text-decoration: underline;
+        }
+
+        /* Modal/Popup styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(5, 25, 35, 0.9);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s;
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, var(--dark) 0%, var(--primary) 100%);
+            border: 2px solid var(--accent);
+            border-radius: 12px;
+            padding: 2rem;
+            max-width: 90%;
+            max-height: 90%;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 10px 50px rgba(5, 195, 221, 0.3);
+            animation: slideIn 0.3s;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 2rem;
+            color: var(--accent);
+            cursor: pointer;
+            background: none;
+            border: none;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .modal-close:hover {
+            color: var(--light);
+            transform: rotate(90deg);
+        }
+
+        .modal-room-number {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        .modal-room-name {
+            font-size: 1.5rem;
+            color: var(--light);
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-room-image {
+            width: 100%;
+            max-width: 600px;
+            height: auto;
+            border-radius: 8px;
+            border: 2px solid var(--accent);
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-room-description {
+            color: rgba(240, 249, 255, 0.9);
+            line-height: 1.8;
+            font-size: 1rem;
+        }
+
+        .room-info-note {
+            text-align: left;
+            color: var(--primary);
+            font-size: 0.85rem;
+            margin-bottom: 0rem;
+            margin-top: 0.5rem;
+            font-weight: 500;
+            padding-left: 0.5rem;
+        }
+
+        .facility-map {
+            min-width: 400px;
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 2rem;
+            display: none;
+            background: rgba(230, 235, 240, 0.95);
+            border-radius: 8px;
+        }
+
+        .room-type-badge {
+            display: inline-block;
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-left: 0.5rem;
+        }
+
+        .badge-research {
+            background: rgba(135, 206, 235, 0.4);
+            color: rgba(10, 77, 104, 1);
+        }
+
+        .badge-clinical {
+            background: rgba(255, 182, 193, 0.4);
+            color: rgba(200, 50, 50, 1);
+        }
+
+        .badge-common {
+            background: rgba(144, 238, 144, 0.4);
+            color: rgba(0, 100, 0, 1);
+        }
+
+        .badge-special {
+            background: rgba(255, 222, 173, 0.5);
+            color: rgba(200, 100, 0, 1);
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(5, 25, 35, 0.9);
+            border-top: 1px solid var(--accent);
+            margin-top: 4rem;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* Mobile responsive */
+        @media (max-width: 768px) {
+            .notice-banner {
+                font-size: 0.8rem !important;
+                padding: 0.8rem !important;
+                line-height: 1.5 !important;
+            }
+
+            header {
+                padding: 1rem;
+            }
+
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: flex-start;
+            }
+
+            .logo {
+                font-size: 1.3rem;
+            }
+
+            nav {
+                flex-wrap: wrap;
+                gap: 0.5rem;
+                width: 100%;
+            }
+
+            nav a {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.9rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+            }
+
+            .container {
+                padding: 2rem 1rem;
+            }
+
+            .access-info {
+                grid-template-columns: 1fr;
+            }
+
+            .map-scroll-wrapper {
+                margin: 0 -0.5rem;
+                padding: 0.5rem;
+            }
+
+            .facility-map {
+                padding: 1rem;
+                min-width: 350px;
+            }
+
+            .floor-header {
+                margin-bottom: 1.5rem;
+            }
+
+            .floor-title {
+                font-size: 2rem;
+            }
+
+            .floor-map-image {
+                border-width: 1px;
+            }
+
+            .room-legend-table th,
+            .room-legend-table td {
+                padding: 0.5rem 0.3rem;
+                font-size: 0.75rem;
+            }
+
+            .room-type-badge {
+                padding: 0.15rem 0.4rem;
+                font-size: 0.65rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background particles -->
+    <div class="particles" id="particles"></div>
+
+    <!-- Notice Banner -->
+    <div class="notice-banner" style="background: rgba(255, 107, 107, 0.2); border-bottom: 2px solid var(--warning); padding: 1rem; text-align: center; font-size: 0.95rem; color: var(--warning); backdrop-filter: blur(10px); line-height: 1.6;">
+        ⚠️ 諸事情により本ページの更新は止まっております。新サイトの開設をお待ちください。
+    </div>
+
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                NeuroLife<span style="font-size: 0.5em; font-weight: 400; margin-left: 0.3rem;">Pharmaceuticals</span><span data-hint="NL-X789">®</span>
+            </div>
+            <nav>
+                <a href="company-site.html">ホーム</a>
+                <a href="#products" class="disabled-link">製品情報</a>
+                <a href="#research" class="disabled-link">研究開発</a>
+                <a href="#clinical-trial" class="disabled-link">臨床試験被験者の方へ</a>
+                <a href="access.html" class="active">アクセス</a>
+                <a href="chatbot.html">サポート</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="hero">
+            <h1>アクセス</h1>
+            <p style="color: rgba(240, 249, 255, 0.8); font-size: 1.1rem;">ACCESS</p>
+        </div>
+
+        <div class="card">
+            <div class="access-info">
+                <div class="info-item">
+                    <div class="info-icon">📍</div>
+                    <div class="info-content">
+                        <h3>所在地</h3>
+                        <p>
+                            〒240-0689<br>
+                            神奈川県汐浜市本町2丁目17-8<br>
+                            ニューロライフ製薬本社ビル
+                        </p>
+                    </div>
+                </div>
+
+                <div class="info-item">
+                    <div class="info-icon">🚇</div>
+                    <div class="info-content">
+                        <h3>電車でお越しの方</h3>
+                        <p>
+                            湘南臨海電鉄 汐浜本線<br>
+                            「汐浜中央駅」下車 徒歩12分
+                        </p>
+                    </div>
+                </div>
+
+                <div class="info-item">
+                    <div class="info-icon">🚗</div>
+                    <div class="info-content">
+                        <h3>お車でお越しの方</h3>
+                        <p>
+                            南関東横断道「汐浜北IC」より約8分<br>
+                            ※来客用駐車場：20台完備<br>
+                            ※事前予約制となります
+                        </p>
+                    </div>
+                </div>
+
+                <div class="info-item">
+                    <div class="info-icon">📞</div>
+                    <div class="info-content">
+                        <h3>お問い合わせ</h3>
+                        <p>
+                            代表電話：046-XXX-XXXX<br>
+                            受付時間：平日 9:00～17:00<br>
+                            （土日祝日を除く）
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="map-container">
+            <h2>施設マップ</h2>
+            
+            <div class="floor-tabs">
+                <button class="floor-tab" data-floor="3f">3F</button>
+                <button class="floor-tab" data-floor="2f">2F</button>
+                <button class="floor-tab active" data-floor="1f">1F</button>
+            </div>
+
+            <div class="card">
+                <div class="map-scroll-wrapper">
+                    <!-- 3F Map -->
+                    <div class="facility-map" id="map-3f">
+                        <div class="floor-header">
+                            <div class="floor-title">3F</div>
+                            <p style="color: var(--primary); font-size: 0.9rem;">先端研究フロア / 高度観察フロア</p>
+                        </div>
+                        <img src="floormap-3.png" alt="3Fフロアマップ" class="floor-map-image">
+                        
+                        <p class="room-info-note">※ 下記一覧から確認したい部屋をクリック/タップすると、詳細画像が表示されます</p>
+                        <table class="room-legend-table">
+                            <thead>
+                                <tr>
+                                    <th>室番号</th>
+                                    <th>室名</th>
+                                    <th>区分</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><span class="room-number">301</span></td>
+                                    <td><span class="room-name-link" onclick="openRoomModal('301', '展望カフェテリア', 'その他', '最上階に位置する展望カフェテリアです。リラックスした雰囲気の中で食事や休憩をお楽しみいただけます。')">展望カフェテリア</span></td>
+                                    <td><span class="room-type-badge badge-common">その他</span></td>
+                                </tr>
+                                <tr>
+                                    <td><span class="room-number">302</span></td>
+                                    <td><span class="room-name-link" onclick="openRoomModal('302', '被験者宿泊室', '臨床試験', '3階に位置する被験者用の宿泊施設です。静かで快適な環境を提供しています。')">被験者宿泊室</span></td>
+                                    <td><span class="room-type-badge badge-clinical">臨床試験</span></td>
+                                </tr>
+                                <tr>
+                                    <td><span class="room-number">303</span></td>
+                                    <td><span class="room-name-link" onclick="openRoomModal('303', '治験薬投与室', '臨床試験', '3階の治験薬投与専用施設です。高度な医療設備を備え、安全な投薬管理を行っています。')">治験薬投与室</span></td>
+                                    <td><span class="room-type-badge badge-clinical">臨床試験</span></td>
+                                </tr>
+                                <tr>
+                                    <td><span class="room-number">304</span></td>
+                                    <td><span class="room-name-link" onclick="openRoomModal('304', '代表室', '研究開発', '代表取締役の執務室です。企業戦略の立案や重要な意思決定が行われます。')">代表室</span></td>
+                                    <td><span class="room-type-badge badge-research">研究開発</span></td>
+                                </tr>
+                                <tr>
+                                    <td><span class="room-number">305</span></td>
+                                    <td><span class="room-name-link" onclick="openRoomModal('305', '分析ラボ', '研究開発', '最先端の分析機器を備えた研究施設です。薬物の詳細な成分分析や品質管理を行っています。')">分析ラボ</span></td>
+                                    <td><span class="room-type-badge badge-research">研究開発</span></td>
+                                </tr>
+                                <tr>
+                                    <td><span class="room-number">306</span></td>
+                                    <td><span class="room-name-link" onclick="openRoomModal('306', '被験者健康検査室', '研究開発', '被験者の健康状態を総合的に検査する施設です。各種医療検査機器を完備しています。')">被験者健康検査室</span></td>
+                                    <td><span class="room-type-badge badge-research">研究開発</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- 2F Map -->
+                    <div class="facility-map" id="map-2f">
+                        <div class="floor-header">
+                            <div class="floor-title">2F</div>
+                            <p style="color: var(--primary); font-size: 0.9rem;">開発フロア / 診療フロア</p>
+                        </div>
+                        <img src="floormap-2.png" alt="2Fフロアマップ" class="floor-map-image">
+                        
+                        <p class="room-info-note">※ 下記一覧から確認したい部屋をクリック/タップすると、詳細画像が表示されます</p>
+                        <table class="room-legend-table">
+                            <thead>
+                                <tr>
+                                    <th>室番号</th>
+                                    <th>室名</th>
+                                    <th>区分</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><span class="room-number">201</span></td>
+                                    <td><span class="room-name-link" onclick="openRoomModal('201', 'ナースステーション', 'その他', '医療スタッフが常駐し、被験者の健康状態を24時間体制で管理・モニタリングする拠点です。緊急時の対応や日常的な健康相談にも対応しています。')">ナースステーション</span></td>
+                                    <td><span class="room-type-badge badge-common">その他</span></td>
+                                </tr>
+                                <tr>
+                                    <td><span class="room-number">202</span></td>
+                                    <td><span class="room-name-link" onclick="openRoomModal('202', '治験薬投与室', '臨床試験', '治験薬の投与を行う専用の施設です。厳格な管理体制のもと、被験者への安全な投薬を実施しています。')">治験薬投与室</span></td>
+                                    <td><span class="room-type-badge badge-clinical">臨床試験</span></td>
+                                </tr>
+                                <tr>
+                                    <td><span class="room-number">203</span></td>
+                                    <td><span class="room-name-link" onclick="openRoomModal('203', '被験者宿泊室', '臨床試験', '臨床試験参加者のための宿泊施設です。快適な環境で試験期間中の滞在をサポートします。')">被験者宿泊室</span></td>
+                                    <td><span class="room-type-badge badge-clinical">臨床試験</span></td>
+                                </tr>
+                                <tr>
+                                    <td><span class="room-number">204</span></td>
+                                    <td><span class="room-name-link" onclick="openRoomModal('204', '動態試験実施室', '研究開発', '薬物動態試験を実施する専門施設です。最新の分析機器を用いて薬物の体内動態を詳細に解析します。')">動態試験実施室</span></td>
+                                    <td><span class="room-type-badge badge-research">研究開発</span></td>
+                                </tr>
+                                <tr>
+                                    <td><span class="room-number">205</span></td>
+                                    <td><span class="room-name-link" onclick="openRoomModal('205', '研究室1', '研究開発', '神経科学を中心とした基礎研究を行う研究室です。先端的な研究プロジェクトを推進しています。')">研究室1</span></td>
+                                    <td><span class="room-type-badge badge-research">研究開発</span></td>
+                                </tr>
+                                <tr>
+                                    <td><span class="room-number">206</span></td>
+                                    <td><span class="room-name-link" onclick="openRoomModal('206', '研究室2', '研究開発', 'バイオテクノロジーや分子生物学の研究を行う施設です。次世代医薬品の開発に取り組んでいます。')">研究室2</span></td>
+                                    <td><span class="room-type-badge badge-research">研究開発</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- 1F Map -->
+                    <div class="facility-map active" id="map-1f">
+                        <div class="floor-header">
+                            <div class="floor-title">1F</div>
+                            <p style="color: var(--primary); font-size: 0.9rem;">エントランスフロア</p>
+                        </div>
+                        <img src="floormap-1.png" alt="1Fフロアマップ" class="floor-map-image">
+                        
+                        <p class="room-info-note">※ 下記一覧から確認したい部屋をクリック/タップすると、詳細画像が表示されます</p>
+                        <table class="room-legend-table">
+                            <thead>
+                                <tr>
+                                    <th>室番号</th>
+                                    <th>室名</th>
+                                    <th>区分</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><span class="room-number">101</span></td>
+                                    <td><span class="room-name-link" onclick="openRoomModal('101', 'エントランス', 'その他', '当施設のメインエントランスです。広々とした空間で、来訪者の皆様を快適にお迎えいたします。')">エントランス</span></td>
+                                    <td><span class="room-type-badge badge-common">その他</span></td>
+                                </tr>
+                                <tr>
+                                    <td><span class="room-number">102</span></td>
+                                    <td><span class="room-name-link" onclick="openRoomModal('102', '被験者受付', '臨床試験', '臨床試験にご参加いただく被験者様の受付窓口です。専門スタッフが丁寧にご案内いたします。')">被験者受付</span></td>
+                                    <td><span class="room-type-badge badge-clinical">臨床試験</span></td>
+                                </tr>
+                                <tr>
+                                    <td><span class="room-number">103</span></td>
+                                    <td><span class="room-name-link" onclick="openRoomModal('103', '被験者待合室', '臨床試験', '臨床試験参加者の待合スペースです。リラックスしてお待ちいただける環境を整えています。')">被験者待合室</span></td>
+                                    <td><span class="room-type-badge badge-clinical">臨床試験</span></td>
+                                </tr>
+                                <tr>
+                                    <td><span class="room-number">104</span></td>
+                                    <td><span class="room-name-link" onclick="openRoomModal('104', '問診室', '臨床試験', '医師による問診を行う部屋です。プライバシーに配慮した個室で、詳細な健康状態の確認を行います。')">問診室</span></td>
+                                    <td><span class="room-type-badge badge-clinical">臨床試験</span></td>
+                                </tr>
+                                <tr>
+                                    <td><span class="room-number">105</span></td>
+                                    <td><span class="room-name-link" onclick="openRoomModal('105', '来客ラウンジ', '研究開発', 'お客様との打ち合わせや商談に使用するラウンジです。落ち着いた雰囲気の中でお話しいただけます。')">来客ラウンジ</span></td>
+                                    <td><span class="room-type-badge badge-research">研究開発</span></td>
+                                </tr>
+                                <tr>
+                                    <td><span class="room-number">106</span></td>
+                                    <td><span class="room-name-link" onclick="openRoomModal('106', '会議室', '研究開発', '社内会議やプレゼンテーションに使用する会議室です。最新の設備を備えています。')">会議室</span></td>
+                                    <td><span class="room-type-badge badge-research">研究開発</span></td>
+                                </tr>
+                                <tr>
+                                    <td><span class="room-number">107</span></td>
+                                    <td><span class="room-name-link" onclick="openRoomModal('107', '資料、医療機器保管室', '研究開発', '重要な研究資料や医療機器を厳重に管理・保管する施設です。適切な環境管理のもと運営されています。')">資料、医療機器保管室</span></td>
+                                    <td><span class="room-type-badge badge-research">研究開発</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <p style="text-align: center; margin-top: 2rem; color: rgba(240, 249, 255, 0.7); font-size: 0.9rem;">
+                    ※ 施設内は関係者以外立入禁止となっております<br>
+                    ※ 見学をご希望の方は事前にお問い合わせください
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 ニューロライフ製薬株式会社 All rights reserved.</p>
+        <p style="margin-top: 0.5rem; font-size: 0.8rem; opacity: 0.6;">
+            本サイトの情報は医療従事者向けです | プライバシーポリシー | 利用規約
+        </p>
+    </footer>
+
+    <!-- Room Detail Modal -->
+    <div id="roomModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeRoomModal()">&times;</button>
+            <div class="modal-room-number" id="modalRoomNumber"></div>
+            <div class="modal-room-name" id="modalRoomName"></div>
+            <img id="modalRoomImage" class="modal-room-image" src="" alt="Room Image">
+            <div class="modal-room-description" id="modalRoomDescription"></div>
+        </div>
+    </div>
+
+    <script>
+        // Create floating particles
+        const particlesContainer = document.getElementById('particles');
+        for (let i = 0; i < 50; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.top = Math.random() * 100 + '%';
+            particle.style.animationDelay = Math.random() * 15 + 's';
+            particle.style.animationDuration = (10 + Math.random() * 10) + 's';
+            particlesContainer.appendChild(particle);
+        }
+
+        // Floor tab switching
+        const floorTabs = document.querySelectorAll('.floor-tab');
+        const facilityMaps = document.querySelectorAll('.facility-map');
+
+        floorTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const targetFloor = tab.getAttribute('data-floor');
+                
+                // Remove active class from all tabs and maps
+                floorTabs.forEach(t => t.classList.remove('active'));
+                facilityMaps.forEach(m => m.classList.remove('active'));
+                
+                // Add active class to clicked tab and corresponding map
+                tab.classList.add('active');
+                document.getElementById(`map-${targetFloor}`).classList.add('active');
+            });
+        });
+
+        // Room modal functions
+        function openRoomModal(roomNumber, roomName, category, description) {
+            document.getElementById('modalRoomNumber').textContent = roomNumber;
+            document.getElementById('modalRoomName').textContent = roomName;
+            document.getElementById('modalRoomImage').src = `${roomNumber}.png`;
+            document.getElementById('modalRoomImage').alt = `${roomName}の画像`;
+            document.getElementById('modalRoomDescription').textContent = description;
+            document.getElementById('roomModal').classList.add('active');
+        }
+
+        function closeRoomModal() {
+            document.getElementById('roomModal').classList.remove('active');
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('roomModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeRoomModal();
+            }
+        });
+
+        // Make table rows clickable
+        document.addEventListener('DOMContentLoaded', function() {
+            const tableRows = document.querySelectorAll('.room-legend-table tbody tr');
+            tableRows.forEach(row => {
+                row.addEventListener('click', function() {
+                    const link = this.querySelector('.room-name-link');
+                    if (link) {
+                        link.click();
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

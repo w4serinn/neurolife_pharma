@@ -40,6 +40,59 @@
             z-index: 0;
             background: linear-gradient(135deg, #051923 0%, #0a4d68 50%, #088395 100%);
         }
+
+        .grid-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            background-image: 
+                linear-gradient(rgba(5, 195, 221, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(5, 195, 221, 0.05) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+        }
+
+        .floating-shapes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .shape {
+            position: absolute;
+            opacity: 0.1;
+            animation: float-shape 20s infinite ease-in-out;
+        }
+
+        .shape.circle {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--accent), transparent);
+        }
+
+        .shape.square {
+            width: 200px;
+            height: 200px;
+            background: linear-gradient(45deg, var(--secondary), transparent);
+            transform: rotate(45deg);
+        }
+
+        @keyframes float-shape {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(100px, -100px) rotate(90deg); }
+            50% { transform: translate(200px, 50px) rotate(180deg); }
+            75% { transform: translate(-50px, 100px) rotate(270deg); }
+        }
+
         .warning-overlay {
             display: none;
             position: fixed;
@@ -130,7 +183,7 @@
             z-index: 10000;
         }
         .auth-overlay.hidden {
-            display: none;
+            display: none !important;
         }
         .auth-container {
             background: linear-gradient(135deg, rgba(10, 77, 104, 0.9), rgba(8, 131, 149, 0.9));
@@ -149,6 +202,7 @@
             font-size: 4rem;
             margin-bottom: 1rem;
         }
+
         .auth-header h2 {
             font-family: 'Orbitron', sans-serif;
             font-size: 1.8rem;
@@ -227,6 +281,24 @@
         .back-button:hover {
             background: rgba(240, 249, 255, 0.2);
         }
+
+        .forgot-password {
+            text-align: right;
+            margin-top: 0.5rem;
+        }
+
+        .forgot-password a {
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+
+        .forgot-password a:hover {
+            color: var(--light);
+            text-decoration: underline;
+        }
+
         header {
             position: fixed;
             top: 0;
@@ -265,6 +337,12 @@
             font-size: 1.3rem;
             color: var(--dark);
             box-shadow: 0 4px 20px rgba(5, 195, 221, 0.4);
+            animation: logo-pulse 3s ease-in-out infinite;
+        }
+
+        @keyframes logo-pulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 4px 20px rgba(5, 195, 221, 0.4); }
+            50% { transform: scale(1.05); box-shadow: 0 6px 30px rgba(5, 195, 221, 0.6); }
         }
         .logo-text {
             display: flex;
@@ -310,35 +388,6 @@
         .content-wrapper {
             position: relative;
             z-index: 1;
-        }
-        .incident-banner {
-            position: relative;
-            background: rgba(139, 0, 0, 0.95);
-            backdrop-filter: blur(10px);
-            border-bottom: 2px solid #ff4444;
-            padding: 1rem 2rem;
-            z-index: 98;
-            box-shadow: 0 4px 20px rgba(255, 68, 68, 0.4);
-        }
-        .incident-content {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-        .incident-icon {
-            font-size: 1.5rem;
-        }
-        .incident-text {
-            color: #ffcccc;
-            font-size: 0.95rem;
-            line-height: 1.5;
-        }
-        .incident-text strong {
-            color: #ff6b6b;
-            font-weight: 700;
-            font-family: 'Orbitron', sans-serif;
         }
         main {
             position: relative;
@@ -427,6 +476,15 @@
 </head>
 <body>
     <div class="background-animation"></div>
+    
+    <!-- Grid overlay and floating shapes -->
+    <div class="grid-overlay"></div>
+    <div class="floating-shapes">
+        <div class="shape circle" style="top: 10%; left: 10%;"></div>
+        <div class="shape square" style="top: 50%; right: 15%;"></div>
+        <div class="shape circle" style="bottom: 20%; left: 60%;"></div>
+    </div>
+
     <div class="warning-overlay" id="warningOverlay">
         <div class="warning-content">
             <div class="warning-icon">⚠️</div>
@@ -439,7 +497,7 @@
             <div class="countdown-text">
                 <span class="countdown-number" id="countdownNumber">10</span>秒後にトップページに自動遷移します。
             </div>
-            <button class="warning-back-button" onclick="goBackFromWarning()">前のページに戻る</button>
+            <button class="warning-back-button" onclick="goBackFromWarning()">トップページに戻る</button>
         </div>
     </div>
     <div class="auth-overlay" id="authOverlay">
@@ -463,6 +521,9 @@
                     <button type="button" class="back-button" onclick="goBack()">戻る</button>
                     <button type="submit" class="auth-button">ログイン</button>
                 </div>
+                <div class="forgot-password">
+                    <a href="#" onclick="openPasswordReset(event)">パスワードを忘れた場合</a>
+                </div>
             </form>
         </div>
     </div>
@@ -482,14 +543,6 @@
         </div>
     </header>
     <div class="content-wrapper">
-        <div class="incident-banner">
-            <div class="incident-content">
-                <span class="incident-icon">⚠️</span>
-                <span class="incident-text">
-                    <strong>2025/10/17</strong> 社内インシデント発生のため更新を中断。また、情報の閲覧権限をM-導入済の者のみに変更。
-                </span>
-            </div>
-        </div>
         <main>
             <div class="container">
                 <div class="page-header">
@@ -502,7 +555,7 @@
                         この度は当社の臨床試験にご参加いただき、誠にありがとうございます。<br>
                         被験者番号<strong style="color: var(--accent);">2847</strong>番から<strong style="color: var(--accent);">2899</strong>番の方々には、既に郵送にて詳細資料をお送りしております。<br>
                         システム移行に伴い、新しいポータルサイトへの移行を進めておりますが、現在は<strong style="color: var(--warning);">閲覧のみ</strong>可能となっております。<br>
-                        ご不明な点がございましたら、臨床試験サポートデスク（📧 clinical-support@neurolife-pharma.com）までご連絡ください。<br>
+                        ご不明な点がございましたら、臨床試験サポートデスク（📧 support@neurolife.jp）までご連絡ください。<br>
                         <span style="opacity: 0.7;">※ 本ページへのアクセスには被験者IDとパスワードが必要です。郵送書類をご確認ください。</span>
                     </p>
                 </div>
@@ -526,24 +579,36 @@
             window.location.href = 'newsite.html';
         }
 
-        function goBackFromWarning() {
-            window.location.href = 'newsite.html';
-        }
-
         function authenticate(event) {
             event.preventDefault();
             const participantId = document.getElementById('participantId').value.trim();
             const password = document.getElementById('password').value.trim();
             const errorMessage = document.getElementById('errorMessage');
+            const authOverlay = document.getElementById('authOverlay');
+            
+            console.log('=== 認証試行 ===');
+            console.log('入力されたID:', participantId, '| 期待値: test');
+            console.log('入力されたパスワード:', password, '| 期待値: test');
+            console.log('ID一致:', participantId === 'test');
+            console.log('パスワード一致:', password === 'test');
+            console.log('authOverlay要素:', authOverlay);
+            
             if (!participantId || !password) {
                 errorMessage.textContent = '被験者IDとパスワードを入力してください';
+                console.log('エラー: 未入力');
                 return false;
             }
             if (participantId === 'test' && password === 'test') {
-                document.getElementById('authOverlay').classList.add('hidden');
+                console.log('✓ 認証成功！');
+                console.log('hiddenクラス追加前:', authOverlay.className);
+                authOverlay.classList.add('hidden');
+                console.log('hiddenクラス追加後:', authOverlay.className);
+                console.log('display プロパティ:', window.getComputedStyle(authOverlay).display);
                 errorMessage.textContent = '';
                 setupInteractionDetection();
             } else {
+                console.log('✗ 認証失敗');
+                console.log('入力値が一致しません');
                 errorMessage.textContent = 'ID、もしくはパスワードが違います。';
             }
             return false;
@@ -585,8 +650,35 @@
             }, 1000);
         }
 
+        function goBackFromWarning() {
+            window.location.href = 'newsite.html';
+        }
+
+        function goBack() {
+            window.history.back();
+        }
+
+        function openPasswordReset(event) {
+            event.preventDefault();
+            window.open('password-reset.html', '_blank');
+        }
+
         window.addEventListener('DOMContentLoaded', function() {
-            localStorage.removeItem('clinical_trial_authenticated');
+            document.getElementById('authOverlay').style.display = 'flex';
+            
+            // Dynamically adjust content spacing based on header height
+            function adjustContentSpacing() {
+                const header = document.querySelector('header');
+                const contentWrapper = document.querySelector('.content-wrapper');
+                
+                if (header && contentWrapper) {
+                    const headerHeight = header.offsetHeight;
+                    contentWrapper.style.paddingTop = headerHeight + 'px';
+                }
+            }
+            
+            adjustContentSpacing();
+            window.addEventListener('resize', adjustContentSpacing);
         });
     </script>
 </body>

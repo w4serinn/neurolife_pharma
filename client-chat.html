@@ -592,7 +592,17 @@
 
             // Phase 0: 初期対応
             if (storyState.phase === 0) {
-                if (message.includes('調べ') || message.includes('わかり') || message.includes('わかった') || message.includes('分かり') || message.includes('分かった') || message.includes('はい') || message.includes('協力') || message.includes('うん')) {
+                // Phase 1のキーワードが来たら自動的にPhase 1に移行
+                if (message.includes('製品') || message.includes('neurosync') || message.includes('memoriaplus') || 
+                    message.includes('dreamlink') || message.includes('dl-x789') || message.includes('x789') ||
+                    message.includes('臨床試験') || message.includes('被験者') || 
+                    message.includes('新サイト') || message.includes('社内情報システム') ||
+                    message.includes('パスワード') || message.includes('nemophila')) {
+                    storyState.phase = 1;
+                    saveState();
+                }
+                // 通常の同意による移行
+                else if (message.includes('調べ') || message.includes('わかり') || message.includes('わかった') || message.includes('分かり') || message.includes('分かった') || message.includes('はい') || message.includes('協力') || message.includes('うん')) {
                     storyState.phase = 1;
                     saveState();
                     return {
