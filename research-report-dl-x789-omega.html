@@ -117,7 +117,7 @@
         .document-header {
             background: rgba(10, 77, 104, 0.3);
             backdrop-filter: blur(10px);
-            border: 2px solid var(--warning);
+            border: 2px solid var(--accent);
             border-radius: 12px;
             padding: 2rem;
             margin-bottom: 2rem;
@@ -133,7 +133,7 @@
         .doc-code {
             font-family: 'Orbitron', sans-serif;
             font-size: 1.5rem;
-            color: var(--warning);
+            color: var(--success);
             margin-bottom: 1rem;
         }
 
@@ -157,15 +157,9 @@
             border-radius: 20px;
             font-size: 0.85rem;
             font-weight: 600;
-            background: rgba(255, 107, 107, 0.3);
+            background: rgba(255, 107, 107, 0.2);
             border: 1px solid var(--warning);
             color: var(--warning);
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.6; }
         }
 
         .content-section {
@@ -213,7 +207,7 @@
         }
 
         .warning-box {
-            background: rgba(255, 107, 107, 0.15);
+            background: rgba(255, 107, 107, 0.1);
             border: 2px solid var(--warning);
             border-radius: 8px;
             padding: 1.5rem;
@@ -223,18 +217,6 @@
         .warning-box h3 {
             color: var(--warning);
             margin-bottom: 0.5rem;
-        }
-
-        .redacted {
-            background: rgba(0, 0, 0, 0.8);
-            color: rgba(0, 0, 0, 0.8);
-            padding: 0 0.5rem;
-            user-select: none;
-        }
-
-        .redacted:hover {
-            background: rgba(255, 107, 107, 0.2);
-            color: var(--warning);
         }
 
         footer {
@@ -298,20 +280,12 @@
             <div class="doc-title">DreamLink™ 研究レポート</div>
             <div class="doc-meta">
                 <div class="doc-meta-item">📅 作成日: 2024年11月08日</div>
-                <div class="doc-meta-item">👤 研究責任者: <span class="redacted">████████</span></div>
+                <div class="doc-meta-item">👤 研究責任者: 睡眠科学研究部門</div>
                 <div class="doc-meta-item">🔄 最終更新: 2024年11月21日</div>
             </div>
             <div style="margin-top: 1rem;">
-                <span class="status-badge">⚠️ 最高機密 - レベル5 - アクセス制限</span>
+                <span class="status-badge">機密情報 - レベル3</span>
             </div>
-        </div>
-
-        <div class="warning-box">
-            <h3>⚠️ 緊急通知</h3>
-            <p>
-                本文書は最高機密に分類されています。本製品に関する臨床試験において重大なインシデントが発生したため、
-                アクセス権限を持つ者のみが閲覧可能です。詳細は<a href="product-incident-dl-x789-omega.html" style="color: var(--warning); text-decoration: underline;">インシデント報告書</a>を参照してください。
-            </p>
         </div>
 
         <div class="content-section">
@@ -376,7 +350,7 @@
 
             <h3 class="subsection-title">第I相臨床試験</h3>
             <p>
-                健常成人ボランティア（n=42）を対象とした段階的投与試験を実施しました。<span class="redacted">試験は2024年10月に中断されました</span>
+                健常成人ボランティア（n=42）を対象とした段階的投与試験を実施しました。
             </p>
         </div>
 
@@ -429,35 +403,19 @@
                 <li>軽度〜中等度の悪夢（発現率: 23.8%）</li>
                 <li>睡眠麻痺の増加（発現率: 14.3%）</li>
                 <li>起床時の見当識障害（発現率: 9.5%）</li>
-                <li class="redacted">重篤な有害事象: ████████████</li>
             </ul>
-
-            <div class="warning-box">
-                <h3>⚠️ 重要な安全性情報</h3>
-                <p>
-                    <strong>2024年10月27日付けで、本製品の臨床試験は一時中断されました。</strong><br>
-                    被験者の一部において、<span class="redacted">現実と夢の区別困難</span>、<span class="redacted">持続性の解離症状</span>、
-                    および<span class="redacted">████████</span>が報告されています。詳細は機密扱いとし、
-                    倫理委員会および<span class="redacted">████████</span>による調査が進行中です。
-                </p>
-            </div>
         </div>
 
         <div class="content-section">
             <h2 class="section-title">💡 結論</h2>
             <p>
                 DL-X789-OMEGA（DreamLink™）は、前臨床試験において予想を大きく上回る明晰夢誘導効果を示しました。
-                しかし、第I相臨床試験では予期せぬ重篤な有害事象が発生したため、現在は試験を中断し、
-                安全性の再評価を実施しています。
+                第I相臨床試験でも良好な有効性が確認されており、第II相臨床試験への進展が検討されています。
             </p>
 
             <div class="warning-box">
-                <h3>⚠️ 最高機密事項</h3>
-                <p>
-                    本研究レポートは最高機密情報です。外部への開示は厳禁です。本製品の開発継続については、
-                    <span class="redacted">████████</span>の判断を待つ必要があります。
-                    関係者以外のアクセスは法的処罰の対象となります。
-                </p>
+                <h3>⚠️ 重要な注意事項</h3>
+                <p>本研究レポートは社内限定の機密情報です。外部への開示は厳禁です。本製品は現在開発段階にあり、今後の臨床試験結果を踏まえて販売時期を決定予定です。</p>
             </div>
         </div>
 
@@ -467,7 +425,6 @@
                 <li><a href="experiment-data-dl-x789-omega.html" style="color: var(--accent);">DL-X789-OMEGA 実験データベース</a></li>
                 <li><a href="analysis-report-dl-x789-omega.html" style="color: var(--accent);">DL-X789-OMEGA 統計分析レポート</a></li>
                 <li><a href="product-clinical-dl-x789-omega.html" style="color: var(--accent);">DL-X789-OMEGA 臨床試験データ</a></li>
-                <li><a href="product-incident-dl-x789-omega.html" style="color: var(--warning); text-decoration: underline;">⚠️ DL-X789-OMEGA 重大インシデント調査報告</a></li>
             </ul>
         </div>
     </div>
@@ -475,7 +432,7 @@
     <footer>
         <p>&copy; 2025 ニューロライフ製薬株式会社 All rights reserved.</p>
         <p style="margin-top: 0.5rem; font-size: 0.8rem; opacity: 0.6;">
-            最高機密情報 | 文書番号: NL-RR-2024-1108-DLX789O-CLASSIFIED
+            機密情報 - 社内限定 | 文書番号: NL-RR-2024-1108-DLX789O
         </p>
     </footer>
 </body>

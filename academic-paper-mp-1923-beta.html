@@ -2,12 +2,26 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <title>MP-1923-BETA 学術論文 | ニューロライフ製薬</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MP-1923-BETA 学術論文集 | ニューロライフ製薬</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Noto+Sans+JP:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
-        :root { --primary: #0a4d68; --accent: #05c3dd; --secondary: #088395; --dark: #051923; --light: #f0f9ff; }
+        :root {
+            --primary: #0a4d68;
+            --secondary: #088395;
+            --accent: #05c3dd;
+            --dark: #051923;
+            --light: #f0f9ff;
+            --success: #51cf66;
+        }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Noto Sans JP', sans-serif; background: linear-gradient(135deg, var(--dark) 0%, var(--primary) 100%); color: var(--light); min-height: 100vh; line-height: 1.8; }
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background: linear-gradient(135deg, var(--dark) 0%, var(--primary) 100%);
+            color: var(--light);
+            min-height: 100vh;
+            line-height: 1.8;
+        }
         header {
             position: fixed;
             top: 0;
@@ -20,7 +34,6 @@
             z-index: 100;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
         }
-
         .header-content {
             max-width: 1400px;
             margin: 0 auto;
@@ -29,13 +42,7 @@
             align-items: center;
             gap: 2rem;
         }
-
-        .logo-container {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
+        .logo-container { display: flex; align-items: center; gap: 1rem; }
         .logo-icon {
             width: 50px;
             height: 50px;
@@ -50,12 +57,10 @@
             color: var(--dark);
             box-shadow: 0 4px 20px rgba(5, 195, 221, 0.4);
         }
-
         .logo-text {
             display: flex;
             flex-direction: column;
         }
-
         .logo {
             font-family: 'Orbitron', sans-serif;
             font-size: 1.5rem;
@@ -65,14 +70,12 @@
             letter-spacing: 2px;
             text-shadow: 0 0 20px rgba(5, 195, 221, 0.5);
         }
-
         .logo-subtitle {
             font-size: 0.7rem;
             color: rgba(240, 249, 255, 0.6);
             letter-spacing: 3px;
             font-weight: 300;
         }
-
         nav a {
             color: var(--light);
             text-decoration: none;
@@ -80,26 +83,67 @@
             border-radius: 8px;
             transition: all 0.3s;
         }
-
         nav a:hover {
             color: var(--accent);
             background: rgba(5, 195, 221, 0.1);
         }
-
-.header-content { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-family: 'Orbitron', sans-serif; font-size: 1.8rem; font-weight: 900; color: var(--accent); text-decoration: none; }
-        nav a { color: var(--light); text-decoration: none; padding: 0.5rem 1rem; margin-left: 1rem; }
         .container { max-width: 1000px; margin: 2rem auto; padding: 120px 2rem 0; }
-        .document-header { background: rgba(10, 77, 104, 0.3); border: 2px solid var(--accent); border-radius: 12px; padding: 2rem; margin-bottom: 2rem; }
-        .doc-code { font-family: 'Orbitron', sans-serif; font-size: 1.5rem; color: #51cf66; margin-bottom: 1rem; }
-        .doc-title { font-family: 'Orbitron', sans-serif; font-size: 2rem; color: var(--accent); }
-        .content-section { background: rgba(5, 25, 35, 0.6); border: 1px solid rgba(5, 195, 221, 0.3); border-radius: 8px; padding: 2rem; margin-bottom: 1.5rem; }
-        .section-title { font-family: 'Orbitron', sans-serif; font-size: 1.5rem; color: var(--accent); margin-bottom: 1.5rem; border-bottom: 2px solid var(--accent); padding-bottom: 0.5rem; }
-        footer { text-align: center; padding: 2rem; background: rgba(5, 25, 35, 0.9); border-top: 1px solid var(--accent); margin-top: 4rem; }
+        .document-header {
+            background: rgba(10, 77, 104, 0.3);
+            border: 2px solid var(--accent);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        .doc-code { font-family: 'Orbitron', sans-serif; font-size: 1.5rem; color: var(--success); margin-bottom: 1rem; }
+        .doc-title { font-family: 'Orbitron', sans-serif; font-size: 2rem; color: var(--accent); margin-bottom: 1rem; }
+        .doc-meta { display: flex; gap: 2rem; flex-wrap: wrap; font-size: 0.9rem; color: rgba(240, 249, 255, 0.7); }
+        .status-badge {
+            display: inline-block; padding: 0.4rem 1rem; border-radius: 20px;
+            font-size: 0.85rem; font-weight: 600;
+            background: rgba(81, 207, 102, 0.2); border: 1px solid var(--success); color: var(--success);
+        }
+        .content-section {
+            background: rgba(5, 25, 35, 0.6);
+            border: 1px solid rgba(5, 195, 221, 0.3);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+        }
+        .section-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--accent);
+        }
+        .paper-card {
+            background: rgba(5, 25, 35, 0.5);
+            border: 1px solid rgba(5, 195, 221, 0.3);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        .paper-title { font-size: 1.1rem; font-weight: 600; color: var(--light); margin-bottom: 0.5rem; }
+        .paper-authors { font-size: 0.9rem; color: rgba(240, 249, 255, 0.7); margin-bottom: 0.5rem; }
+        .paper-journal { font-size: 0.85rem; color: var(--accent); margin-bottom: 0.5rem; }
+        .paper-meta { display: flex; gap: 1rem; flex-wrap: wrap; font-size: 0.8rem; color: rgba(240, 249, 255, 0.6); }
+        .paper-tag {
+            display: inline-block; padding: 0.2rem 0.6rem; border-radius: 4px;
+            font-size: 0.75rem;
+            background: rgba(5, 195, 221, 0.2); color: var(--accent);
+        }
+        footer {
+            text-align: center; padding: 2rem;
+            background: rgba(5, 25, 35, 0.9);
+            border-top: 1px solid var(--accent);
+            margin-top: 4rem; font-size: 0.9rem; opacity: 0.8;
+        }
     </style>
 </head>
 <body>
-        <header>
+    <header>
         <div class="header-content">
             <div class="logo-container">
                 <div class="logo-icon">NL</div>
@@ -108,21 +152,108 @@
                     <div class="logo-subtitle">PHARMACEUTICALS</div>
                 </div>
             </div>
-            <nav>
-                <a href="archive-library.html">アーカイブに戻る</a>
-            </nav>
+            <nav><a href="archive-library.html">アーカイブに戻る</a></nav>
         </div>
     </header>
+
     <div class="container">
         <div class="document-header">
             <div class="doc-code">MP-1923-BETA</div>
             <div class="doc-title">MemoriaPlus™ 関連学術論文集</div>
+            <div class="doc-meta">
+                <div class="doc-meta-item">📅 最終更新: 2025年1月10日</div>
+                <div class="doc-meta-item">📚 収録論文: 6件</div>
+            </div>
+            <div style="margin-top: 1rem;">
+                <span class="status-badge">公開可能</span>
+            </div>
         </div>
+
         <div class="content-section">
-            <h2 class="section-title">📚 学術論文アーカイブ</h2>
-            <p>MemoriaPlus™に関連する査読済み学術論文および学会発表資料のアーカイブです。</p>
+            <h2 class="section-title">📄 査読済み論文</h2>
+
+            <div class="paper-card">
+                <div class="paper-title">MP-1923-BETAによる海馬長期増強の促進とCREB経路活性化</div>
+                <div class="paper-authors">中山 智也, 山根 亮平, 石井 由美, 高木 正明 他</div>
+                <div class="paper-journal">Journal of Memory Enhancement Research, 2024; 8(2): 112-128</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">基礎研究</span>
+                    <span>DOI: 10.1093/jmer/mem0284</span>
+                    <span>IF: 5.2</span>
+                </div>
+            </div>
+
+            <div class="paper-card">
+                <div class="paper-title">新規記憶増強薬MP-1923-BETAの薬物動態および安全性：第I相臨床試験結果</div>
+                <div class="paper-authors">村田 健一, 佐藤 恵子, 田辺 俊介 他</div>
+                <div class="paper-journal">International Journal of Cognitive Pharmacology, 2024; 32(4): 289-302</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">Phase I</span>
+                    <span>DOI: 10.1016/j.ijcp.2024.04.018</span>
+                    <span>IF: 4.8</span>
+                </div>
+            </div>
+
+            <div class="paper-card">
+                <div class="paper-title">加齢に伴う記憶力低下に対するMP-1923-BETAの有効性：無作為化比較試験</div>
+                <div class="paper-authors">川上 真司, 山根 亮平, 林 美咲, 西村 大輔 他</div>
+                <div class="paper-journal">Advances in Memory Science, 2024; 15(6): 445-461</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">Phase II</span>
+                    <span>DOI: 10.1177/ams.2024.1124</span>
+                    <span>IF: 7.4</span>
+                </div>
+            </div>
+
+            <div class="paper-card">
+                <div class="paper-title">記憶固定化における睡眠の役割とMP-1923-BETAの影響</div>
+                <div class="paper-authors">岡本 理恵, 松田 浩司 他</div>
+                <div class="paper-journal">Sleep and Memory Research, 2024; 22(3): 178-192</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">基礎研究</span>
+                    <span>DOI: 10.3389/smr.2024.00892</span>
+                    <span>IF: 4.1</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">🎤 学会発表</h2>
+
+            <div class="paper-card">
+                <div class="paper-title">MP-1923-BETAによる言語記憶および視覚記憶の改善効果</div>
+                <div class="paper-authors">中山 智也, 村田 健一, 山根 亮平</div>
+                <div class="paper-journal">第8回国際記憶学会（2024年9月、京都）</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">口頭発表</span>
+                    <span>演題番号: O-087</span>
+                </div>
+            </div>
+
+            <div class="paper-card">
+                <div class="paper-title">記憶増強薬の新たな作用機序：CREB経路を標的とした治療戦略</div>
+                <div class="paper-authors">川上 真司, ニューロライフ製薬研究チーム</div>
+                <div class="paper-journal">Asia-Pacific Neuroscience Conference 2024（Seoul, Korea）</div>
+                <div class="paper-meta">
+                    <span class="paper-tag">招待講演</span>
+                    <span>Symposium Session</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">📎 関連文書</h2>
+            <ul style="margin-left: 2rem;">
+                <li><a href="research-report-mp-1923-beta.html" style="color: var(--accent);">MP-1923-BETA 研究レポート</a></li>
+                <li><a href="research-result-mp-1923-beta.html" style="color: var(--accent);">MP-1923-BETA 研究成果まとめ</a></li>
+                <li><a href="product-clinical-mp-1923-beta.html" style="color: var(--accent);">MP-1923-BETA 臨床試験結果</a></li>
+            </ul>
         </div>
     </div>
-    <footer><p>&copy; 2025 ニューロライフ製薬株式会社</p></footer>
+
+    <footer>
+        <p>&copy; 2025 ニューロライフ製薬株式会社 All rights reserved.</p>
+        <p style="margin-top: 0.5rem; font-size: 0.8rem; opacity: 0.6;">文書番号: NL-AP-2024-MP1923B</p>
+    </footer>
 </body>
 </html>

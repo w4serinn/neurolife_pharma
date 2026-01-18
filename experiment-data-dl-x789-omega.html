@@ -2,12 +2,27 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DL-X789-OMEGA 実験データ | ニューロライフ製薬</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Noto+Sans+JP:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
-        :root { --primary: #0a4d68; --accent: #05c3dd; --secondary: #088395; --dark: #051923; --light: #f0f9ff; }
+        :root {
+            --primary: #0a4d68;
+            --secondary: #088395;
+            --accent: #05c3dd;
+            --dark: #051923;
+            --light: #f0f9ff;
+            --success: #51cf66;
+            --warning: #ff6b6b;
+        }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Noto Sans JP', sans-serif; background: linear-gradient(135deg, var(--dark) 0%, var(--primary) 100%); color: var(--light); min-height: 100vh; line-height: 1.8; }
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background: linear-gradient(135deg, var(--dark) 0%, var(--primary) 100%);
+            color: var(--light);
+            min-height: 100vh;
+            line-height: 1.8;
+        }
         header {
             position: fixed;
             top: 0;
@@ -20,7 +35,6 @@
             z-index: 100;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
         }
-
         .header-content {
             max-width: 1400px;
             margin: 0 auto;
@@ -29,13 +43,7 @@
             align-items: center;
             gap: 2rem;
         }
-
-        .logo-container {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
+        .logo-container { display: flex; align-items: center; gap: 1rem; }
         .logo-icon {
             width: 50px;
             height: 50px;
@@ -50,56 +58,70 @@
             color: var(--dark);
             box-shadow: 0 4px 20px rgba(5, 195, 221, 0.4);
         }
-
         .logo-text {
             display: flex;
             flex-direction: column;
         }
-
-        .logo {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.5rem;
-            font-weight: 900;
-            color: var(--accent);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            text-shadow: 0 0 20px rgba(5, 195, 221, 0.5);
-        }
-
-        .logo-subtitle {
-            font-size: 0.7rem;
-            color: rgba(240, 249, 255, 0.6);
-            letter-spacing: 3px;
-            font-weight: 300;
-        }
-
+        .logo { font-family: 'Orbitron', sans-serif; font-size: 1.5rem; font-weight: 900; color: var(--accent); text-transform: uppercase; letter-spacing: 2px; text-shadow: 0 0 20px rgba(5, 195, 221, 0.5); }
+        .logo-subtitle { font-size: 0.7rem; color: rgba(240, 249, 255, 0.6); letter-spacing: 3px; font-weight: 300; }
         nav a {
             color: var(--light);
             text-decoration: none;
             padding: 0.5rem 1rem;
             border-radius: 8px;
-            transition: all 0.3s;
+            transition: all 0.3s ease;
+            font-weight: 400;
         }
-
         nav a:hover {
             color: var(--accent);
             background: rgba(5, 195, 221, 0.1);
+            transform: translateY(-2px);
         }
-
-.header-content { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-family: 'Orbitron', sans-serif; font-size: 1.8rem; font-weight: 900; color: var(--accent); text-decoration: none; }
-        nav a { color: var(--light); text-decoration: none; padding: 0.5rem 1rem; margin-left: 1rem; }
         .container { max-width: 1000px; margin: 2rem auto; padding: 120px 2rem 0; }
-        .document-header { background: rgba(10, 77, 104, 0.3); border: 2px solid var(--accent); border-radius: 12px; padding: 2rem; margin-bottom: 2rem; }
-        .doc-code { font-family: 'Orbitron', sans-serif; font-size: 1.5rem; color: #51cf66; margin-bottom: 1rem; }
-        .doc-title { font-family: 'Orbitron', sans-serif; font-size: 2rem; color: var(--accent); }
-        .content-section { background: rgba(5, 25, 35, 0.6); border: 1px solid rgba(5, 195, 221, 0.3); border-radius: 8px; padding: 2rem; margin-bottom: 1.5rem; }
-        .section-title { font-family: 'Orbitron', sans-serif; font-size: 1.5rem; color: var(--accent); margin-bottom: 1.5rem; border-bottom: 2px solid var(--accent); padding-bottom: 0.5rem; }
-        footer { text-align: center; padding: 2rem; background: rgba(5, 25, 35, 0.9); border-top: 1px solid var(--accent); margin-top: 4rem; }
+        .document-header {
+            background: rgba(10, 77, 104, 0.3);
+            border: 2px solid var(--accent);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        .doc-code { font-family: 'Orbitron', sans-serif; font-size: 1.5rem; color: var(--success); margin-bottom: 1rem; }
+        .doc-title { font-family: 'Orbitron', sans-serif; font-size: 2rem; color: var(--accent); margin-bottom: 1rem; }
+        .doc-meta { display: flex; gap: 2rem; flex-wrap: wrap; font-size: 0.9rem; color: rgba(240, 249, 255, 0.7); }
+        .status-badge {
+            display: inline-block; padding: 0.4rem 1rem; border-radius: 20px;
+            font-size: 0.85rem; font-weight: 600;
+            background: rgba(81, 207, 102, 0.2); border: 1px solid var(--success); color: var(--success);
+        }
+        .content-section {
+            background: rgba(5, 25, 35, 0.6);
+            border: 1px solid rgba(5, 195, 221, 0.3);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+        }
+        .section-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--accent);
+        }
+        .subsection-title { font-size: 1.1rem; color: var(--success); margin: 1.5rem 0 1rem; }
+        .data-table { width: 100%; border-collapse: collapse; margin: 1rem 0; }
+        .data-table th, .data-table td { padding: 0.75rem; border: 1px solid rgba(5, 195, 221, 0.3); text-align: left; }
+        .data-table th { background: rgba(5, 195, 221, 0.2); font-weight: 600; color: var(--accent); }
+        footer {
+            text-align: center; padding: 2rem;
+            background: rgba(5, 25, 35, 0.9);
+            border-top: 1px solid var(--accent);
+            margin-top: 4rem; font-size: 0.9rem; opacity: 0.8;
+        }
     </style>
 </head>
 <body>
-        <header>
+    <header>
         <div class="header-content">
             <div class="logo-container">
                 <div class="logo-icon">NL</div>
@@ -108,21 +130,150 @@
                     <div class="logo-subtitle">PHARMACEUTICALS</div>
                 </div>
             </div>
-            <nav>
-                <a href="archive-library.html">アーカイブに戻る</a>
-            </nav>
+            <nav><a href="archive-library.html">アーカイブに戻る</a></nav>
         </div>
     </header>
+
     <div class="container">
         <div class="document-header">
             <div class="doc-code">DL-X789-OMEGA</div>
-            <div class="doc-title">DreamLink™ 実験データベース</div>
+            <div class="doc-title">DreamLink™ 実験データ</div>
+            <div class="doc-meta">
+                <div class="doc-meta-item">📅 作成日: 2024年3月1日</div>
+                <div class="doc-meta-item">📄 最終更新: 2025年1月12日</div>
+            </div>
+            <div style="margin-top: 1rem;">
+                <span class="status-badge">機密情報 - レベル3</span>
+            </div>
         </div>
+
         <div class="content-section">
             <h2 class="section-title">🧪 実験データ概要</h2>
-            <p>DreamLink™に関する実験データの統合データベースです。前臨床試験および臨床試験で取得された全データを含みます。</p>
+            <p>本文書は、DreamLink™（DL-X789-OMEGA）の前臨床試験および臨床試験において取得された主要な実験データをまとめたものです。</p>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">🐀 前臨床試験データ</h2>
+
+            <h3 class="subsection-title">睡眠脳波解析（ラット）</h3>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>群</th>
+                        <th>n</th>
+                        <th>REM睡眠時間（分/日）</th>
+                        <th>REM密度</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>対照群</td><td>24</td><td>18.4 ± 3.2</td><td>0.82 ± 0.08</td></tr>
+                    <tr><td>0.8mg/kg</td><td>24</td><td>22.6 ± 3.8</td><td>1.04 ± 0.10</td></tr>
+                    <tr><td>1.5mg/kg</td><td>24</td><td>26.8 ± 4.2</td><td>1.18 ± 0.12</td></tr>
+                    <tr><td>3.0mg/kg</td><td>24</td><td>32.2 ± 4.8</td><td>1.38 ± 0.15</td></tr>
+                </tbody>
+            </table>
+
+            <h3 class="subsection-title">神経活動マッピング</h3>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>脳領域</th>
+                        <th>対照群</th>
+                        <th>DL-X789投与群</th>
+                        <th>活性変化率</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>前頭前皮質</td><td>100%（基準）</td><td>142%</td><td>+42%</td></tr>
+                    <tr><td>海馬</td><td>100%（基準）</td><td>118%</td><td>+18%</td></tr>
+                    <tr><td>扁桃体</td><td>100%（基準）</td><td>106%</td><td>+6%</td></tr>
+                    <tr><td>視床</td><td>100%（基準）</td><td>128%</td><td>+28%</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">💊 薬物動態データ（ヒト）</h2>
+            
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>パラメータ</th>
+                        <th>1.5mg投与</th>
+                        <th>2.5mg投与</th>
+                        <th>3.0mg投与</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>Cmax (ng/mL)</td><td>28.4 ± 4.2</td><td>48.6 ± 6.8</td><td>58.2 ± 7.2</td></tr>
+                    <tr><td>Tmax (h)</td><td>1.2 ± 0.3</td><td>1.4 ± 0.4</td><td>1.5 ± 0.4</td></tr>
+                    <tr><td>AUC0-∞ (ng·h/mL)</td><td>186 ± 28</td><td>324 ± 42</td><td>392 ± 48</td></tr>
+                    <tr><td>t½ (h)</td><td>6.8 ± 1.2</td><td>7.4 ± 1.4</td><td>7.8 ± 1.5</td></tr>
+                    <tr><td>脳内移行率</td><td>82%</td><td>84%</td><td>85%</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">🧠 睡眠・夢評価データ（Phase I）</h2>
+            
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>評価項目</th>
+                        <th>ベースライン</th>
+                        <th>プラセボ群</th>
+                        <th>DL-X789 2.5mg群</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>REM睡眠時間（分）</td><td>78.2 ± 14.6</td><td>82.3 ± 12.4</td><td>119.4 ± 13.8</td></tr>
+                    <tr><td>明晰夢発現率（%）</td><td>3.8 ± 1.8</td><td>4.2 ± 2.1</td><td>68.5 ± 9.2</td></tr>
+                    <tr><td>夢想起精度スコア（1-10）</td><td>3.6 ± 1.4</td><td>3.8 ± 1.2</td><td>8.4 ± 1.1</td></tr>
+                    <tr><td>夢内自己認識スコア</td><td>1.2 ± 0.6</td><td>1.4 ± 0.8</td><td>6.8 ± 1.6</td></tr>
+                    <tr><td>睡眠の質スコア（PSQI）</td><td>6.2 ± 1.8</td><td>6.4 ± 1.5</td><td>8.7 ± 1.0</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">📊 Phase IIa データ（暫定）</h2>
+            
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>評価項目</th>
+                        <th>ベースライン</th>
+                        <th>4週後（2.5mg群）</th>
+                        <th>変化率</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>総睡眠時間（分）</td><td>418 ± 38</td><td>432 ± 28</td><td>+3.3%</td></tr>
+                    <tr><td>REM睡眠時間（分）</td><td>84 ± 14</td><td>116 ± 16</td><td>+38.1%</td></tr>
+                    <tr><td>明晰夢誘導率（%）</td><td>4.1 ± 2.3</td><td>65.2 ± 10.4</td><td>+1,490%</td></tr>
+                    <tr><td>夢の鮮明度（0-10）</td><td>5.4 ± 1.2</td><td>8.6 ± 0.9</td><td>+59.3%</td></tr>
+                    <tr><td>起床時すっきり感</td><td>5.8 ± 1.4</td><td>8.2 ± 1.2</td><td>+41.4%</td></tr>
+                </tbody>
+            </table>
+            <p style="margin-top: 1rem; font-size: 0.9rem; opacity: 0.8;">
+                ※ n=8の暫定データ。Phase IIa試験は2025年3月完了予定。
+            </p>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">📎 関連文書</h2>
+            <ul style="margin-left: 2rem;">
+                <li><a href="research-report-dl-x789-omega.html" style="color: var(--accent);">DL-X789-OMEGA 研究レポート</a></li>
+                <li><a href="product-clinical-dl-x789-omega.html" style="color: var(--accent);">DL-X789-OMEGA 臨床試験結果</a></li>
+                <li><a href="analysis-report-dl-x789-omega.html" style="color: var(--accent);">DL-X789-OMEGA 統計分析レポート</a></li>
+            </ul>
         </div>
     </div>
-    <footer><p>&copy; 2025 ニューロライフ製薬株式会社</p></footer>
+
+    <footer>
+        <p>&copy; 2025 ニューロライフ製薬株式会社 All rights reserved.</p>
+        <p style="margin-top: 0.5rem; font-size: 0.8rem; opacity: 0.6;">機密情報 - 社内限定 | 文書番号: NL-ED-2024-0301-DLX789O</p>
+    </footer>
 </body>
 </html>

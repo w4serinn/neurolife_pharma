@@ -15,13 +15,7 @@
             --warning: #ff6b6b;
             --success: #51cf66;
         }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Noto Sans JP', sans-serif;
             background: linear-gradient(135deg, #1a0000 0%, #3d0000 100%);
@@ -29,91 +23,28 @@
             min-height: 100vh;
             line-height: 1.8;
         }
-
         header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
+            position: fixed; top: 0; left: 0; right: 0;
             background: rgba(5, 25, 35, 0.7);
             backdrop-filter: blur(20px);
             border-bottom: 1px solid rgba(5, 195, 221, 0.2);
             padding: 1.5rem 3rem;
             z-index: 100;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
         }
-
-        .header-content {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 2rem;
-        }
-
-        .logo-container {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
+        .header-content { max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .logo-container { display: flex; align-items: center; gap: 1rem; }
         .logo-icon {
-            width: 50px;
-            height: 50px;
+            width: 50px; height: 50px;
             background: linear-gradient(135deg, var(--accent), var(--secondary));
             border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: 'Orbitron', sans-serif;
-            font-weight: 900;
-            font-size: 1.5rem;
-            color: var(--dark);
-            box-shadow: 0 4px 20px rgba(5, 195, 221, 0.4);
+            display: flex; align-items: center; justify-content: center;
+            font-family: 'Orbitron', sans-serif; font-weight: 900; font-size: 1.5rem; color: var(--dark);
         }
-
-        .logo-text {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .logo {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.5rem;
-            font-weight: 900;
-            color: var(--accent);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            text-shadow: 0 0 20px rgba(5, 195, 221, 0.5);
-        }
-
-        .logo-subtitle {
-            font-size: 0.7rem;
-            color: rgba(240, 249, 255, 0.6);
-            letter-spacing: 3px;
-            font-weight: 300;
-        }
-
-        nav a {
-            color: var(--light);
-            text-decoration: none;
-            padding: 0.5rem 1rem;
-            border-radius: 8px;
-            transition: all 0.3s;
-        }
-
-        nav a:hover {
-            color: var(--accent);
-            background: rgba(5, 195, 221, 0.1);
-        }
-
-        .container {
-            max-width: 1000px;
-            margin: 2rem auto;
-            padding: 120px 2rem 0;
-        }
-
+        .logo { font-family: 'Orbitron', sans-serif; font-size: 1.5rem; font-weight: 900; color: var(--accent); }
+        .logo-subtitle { font-size: 0.7rem; color: rgba(240, 249, 255, 0.6); letter-spacing: 3px; }
+        nav a { color: var(--light); text-decoration: none; padding: 0.5rem 1rem; border-radius: 8px; }
+        nav a:hover { color: var(--accent); background: rgba(5, 195, 221, 0.1); }
+        .container { max-width: 1000px; margin: 2rem auto; padding: 120px 2rem 0; }
         .alert-banner {
             background: rgba(255, 107, 107, 0.3);
             border: 3px solid var(--warning);
@@ -123,93 +54,46 @@
             text-align: center;
             animation: pulse 2s infinite;
         }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.7; }
-        }
-
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.7; } }
         .alert-banner h1 {
             font-family: 'Orbitron', sans-serif;
             font-size: 2.5rem;
             color: var(--warning);
             margin-bottom: 1rem;
         }
-
         .document-header {
             background: rgba(61, 0, 0, 0.5);
-            backdrop-filter: blur(10px);
             border: 2px solid var(--warning);
             border-radius: 12px;
             padding: 2rem;
             margin-bottom: 2rem;
         }
-
-        .doc-code {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.5rem;
-            color: var(--warning);
-            margin-bottom: 1rem;
-        }
-
-        .doc-title {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 2rem;
-            color: var(--light);
-            margin-bottom: 1rem;
-        }
-
-        .doc-meta {
-            display: flex;
-            gap: 2rem;
-            flex-wrap: wrap;
-            font-size: 0.9rem;
-            color: rgba(240, 249, 255, 0.7);
-        }
-
+        .doc-code { font-family: 'Orbitron', sans-serif; font-size: 1.5rem; color: var(--warning); margin-bottom: 1rem; }
+        .doc-title { font-family: 'Orbitron', sans-serif; font-size: 2rem; color: var(--light); margin-bottom: 1rem; }
+        .doc-meta { display: flex; gap: 2rem; flex-wrap: wrap; font-size: 0.9rem; color: rgba(240, 249, 255, 0.7); }
         .content-section {
             background: rgba(61, 0, 0, 0.3);
-            backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 107, 107, 0.5);
             border-radius: 8px;
             padding: 2rem;
             margin-bottom: 1.5rem;
         }
-
         .section-title {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.5rem;
-            color: var(--warning);
-            margin-bottom: 1.5rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid var(--warning);
+            font-family: 'Orbitron', sans-serif; font-size: 1.5rem; color: var(--warning);
+            margin-bottom: 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--warning);
         }
-
         .incident-box {
             background: rgba(0, 0, 0, 0.5);
             border-left: 4px solid var(--warning);
             padding: 1.5rem;
             margin: 1rem 0;
         }
-
-        .incident-box h3 {
-            color: var(--warning);
-            margin-bottom: 0.75rem;
-        }
-
+        .incident-box h3 { color: var(--warning); margin-bottom: 0.75rem; }
         .redacted {
-            background: rgba(0, 0, 0, 0.9);
-            color: rgba(0, 0, 0, 0.9);
-            padding: 0 0.5rem;
-            user-select: none;
-            cursor: help;
+            background: rgba(0, 0, 0, 0.9); color: rgba(0, 0, 0, 0.9);
+            padding: 0 0.5rem; user-select: none; cursor: help;
         }
-
-        .redacted:hover {
-            background: rgba(255, 107, 107, 0.2);
-            color: var(--warning);
-        }
-
+        .redacted:hover { background: rgba(255, 107, 107, 0.2); color: var(--warning); }
         .case-report {
             background: rgba(0, 0, 0, 0.3);
             border: 1px solid rgba(255, 107, 107, 0.3);
@@ -217,50 +101,17 @@
             padding: 1.5rem;
             margin: 1rem 0;
         }
-
-        .case-id {
-            font-family: 'Orbitron', sans-serif;
-            color: var(--accent);
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-
+        .case-id { font-family: 'Orbitron', sans-serif; color: var(--accent); font-weight: 700; margin-bottom: 0.5rem; }
         footer {
-            text-align: center;
-            padding: 2rem;
+            text-align: center; padding: 2rem;
             background: rgba(61, 0, 0, 0.9);
             border-top: 2px solid var(--warning);
-            margin-top: 4rem;
-            font-size: 0.9rem;
-        }
-
-        @media (max-width: 768px) {
-            header {
-                padding: 1rem 1.5rem;
-            }
-
-            .logo-icon {
-                width: 40px;
-                height: 40px;
-                font-size: 1.2rem;
-            }
-
-            .logo {
-                font-size: 1.2rem;
-            }
-
-            .container {
-                padding: 0 1rem;
-            }
-
-            .alert-banner h1 {
-                font-size: 1.8rem;
-            }
+            margin-top: 4rem; font-size: 0.9rem;
         }
     </style>
 </head>
 <body>
-        <header>
+    <header>
         <div class="header-content">
             <div class="logo-container">
                 <div class="logo-icon">NL</div>
@@ -269,9 +120,7 @@
                     <div class="logo-subtitle">PHARMACEUTICALS</div>
                 </div>
             </div>
-            <nav>
-                <a href="archive-library.html">アーカイブに戻る</a>
-            </nav>
+            <nav><a href="archive-library.html">アーカイブに戻る</a></nav>
         </div>
     </header>
 

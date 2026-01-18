@@ -2,12 +2,30 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <title>NS-2847-ALPHA 分析レポート | ニューロライフ製薬</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NS-2847-ALPHA 統計分析レポート | ニューロライフ製薬</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Noto+Sans+JP:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
-        :root { --primary: #0a4d68; --accent: #05c3dd; --secondary: #088395; --dark: #051923; --light: #f0f9ff; }
+        :root {
+            --primary: #0a4d68;
+            --secondary: #088395;
+            --accent: #05c3dd;
+            --dark: #051923;
+            --light: #f0f9ff;
+            --warning: #ff6b6b;
+            --success: #51cf66;
+        }
+
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Noto Sans JP', sans-serif; background: linear-gradient(135deg, var(--dark) 0%, var(--primary) 100%); color: var(--light); min-height: 100vh; line-height: 1.8; }
+
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background: linear-gradient(135deg, var(--dark) 0%, var(--primary) 100%);
+            color: var(--light);
+            min-height: 100vh;
+            line-height: 1.8;
+        }
+
         header {
             position: fixed;
             top: 0;
@@ -30,11 +48,7 @@
             gap: 2rem;
         }
 
-        .logo-container {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
+        .logo-container { display: flex; align-items: center; gap: 1rem; }
 
         .logo-icon {
             width: 50px;
@@ -51,10 +65,7 @@
             box-shadow: 0 4px 20px rgba(5, 195, 221, 0.4);
         }
 
-        .logo-text {
-            display: flex;
-            flex-direction: column;
-        }
+        .logo-text { display: flex; flex-direction: column; }
 
         .logo {
             font-family: 'Orbitron', sans-serif;
@@ -86,20 +97,131 @@
             background: rgba(5, 195, 221, 0.1);
         }
 
-.header-content { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-family: 'Orbitron', sans-serif; font-size: 1.8rem; font-weight: 900; color: var(--accent); text-decoration: none; }
-        nav a { color: var(--light); text-decoration: none; padding: 0.5rem 1rem; margin-left: 1rem; }
-        .container { max-width: 1000px; margin: 2rem auto; padding: 120px 2rem 0; }
-        .document-header { background: rgba(10, 77, 104, 0.3); border: 2px solid var(--accent); border-radius: 12px; padding: 2rem; margin-bottom: 2rem; }
-        .doc-code { font-family: 'Orbitron', sans-serif; font-size: 1.5rem; color: #51cf66; margin-bottom: 1rem; }
-        .doc-title { font-family: 'Orbitron', sans-serif; font-size: 2rem; color: var(--accent); }
-        .content-section { background: rgba(5, 25, 35, 0.6); border: 1px solid rgba(5, 195, 221, 0.3); border-radius: 8px; padding: 2rem; margin-bottom: 1.5rem; }
-        .section-title { font-family: 'Orbitron', sans-serif; font-size: 1.5rem; color: var(--accent); margin-bottom: 1.5rem; border-bottom: 2px solid var(--accent); padding-bottom: 0.5rem; }
-        footer { text-align: center; padding: 2rem; background: rgba(5, 25, 35, 0.9); border-top: 1px solid var(--accent); margin-top: 4rem; }
+        .container {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 120px 2rem 0;
+        }
+
+        .document-header {
+            background: rgba(10, 77, 104, 0.3);
+            backdrop-filter: blur(10px);
+            border: 2px solid var(--accent);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .doc-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        .doc-code {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            color: var(--success);
+            margin-bottom: 1rem;
+        }
+
+        .doc-meta {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+            font-size: 0.9rem;
+            color: rgba(240, 249, 255, 0.7);
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            background: rgba(255, 107, 107, 0.2);
+            border: 1px solid var(--warning);
+            color: var(--warning);
+        }
+
+        .content-section {
+            background: rgba(5, 25, 35, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(5, 195, 221, 0.3);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--accent);
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+
+        .data-table th,
+        .data-table td {
+            padding: 0.75rem;
+            border: 1px solid rgba(5, 195, 221, 0.3);
+            text-align: left;
+        }
+
+        .data-table th {
+            background: rgba(5, 195, 221, 0.2);
+            font-weight: 600;
+            color: var(--accent);
+        }
+
+        .stat-highlight {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--success);
+        }
+
+        .info-box {
+            background: rgba(5, 195, 221, 0.1);
+            border: 2px solid var(--accent);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .info-box h3 {
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(5, 25, 35, 0.9);
+            border-top: 1px solid var(--accent);
+            margin-top: 4rem;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        @media (max-width: 768px) {
+            header { padding: 1rem 1.5rem; }
+            .logo-icon { width: 40px; height: 40px; font-size: 1.2rem; }
+            .logo { font-size: 1.2rem; }
+            .container { padding: 100px 1rem 0; }
+            .doc-title { font-size: 1.5rem; }
+            .data-table { font-size: 0.85rem; }
+        }
     </style>
 </head>
 <body>
-        <header>
+    <header>
         <div class="header-content">
             <div class="logo-container">
                 <div class="logo-icon">NL</div>
@@ -113,16 +235,134 @@
             </nav>
         </div>
     </header>
+
     <div class="container">
         <div class="document-header">
             <div class="doc-code">NS-2847-ALPHA</div>
             <div class="doc-title">NeuroSync™ 統計分析レポート</div>
+            <div class="doc-meta">
+                <div class="doc-meta-item">📅 作成日: 2024年11月15日</div>
+                <div class="doc-meta-item">👤 担当: 生物統計部門</div>
+                <div class="doc-meta-item">🔄 最終更新: 2025年1月10日</div>
+            </div>
+            <div style="margin-top: 1rem;">
+                <span class="status-badge">機密情報 - レベル3</span>
+            </div>
         </div>
+
         <div class="content-section">
-            <h2 class="section-title">📊 統計分析概要</h2>
-            <p>NeuroSync™の臨床試験データに対する包括的な統計分析結果をまとめたレポートです。</p>
+            <h2 class="section-title">📊 解析概要</h2>
+            <p>
+                本レポートは、NeuroSync™（NS-2847-ALPHA）Phase I〜III臨床試験データの統計解析結果をまとめたものです。主要評価項目および副次評価項目について、プラセボ対照群との比較解析を実施しました。
+            </p>
+            <p style="margin-top: 1rem;">
+                解析対象：472名（ITT集団）、解析ソフトウェア：SAS 9.4
+            </p>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">📈 主要評価項目</h2>
+            
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>評価項目</th>
+                        <th>プラセボ群</th>
+                        <th>NeuroSync™群</th>
+                        <th>群間差</th>
+                        <th>p値</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>ADAS-Cog変化量（12週）</td>
+                        <td>-0.9 ± 2.1</td>
+                        <td>-4.6 ± 2.4</td>
+                        <td class="stat-highlight">-3.7</td>
+                        <td class="stat-highlight">&lt; 0.0001</td>
+                    </tr>
+                    <tr>
+                        <td>作業記憶スコア変化率</td>
+                        <td>+3.2%</td>
+                        <td>+22.8%</td>
+                        <td class="stat-highlight">+19.6%</td>
+                        <td class="stat-highlight">&lt; 0.0001</td>
+                    </tr>
+                    <tr>
+                        <td>注意力持続時間変化率</td>
+                        <td>+5.1%</td>
+                        <td>+38.4%</td>
+                        <td class="stat-highlight">+33.3%</td>
+                        <td class="stat-highlight">&lt; 0.0001</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="info-box">
+                <h3>📋 解析結果サマリー</h3>
+                <p>全主要評価項目において、NeuroSync™群はプラセボ群に対して統計学的に有意な優越性を示しました（p < 0.0001）。効果量（Cohen's d）は0.82〜1.14で、大きな効果サイズに分類されます。</p>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">📉 サブグループ解析</h2>
+            
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>サブグループ</th>
+                        <th>n</th>
+                        <th>効果量（d）</th>
+                        <th>95% CI</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>年齢 &lt; 40歳</td>
+                        <td>186</td>
+                        <td>1.08</td>
+                        <td>[0.89, 1.27]</td>
+                    </tr>
+                    <tr>
+                        <td>年齢 ≥ 40歳</td>
+                        <td>142</td>
+                        <td>0.94</td>
+                        <td>[0.74, 1.14]</td>
+                    </tr>
+                    <tr>
+                        <td>男性</td>
+                        <td>198</td>
+                        <td>1.02</td>
+                        <td>[0.84, 1.20]</td>
+                    </tr>
+                    <tr>
+                        <td>女性</td>
+                        <td>130</td>
+                        <td>0.98</td>
+                        <td>[0.77, 1.19]</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p style="margin-top: 1rem; font-size: 0.9rem; opacity: 0.8;">
+                ※ サブグループ間で有意な交互作用は認められませんでした。
+            </p>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">📎 関連文書</h2>
+            <ul style="margin-left: 2rem;">
+                <li><a href="research-report-ns-2847-alpha.html" style="color: var(--accent);">NS-2847-ALPHA 研究レポート</a></li>
+                <li><a href="product-clinical-ns-2847-alpha.html" style="color: var(--accent);">NS-2847-ALPHA 臨床試験結果</a></li>
+                <li><a href="experiment-data-ns-2847-alpha.html" style="color: var(--accent);">NS-2847-ALPHA 実験データベース</a></li>
+            </ul>
         </div>
     </div>
-    <footer><p>&copy; 2025 ニューロライフ製薬株式会社</p></footer>
+
+    <footer>
+        <p>&copy; 2025 ニューロライフ製薬株式会社 All rights reserved.</p>
+        <p style="margin-top: 0.5rem; font-size: 0.8rem; opacity: 0.6;">
+            機密情報 - 社内限定 | 文書番号: NL-SA-2024-1115-NS2847A
+        </p>
+    </footer>
 </body>
 </html>

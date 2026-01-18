@@ -2,13 +2,34 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <title>MP-1923-BETA 臨床試験 | ニューロライフ製薬</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MP-1923-BETA 臨床試験結果 | ニューロライフ製薬</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Noto+Sans+JP:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
-        :root { --primary: #0a4d68; --accent: #05c3dd;
-            --secondary: #088395; --dark: #051923; --light: #f0f9ff; }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Noto Sans JP', sans-serif; background: linear-gradient(135deg, var(--dark) 0%, var(--primary) 100%); color: var(--light); min-height: 100vh; line-height: 1.8; }
+        :root {
+            --primary: #0a4d68;
+            --secondary: #088395;
+            --accent: #05c3dd;
+            --dark: #051923;
+            --light: #f0f9ff;
+            --warning: #ff6b6b;
+            --success: #51cf66;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background: linear-gradient(135deg, var(--dark) 0%, var(--primary) 100%);
+            color: var(--light);
+            min-height: 100vh;
+            line-height: 1.8;
+        }
+
         header {
             position: fixed;
             top: 0;
@@ -87,20 +108,486 @@
             background: rgba(5, 195, 221, 0.1);
         }
 
-.header-content { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-family: 'Orbitron', sans-serif; font-size: 1.8rem; font-weight: 900; color: var(--accent); text-decoration: none; }
-        nav a { color: var(--light); text-decoration: none; padding: 0.5rem 1rem; margin-left: 1rem; }
-        .container { max-width: 1000px; margin: 2rem auto; padding: 120px 2rem 0; }
-        .document-header { background: rgba(10, 77, 104, 0.3); border: 2px solid var(--accent); border-radius: 12px; padding: 2rem; margin-bottom: 2rem; }
-        .doc-code { font-family: 'Orbitron', sans-serif; font-size: 1.5rem; color: #51cf66; margin-bottom: 1rem; }
-        .doc-title { font-family: 'Orbitron', sans-serif; font-size: 2rem; color: var(--accent); }
-        .content-section { background: rgba(5, 25, 35, 0.6); border: 1px solid rgba(5, 195, 221, 0.3); border-radius: 8px; padding: 2rem; margin-bottom: 1.5rem; }
-        .section-title { font-family: 'Orbitron', sans-serif; font-size: 1.5rem; color: var(--accent); margin-bottom: 1.5rem; border-bottom: 2px solid var(--accent); padding-bottom: 0.5rem; }
-        footer { text-align: center; padding: 2rem; background: rgba(5, 25, 35, 0.9); border-top: 1px solid var(--accent); margin-top: 4rem; }
+        .container {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 120px 2rem 0;
+        }
+
+        .document-header {
+            background: rgba(10, 77, 104, 0.3);
+            backdrop-filter: blur(10px);
+            border: 2px solid var(--accent);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .doc-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        .doc-code {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            color: var(--success);
+            margin-bottom: 1rem;
+        }
+
+        .doc-meta {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+            font-size: 0.9rem;
+            color: rgba(240, 249, 255, 0.7);
+        }
+
+        .doc-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            background: rgba(255, 107, 107, 0.2);
+            border: 1px solid var(--warning);
+            color: var(--warning);
+        }
+
+        .status-badge.success {
+            background: rgba(81, 207, 102, 0.2);
+            border: 1px solid var(--success);
+            color: var(--success);
+        }
+
+        .status-badge.ongoing {
+            background: rgba(5, 195, 221, 0.2);
+            border: 1px solid var(--accent);
+            color: var(--accent);
+        }
+
+        .content-section {
+            background: rgba(5, 25, 35, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(5, 195, 221, 0.3);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--accent);
+        }
+
+        .subsection-title {
+            font-size: 1.2rem;
+            color: var(--success);
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+
+        .data-table th,
+        .data-table td {
+            padding: 0.75rem;
+            border: 1px solid rgba(5, 195, 221, 0.3);
+            text-align: left;
+        }
+
+        .data-table th {
+            background: rgba(5, 195, 221, 0.2);
+            font-weight: 600;
+            color: var(--accent);
+        }
+
+        .data-table tr:hover {
+            background: rgba(5, 195, 221, 0.05);
+        }
+
+        .phase-card {
+            background: rgba(5, 195, 221, 0.1);
+            border: 1px solid rgba(5, 195, 221, 0.3);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .phase-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .phase-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.3rem;
+            color: var(--accent);
+        }
+
+        .trial-id {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.8rem;
+            color: rgba(240, 249, 255, 0.6);
+            background: rgba(5, 25, 35, 0.5);
+            padding: 0.3rem 0.8rem;
+            border-radius: 4px;
+        }
+
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 1rem;
+            background: rgba(5, 25, 35, 0.4);
+            border-radius: 8px;
+        }
+
+        .stat-value {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            color: var(--success);
+            word-break: break-all;
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: rgba(240, 249, 255, 0.7);
+            margin-top: 0.3rem;
+        }
+
+        .stat-value.warning {
+            color: var(--warning);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(5, 25, 35, 0.5);
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 0.5rem 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent), var(--success));
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 2rem;
+            margin: 1.5rem 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--accent);
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-bottom: 1.5rem;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -2rem;
+            top: 0.3rem;
+            width: 12px;
+            height: 12px;
+            background: var(--accent);
+            border-radius: 50%;
+            border: 2px solid var(--dark);
+        }
+
+        .timeline-date {
+            font-size: 0.85rem;
+            color: var(--accent);
+            margin-bottom: 0.3rem;
+        }
+
+        .timeline-content {
+            font-size: 0.95rem;
+        }
+
+        .warning-box {
+            background: rgba(255, 107, 107, 0.1);
+            border: 2px solid var(--warning);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .warning-box h3 {
+            color: var(--warning);
+            margin-bottom: 0.5rem;
+        }
+
+        .info-box {
+            background: rgba(5, 195, 221, 0.1);
+            border: 2px solid var(--accent);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .info-box h3 {
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .adverse-event {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem;
+            border-bottom: 1px solid rgba(5, 195, 221, 0.2);
+        }
+
+        .adverse-event:last-child {
+            border-bottom: none;
+        }
+
+        .ae-name {
+            flex: 1;
+        }
+
+        .ae-rate {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.9rem;
+            color: var(--accent);
+            min-width: 60px;
+            text-align: right;
+        }
+
+        .ae-rate.elevated {
+            color: var(--warning);
+        }
+
+        .ae-bar {
+            width: 150px;
+            height: 6px;
+            background: rgba(5, 25, 35, 0.5);
+            border-radius: 3px;
+            margin-left: 1rem;
+            overflow: hidden;
+        }
+
+        .ae-bar-fill {
+            height: 100%;
+            background: var(--accent);
+            border-radius: 3px;
+        }
+
+        .ae-bar-fill.elevated {
+            background: var(--warning);
+        }
+
+        .subject-card {
+            background: rgba(5, 25, 35, 0.5);
+            border: 1px solid rgba(5, 195, 221, 0.4);
+            border-radius: 12px;
+            margin-top: 1.5rem;
+            overflow: hidden;
+        }
+
+        .subject-header {
+            background: rgba(5, 195, 221, 0.15);
+            padding: 1.25rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(5, 195, 221, 0.3);
+        }
+
+        .subject-name {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.2rem;
+            color: var(--light);
+            margin-bottom: 0.25rem;
+        }
+
+        .subject-meta {
+            font-size: 0.85rem;
+            color: rgba(240, 249, 255, 0.7);
+        }
+
+        .subject-id {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.9rem;
+            color: var(--success);
+            background: rgba(81, 207, 102, 0.15);
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            border: 1px solid rgba(81, 207, 102, 0.3);
+        }
+
+        .subject-body {
+            padding: 1.5rem;
+        }
+
+        .subject-description {
+            margin-bottom: 1.5rem;
+            color: rgba(240, 249, 255, 0.9);
+        }
+
+        .subject-timeline {
+            position: relative;
+            padding-left: 2rem;
+        }
+
+        .subject-timeline::before {
+            content: '';
+            position: absolute;
+            left: 6px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: rgba(5, 195, 221, 0.3);
+        }
+
+        .subject-timeline-item {
+            position: relative;
+            padding-bottom: 1.25rem;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .subject-timeline-item:last-child {
+            padding-bottom: 0;
+        }
+
+        .timeline-marker {
+            position: absolute;
+            left: -2rem;
+            top: 0.2rem;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            border: 2px solid var(--dark);
+        }
+
+        .timeline-marker.invest {
+            background: var(--accent);
+        }
+
+        .timeline-marker.observe {
+            background: #ffc107;
+        }
+
+        .timeline-marker.complete {
+            background: var(--success);
+        }
+
+        .timeline-info {
+            flex: 1;
+        }
+
+        .timeline-phase {
+            font-weight: 600;
+            color: var(--accent);
+            font-size: 0.95rem;
+        }
+
+        .timeline-date {
+            font-size: 0.8rem;
+            color: rgba(240, 249, 255, 0.6);
+            margin-bottom: 0.3rem;
+        }
+
+        .timeline-detail {
+            font-size: 0.9rem;
+            color: rgba(240, 249, 255, 0.85);
+            line-height: 1.6;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(5, 25, 35, 0.9);
+            border-top: 1px solid var(--accent);
+            margin-top: 4rem;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 1rem 1.5rem;
+            }
+
+            .logo-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+            }
+
+            .logo {
+                font-size: 1.2rem;
+            }
+
+            .container {
+                padding: 100px 1rem 0;
+            }
+
+            .doc-title {
+                font-size: 1.5rem;
+            }
+
+            .data-table {
+                font-size: 0.85rem;
+            }
+
+            .phase-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+
+            .stat-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .ae-bar {
+                display: none;
+            }
+        }
     </style>
 </head>
 <body>
-        <header>
+    <header>
         <div class="header-content">
             <div class="logo-container">
                 <div class="logo-icon">NL</div>
@@ -114,16 +601,546 @@
             </nav>
         </div>
     </header>
+
     <div class="container">
         <div class="document-header">
             <div class="doc-code">MP-1923-BETA</div>
             <div class="doc-title">MemoriaPlus™ 臨床試験結果</div>
+            <div class="doc-meta">
+                <div class="doc-meta-item">📅 報告日: 2024年10月20日</div>
+                <div class="doc-meta-item">👤 責任者: 臨床開発部門</div>
+                <div class="doc-meta-item">🔄 データカットオフ: 2025年1月10日</div>
+            </div>
+            <div style="margin-top: 1rem;">
+                <span class="status-badge ongoing">Phase IIb 進行中</span>
+                <span class="status-badge">機密情報 - レベル3</span>
+            </div>
         </div>
+
         <div class="content-section">
-            <h2 class="section-title">🏥 臨床試験データ</h2>
-            <p>MemoriaPlus™の臨床試験における詳細なデータと結果報告書です。第I相から第III相までの試験結果を含みます。</p>
+            <h2 class="section-title">📋 臨床試験概要</h2>
+            <p>
+                MemoriaPlus™（MP-1923-BETA）の臨床開発プログラムは、2023年に開始され、現在Phase IIb有効性確認試験が進行中です。本レポートは、完了したPhase I試験および進行中のPhase II試験の結果をまとめたものです。
+            </p>
+            <p style="margin-top: 1rem;">
+                全試験は当社研究施設（ニューロライフ製薬 臨床試験棟）において実施され、累計被験者数は<strong>186名</strong>です。試験継続率は94.6%を維持しています。
+            </p>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">🔬 Phase I 試験結果</h2>
+            
+            <div class="phase-card">
+                <div class="phase-header">
+                    <div class="phase-title">Phase Ia - 単回投与試験</div>
+                    <div class="trial-id">NL-MP1923-P1A-001</div>
+                </div>
+                <div style="margin-bottom: 1rem;">
+                    <span class="status-badge success">完了</span>
+                </div>
+                
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>項目</th>
+                            <th>詳細</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>実施期間</td>
+                            <td>2023年4月 - 2023年7月</td>
+                        </tr>
+                        <tr>
+                            <td>被験者数</td>
+                            <td>18名（健常成人）</td>
+                        </tr>
+                        <tr>
+                            <td>投与量</td>
+                            <td>5mg, 15mg, 30mg, 45mg（用量漸増）</td>
+                        </tr>
+                        <tr>
+                            <td>主要評価項目</td>
+                            <td>安全性、忍容性、薬物動態</td>
+                        </tr>
+                        <tr>
+                            <td>MTD（最大耐用量）</td>
+                            <td>45mg（用量制限毒性なし）</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3 class="subsection-title">薬物動態パラメータ（30mg投与群）</h3>
+                <div class="stat-grid">
+                    <div class="stat-item">
+                        <div class="stat-value">1.8h</div>
+                        <div class="stat-label">Tmax</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">12.4h</div>
+                        <div class="stat-label">t½</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">286ng/mL</div>
+                        <div class="stat-label">Cmax</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">82%</div>
+                        <div class="stat-label">バイオアベイラビリティ</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="phase-card">
+                <div class="phase-header">
+                    <div class="phase-title">Phase Ib - 反復投与試験</div>
+                    <div class="trial-id">NL-MP1923-P1B-001</div>
+                </div>
+                <div style="margin-bottom: 1rem;">
+                    <span class="status-badge success">完了</span>
+                </div>
+                
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>項目</th>
+                            <th>詳細</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>実施期間</td>
+                            <td>2023年9月 - 2024年1月</td>
+                        </tr>
+                        <tr>
+                            <td>被験者数</td>
+                            <td>36名（健常成人 男女）</td>
+                        </tr>
+                        <tr>
+                            <td>投与期間</td>
+                            <td>14日間連続投与</td>
+                        </tr>
+                        <tr>
+                            <td>投与量</td>
+                            <td>15mg/日、30mg/日（各群18名）</td>
+                        </tr>
+                        <tr>
+                            <td>結果</td>
+                            <td>蓄積性なし、安全性プロファイル良好</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3 class="subsection-title">有効性シグナル（探索的評価）</h3>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>記憶機能検査</th>
+                            <th>プラセボ群</th>
+                            <th>15mg群</th>
+                            <th>30mg群</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>言語記憶スコア変化</td>
+                            <td>+1.8 ± 2.4</td>
+                            <td>+8.6 ± 3.2</td>
+                            <td>+14.2 ± 3.8</td>
+                        </tr>
+                        <tr>
+                            <td>視覚記憶スコア変化</td>
+                            <td>+1.4 ± 2.1</td>
+                            <td>+7.2 ± 2.8</td>
+                            <td>+12.8 ± 3.4</td>
+                        </tr>
+                        <tr>
+                            <td>想起正確率変化（%）</td>
+                            <td>+2.1 ± 1.8</td>
+                            <td>+12.4 ± 4.2</td>
+                            <td>+18.6 ± 5.1</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">🏥 Phase II 試験結果</h2>
+            
+            <div class="phase-card">
+                <div class="phase-header">
+                    <div class="phase-title">Phase IIa - 用量設定試験</div>
+                    <div class="trial-id">NL-MP1923-P2A-001</div>
+                </div>
+                <div style="margin-bottom: 1rem;">
+                    <span class="status-badge success">完了</span>
+                </div>
+                
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>項目</th>
+                            <th>詳細</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>実施期間</td>
+                            <td>2024年3月 - 2024年7月</td>
+                        </tr>
+                        <tr>
+                            <td>被験者数</td>
+                            <td>48名（記憶機能低下を自覚する成人）</td>
+                        </tr>
+                        <tr>
+                            <td>投与期間</td>
+                            <td>8週間</td>
+                        </tr>
+                        <tr>
+                            <td>投与群</td>
+                            <td>プラセボ、15mg/日、30mg/日、45mg/日</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3 class="subsection-title">最終解析結果</h3>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>主要評価項目</th>
+                            <th>プラセボ</th>
+                            <th>15mg</th>
+                            <th>30mg</th>
+                            <th>45mg</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>言語記憶スコア変化</td>
+                            <td>+2.4 ± 3.1</td>
+                            <td>+9.8 ± 4.2</td>
+                            <td>+18.7 ± 4.8</td>
+                            <td>+21.2 ± 5.4</td>
+                        </tr>
+                        <tr>
+                            <td>視覚記憶スコア変化</td>
+                            <td>+1.8 ± 2.6</td>
+                            <td>+8.4 ± 3.6</td>
+                            <td>+16.2 ± 4.2</td>
+                            <td>+18.8 ± 4.8</td>
+                        </tr>
+                        <tr>
+                            <td>想起正確率変化（%）</td>
+                            <td>+3.2 ± 2.4</td>
+                            <td>+14.6 ± 5.2</td>
+                            <td>+24.8 ± 6.1</td>
+                            <td>+28.4 ± 7.2</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="stat-grid">
+                    <div class="stat-item">
+                        <div class="stat-value">+18.7</div>
+                        <div class="stat-label">言語記憶スコア（30mg）</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">+16.2</div>
+                        <div class="stat-label">視覚記憶スコア（30mg）</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">+24.8%</div>
+                        <div class="stat-label">想起正確率（30mg）</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">94.6%</div>
+                        <div class="stat-label">試験継続率</div>
+                    </div>
+                </div>
+
+                <div class="info-box">
+                    <h3>📊 Phase IIa 結論</h3>
+                    <p>全投与群においてプラセボに対する有意な記憶機能改善が確認されました（p < 0.001）。用量反応関係が明確に示され、30mg群が有効性と安全性のバランスに優れることが判明しました。最適用量は30mg/日（就寝前）に設定されました。</p>
+                </div>
+            </div>
+
+            <div class="phase-card">
+                <div class="phase-header">
+                    <div class="phase-title">Phase IIb - 有効性確認試験</div>
+                    <div class="trial-id">NL-MP1923-P2B-001</div>
+                </div>
+                <div style="margin-bottom: 1rem;">
+                    <span class="status-badge ongoing">進行中（76%完了）</span>
+                </div>
+
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 76%"></div>
+                </div>
+                
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>項目</th>
+                            <th>詳細</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>実施期間</td>
+                            <td>2024年8月 - 2025年4月（予定）</td>
+                        </tr>
+                        <tr>
+                            <td>目標被験者数</td>
+                            <td>84名（記憶機能低下を自覚する成人）</td>
+                        </tr>
+                        <tr>
+                            <td>現在の登録数</td>
+                            <td>84名（100%登録完了）</td>
+                        </tr>
+                        <tr>
+                            <td>投与期間</td>
+                            <td>24週間</td>
+                        </tr>
+                        <tr>
+                            <td>投与群</td>
+                            <td>プラセボ、30mg/日</td>
+                        </tr>
+                        <tr>
+                            <td>進捗</td>
+                            <td>18週時点で76%の被験者が完了</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">⚠️ 安全性データ</h2>
+
+            <h3 class="subsection-title">有害事象発現状況（全Phase累計）</h3>
+            
+            <div style="background: rgba(5, 25, 35, 0.4); border-radius: 8px; padding: 1rem; margin-bottom: 1rem;">
+                <div class="adverse-event">
+                    <div class="ae-name">軽度の頭痛</div>
+                    <div class="ae-rate">11.1%</div>
+                    <div class="ae-bar"><div class="ae-bar-fill" style="width: 37%"></div></div>
+                </div>
+                <div class="adverse-event">
+                    <div class="ae-name">鮮明な夢</div>
+                    <div class="ae-rate elevated">16.7%</div>
+                    <div class="ae-bar"><div class="ae-bar-fill elevated" style="width: 56%"></div></div>
+                </div>
+                <div class="adverse-event">
+                    <div class="ae-name">一時的な倦怠感</div>
+                    <div class="ae-rate">7.4%</div>
+                    <div class="ae-bar"><div class="ae-bar-fill" style="width: 25%"></div></div>
+                </div>
+                <div class="adverse-event">
+                    <div class="ae-name">軽度の食欲不振</div>
+                    <div class="ae-rate">3.7%</div>
+                    <div class="ae-bar"><div class="ae-bar-fill" style="width: 12%"></div></div>
+                </div>
+                <div class="adverse-event">
+                    <div class="ae-name">軽度の悪心</div>
+                    <div class="ae-rate">4.8%</div>
+                    <div class="ae-bar"><div class="ae-bar-fill" style="width: 16%"></div></div>
+                </div>
+            </div>
+
+            <h3 class="subsection-title">重篤な有害事象（SAE）</h3>
+            <p>これまでの試験において、重篤な有害事象は報告されていません。すべての有害事象は軽度かつ一時的であり、投与中止に至ったケースはありません。</p>
+
+            <div class="warning-box">
+                <h3>⚠️ 安全性に関する注意事項</h3>
+                <p>45mg投与群において、鮮明な夢の発現率が他群と比較してやや高いことが確認されたため、推奨用量は30mgに設定されています。投与は就寝前が推奨されます。</p>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">📅 今後の開発計画</h2>
+            
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-date">2025年4月</div>
+                    <div class="timeline-content">Phase IIb完了・最終解析</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">2025年Q2</div>
+                    <div class="timeline-content">Phase III試験計画策定</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">2025年Q3</div>
+                    <div class="timeline-content">Phase III試験開始</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">2026年春</div>
+                    <div class="timeline-content">一般販売開始（予定）</div>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <h3>💡 追加試験計画</h3>
+                <p>Phase IIb完了後、以下の追加試験を計画中です：</p>
+                <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                    <li>高齢者（65歳以上）における安全性試験</li>
+                    <li>舌下錠（学習前投与）と標準錠（就寝前投与）の併用プロトコル評価</li>
+                    <li>長期安全性試験（52週間）</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">👤 被験者個別レポート</h2>
+            <p>Phase II試験における代表的な被験者の経過報告です。</p>
+
+            <div class="subject-card">
+                <div class="subject-header">
+                    <div class="subject-info">
+                        <div class="subject-name">木村 由紀子</div>
+                        <div class="subject-meta">生年月日: 1972年5月14日（52歳） | 女性</div>
+                    </div>
+                    <div class="subject-id">被験者ID: KY19720514</div>
+                </div>
+                <div class="subject-body">
+                    <p class="subject-description">
+                        企業経営者。加齢に伴う記憶力低下を自覚し、会議内容や取引先の名前の想起に困難を感じていた。主要な記憶増強効果の評価対象として登録。ベースライン言語記憶スコア62点。
+                    </p>
+                    <div class="subject-timeline">
+                        <div class="subject-timeline-item">
+                            <div class="timeline-marker invest"></div>
+                            <div class="timeline-info">
+                                <div class="timeline-phase">投与開始</div>
+                                <div class="timeline-date">2024年7月1日</div>
+                                <div class="timeline-detail">30mg/日の投与を開始。初回投与後、軽度の眠気を報告（翌日には消失）。</div>
+                            </div>
+                        </div>
+                        <div class="subject-timeline-item">
+                            <div class="timeline-marker observe"></div>
+                            <div class="timeline-info">
+                                <div class="timeline-phase">4週観察</div>
+                                <div class="timeline-date">2024年7月29日</div>
+                                <div class="timeline-detail">言語記憶スコア72点（+10点）。「会議の内容を翌日でも詳細に思い出せる」と報告。</div>
+                            </div>
+                        </div>
+                        <div class="subject-timeline-item">
+                            <div class="timeline-marker observe"></div>
+                            <div class="timeline-info">
+                                <div class="timeline-phase">8週観察</div>
+                                <div class="timeline-date">2024年8月26日</div>
+                                <div class="timeline-detail">言語記憶スコア78点（+16点）。視覚記憶スコアも+12点改善。鮮明な夢の報告あり（Grade 1）。</div>
+                            </div>
+                        </div>
+                        <div class="subject-timeline-item">
+                            <div class="timeline-marker observe"></div>
+                            <div class="timeline-info">
+                                <div class="timeline-phase">12週観察</div>
+                                <div class="timeline-date">2024年9月23日</div>
+                                <div class="timeline-detail">言語記憶スコア82点（+20点）。想起正確率88%達成。有害事象なし。</div>
+                            </div>
+                        </div>
+                        <div class="subject-timeline-item">
+                            <div class="timeline-marker observe"></div>
+                            <div class="timeline-info">
+                                <div class="timeline-phase">18週観察</div>
+                                <div class="timeline-date">2024年11月4日</div>
+                                <div class="timeline-detail">効果の持続を確認。「10年前の記憶力に戻った感覚」と報告。想起正確率90%。</div>
+                            </div>
+                        </div>
+                        <div class="subject-timeline-item">
+                            <div class="timeline-marker complete"></div>
+                            <div class="timeline-info">
+                                <div class="timeline-phase">24週完了</div>
+                                <div class="timeline-date">2024年12月16日</div>
+                                <div class="timeline-detail">試験完了。最終言語記憶スコア84点（+22点）、想起正確率92%。重篤な有害事象なし。延長試験への参加を希望。</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="subject-card">
+                <div class="subject-header">
+                    <div class="subject-info">
+                        <div class="subject-name">渡辺 大輝</div>
+                        <div class="subject-meta">生年月日: 1999年2月28日（25歳） | 男性</div>
+                    </div>
+                    <div class="subject-id">被験者ID: WD19990228</div>
+                </div>
+                <div class="subject-body">
+                    <p class="subject-description">
+                        医学部6年生。国家試験対策における学習効率向上を目的に参加。舌下錠（学習前投与）と標準錠（就寝前投与）の併用プロトコルで登録。ベースライン想起正確率72%。
+                    </p>
+                    <div class="subject-timeline">
+                        <div class="subject-timeline-item">
+                            <div class="timeline-marker invest"></div>
+                            <div class="timeline-info">
+                                <div class="timeline-phase">投与開始</div>
+                                <div class="timeline-date">2024年9月2日</div>
+                                <div class="timeline-detail">舌下錠10mg（学習前）+ 標準錠30mg（就寝前）の併用投与を開始。初期副作用なし。</div>
+                            </div>
+                        </div>
+                        <div class="subject-timeline-item">
+                            <div class="timeline-marker observe"></div>
+                            <div class="timeline-info">
+                                <div class="timeline-phase">4週観察</div>
+                                <div class="timeline-date">2024年9月30日</div>
+                                <div class="timeline-detail">想起正確率84%（+12%）。「教科書の内容が一度読むだけで定着する感覚がある」と報告。</div>
+                            </div>
+                        </div>
+                        <div class="subject-timeline-item">
+                            <div class="timeline-marker observe"></div>
+                            <div class="timeline-info">
+                                <div class="timeline-phase">8週観察</div>
+                                <div class="timeline-date">2024年10月28日</div>
+                                <div class="timeline-detail">想起正確率91%（+19%）。遅延再生スコアも顕著に改善。軽度の倦怠感あり（Grade 1、1週間で消失）。</div>
+                            </div>
+                        </div>
+                        <div class="subject-timeline-item">
+                            <div class="timeline-marker observe"></div>
+                            <div class="timeline-info">
+                                <div class="timeline-phase">12週観察</div>
+                                <div class="timeline-date">2024年11月25日</div>
+                                <div class="timeline-detail">想起正確率96%（+24%）。模擬試験の成績が上位15%から上位3%に向上。有害事象なし。</div>
+                            </div>
+                        </div>
+                        <div class="subject-timeline-item">
+                            <div class="timeline-marker observe"></div>
+                            <div class="timeline-info">
+                                <div class="timeline-phase">18週観察</div>
+                                <div class="timeline-date">2025年1月6日</div>
+                                <div class="timeline-detail">記憶改善効果の持続を確認。模擬試験成績が上位5%を維持。有害事象なし。</div>
+                            </div>
+                        </div>
+                        <div class="subject-timeline-item">
+                            <div class="timeline-marker complete"></div>
+                            <div class="timeline-info">
+                                <div class="timeline-phase">24週完了</div>
+                                <div class="timeline-date">2025年2月17日</div>
+                                <div class="timeline-detail">試験完了。想起正確率+32%、記憶保持率98%達成。医師国家試験合格。重篤な有害事象なし。長期延長試験への参加を希望。</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">📎 関連文書</h2>
+            <ul style="margin-left: 2rem;">
+                <li><a href="research-report-mp-1923-beta.html" style="color: var(--accent);">MP-1923-BETA 研究レポート</a></li>
+                <li><a href="product-overview-mp-1923-beta.html" style="color: var(--accent);">MP-1923-BETA 製品概要</a></li>
+                <li><a href="product-safety-mp-1923-beta.html" style="color: var(--accent);">MP-1923-BETA 安全性評価レポート</a></li>
+                <li><a href="analysis-report-mp-1923-beta.html" style="color: var(--accent);">MP-1923-BETA 統計分析レポート</a></li>
+            </ul>
         </div>
     </div>
-    <footer><p>&copy; 2025 ニューロライフ製薬株式会社</p></footer>
+
+    <footer>
+        <p>&copy; 2025 ニューロライフ製薬株式会社 All rights reserved.</p>
+        <p style="margin-top: 0.5rem; font-size: 0.8rem; opacity: 0.6;">
+            機密情報 - 社内限定 | 文書番号: NL-CT-2024-1020-MP1923B
+        </p>
+    </footer>
 </body>
 </html>

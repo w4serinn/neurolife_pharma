@@ -2,13 +2,35 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DL-X789-OMEGA 安全性情報 | ニューロライフ製薬</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Noto+Sans+JP:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
-        :root { --primary: #0a4d68; --accent: #05c3dd;
-            --secondary: #088395; --dark: #051923; --light: #f0f9ff; }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Noto Sans JP', sans-serif; background: linear-gradient(135deg, var(--dark) 0%, var(--primary) 100%); color: var(--light); min-height: 100vh; line-height: 1.8; }
+        :root {
+            --primary: #0a4d68;
+            --secondary: #088395;
+            --accent: #05c3dd;
+            --dark: #051923;
+            --light: #f0f9ff;
+            --warning: #ff6b6b;
+            --success: #51cf66;
+            --caution: #ffc107;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background: linear-gradient(135deg, var(--dark) 0%, var(--primary) 100%);
+            color: var(--light);
+            min-height: 100vh;
+            line-height: 1.8;
+        }
+
         header {
             position: fixed;
             top: 0;
@@ -87,20 +109,316 @@
             background: rgba(5, 195, 221, 0.1);
         }
 
-.header-content { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-family: 'Orbitron', sans-serif; font-size: 1.8rem; font-weight: 900; color: var(--accent); text-decoration: none; }
-        nav a { color: var(--light); text-decoration: none; padding: 0.5rem 1rem; margin-left: 1rem; }
-        .container { max-width: 1000px; margin: 2rem auto; padding: 120px 2rem 0; }
-        .document-header { background: rgba(10, 77, 104, 0.3); border: 2px solid var(--accent); border-radius: 12px; padding: 2rem; margin-bottom: 2rem; }
-        .doc-code { font-family: 'Orbitron', sans-serif; font-size: 1.5rem; color: #51cf66; margin-bottom: 1rem; }
-        .doc-title { font-family: 'Orbitron', sans-serif; font-size: 2rem; color: var(--accent); }
-        .content-section { background: rgba(5, 25, 35, 0.6); border: 1px solid rgba(5, 195, 221, 0.3); border-radius: 8px; padding: 2rem; margin-bottom: 1.5rem; }
-        .section-title { font-family: 'Orbitron', sans-serif; font-size: 1.5rem; color: var(--accent); margin-bottom: 1.5rem; border-bottom: 2px solid var(--accent); padding-bottom: 0.5rem; }
-        footer { text-align: center; padding: 2rem; background: rgba(5, 25, 35, 0.9); border-top: 1px solid var(--accent); margin-top: 4rem; }
+        .container {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 120px 2rem 0;
+        }
+
+        .document-header {
+            background: rgba(10, 77, 104, 0.3);
+            backdrop-filter: blur(10px);
+            border: 2px solid var(--accent);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .doc-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        .doc-code {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            color: var(--success);
+            margin-bottom: 1rem;
+        }
+
+        .doc-meta {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+            font-size: 0.9rem;
+            color: rgba(240, 249, 255, 0.7);
+        }
+
+        .doc-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            background: rgba(255, 107, 107, 0.2);
+            border: 1px solid var(--warning);
+            color: var(--warning);
+        }
+
+        .content-section {
+            background: rgba(5, 25, 35, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(5, 195, 221, 0.3);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--accent);
+        }
+
+        .subsection-title {
+            font-size: 1.2rem;
+            color: var(--success);
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+
+        .data-table th,
+        .data-table td {
+            padding: 0.75rem;
+            border: 1px solid rgba(5, 195, 221, 0.3);
+            text-align: left;
+        }
+
+        .data-table th {
+            background: rgba(5, 195, 221, 0.2);
+            font-weight: 600;
+            color: var(--accent);
+        }
+
+        .data-table tr:hover {
+            background: rgba(5, 195, 221, 0.05);
+        }
+
+        .warning-box {
+            background: rgba(255, 107, 107, 0.1);
+            border: 2px solid var(--warning);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .warning-box h3 {
+            color: var(--warning);
+            margin-bottom: 0.5rem;
+        }
+
+        .caution-box {
+            background: rgba(255, 193, 7, 0.1);
+            border: 2px solid var(--caution);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .caution-box h3 {
+            color: var(--caution);
+            margin-bottom: 0.5rem;
+        }
+
+        .info-box {
+            background: rgba(5, 195, 221, 0.1);
+            border: 2px solid var(--accent);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .info-box h3 {
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .severity-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .severity-card {
+            background: rgba(5, 25, 35, 0.5);
+            border-radius: 8px;
+            padding: 1.25rem;
+            border-left: 4px solid;
+        }
+
+        .severity-card.common {
+            border-color: var(--success);
+        }
+
+        .severity-card.uncommon {
+            border-color: var(--caution);
+        }
+
+        .severity-card.rare {
+            border-color: var(--warning);
+        }
+
+        .severity-card-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .severity-card.common .severity-card-title {
+            color: var(--success);
+        }
+
+        .severity-card.uncommon .severity-card-title {
+            color: var(--caution);
+        }
+
+        .severity-card.rare .severity-card-title {
+            color: var(--warning);
+        }
+
+        .severity-card ul {
+            margin-left: 1.25rem;
+            font-size: 0.95rem;
+        }
+
+        .severity-card li {
+            margin-bottom: 0.25rem;
+        }
+
+        .frequency-badge {
+            font-size: 0.75rem;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .contraindication-list {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .contraindication-list li {
+            padding: 0.75rem 1rem;
+            margin-bottom: 0.5rem;
+            background: rgba(255, 107, 107, 0.1);
+            border-left: 3px solid var(--warning);
+            border-radius: 0 6px 6px 0;
+        }
+
+        .interaction-item {
+            padding: 1rem;
+            margin-bottom: 0.75rem;
+            background: rgba(5, 25, 35, 0.4);
+            border-radius: 8px;
+            border: 1px solid rgba(5, 195, 221, 0.2);
+        }
+
+        .interaction-drug {
+            font-weight: 600;
+            color: var(--accent);
+            margin-bottom: 0.25rem;
+        }
+
+        .interaction-effect {
+            font-size: 0.9rem;
+            color: rgba(240, 249, 255, 0.8);
+        }
+
+        .interaction-level {
+            display: inline-block;
+            font-size: 0.75rem;
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            margin-left: 0.5rem;
+        }
+
+        .interaction-level.high {
+            background: rgba(255, 107, 107, 0.2);
+            color: var(--warning);
+        }
+
+        .interaction-level.moderate {
+            background: rgba(255, 193, 7, 0.2);
+            color: var(--caution);
+        }
+
+        .interaction-level.low {
+            background: rgba(81, 207, 102, 0.2);
+            color: var(--success);
+        }
+
+        .monitoring-table td:first-child {
+            font-weight: 600;
+            color: var(--accent);
+            white-space: nowrap;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(5, 25, 35, 0.9);
+            border-top: 1px solid var(--accent);
+            margin-top: 4rem;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 1rem 1.5rem;
+            }
+
+            .logo-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+            }
+
+            .logo {
+                font-size: 1.2rem;
+            }
+
+            .container {
+                padding: 100px 1rem 0;
+            }
+
+            .doc-title {
+                font-size: 1.5rem;
+            }
+
+            .data-table {
+                font-size: 0.85rem;
+            }
+
+            .severity-grid {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 </head>
 <body>
-        <header>
+    <header>
         <div class="header-content">
             <div class="logo-container">
                 <div class="logo-icon">NL</div>
@@ -114,16 +432,185 @@
             </nav>
         </div>
     </header>
+
     <div class="container">
         <div class="document-header">
             <div class="doc-code">DL-X789-OMEGA</div>
-            <div class="doc-title">DreamLink™ 安全性評価レポート</div>
+            <div class="doc-title">DreamLink™ 安全性情報</div>
+            <div class="doc-meta">
+                <div class="doc-meta-item">📅 作成日: 2024年9月28日</div>
+                <div class="doc-meta-item">👤 担当: 医薬品安全性監視部門</div>
+                <div class="doc-meta-item">🔄 最終更新: 2025年1月12日</div>
+            </div>
+            <div style="margin-top: 1rem;">
+                <span class="status-badge">機密情報 - レベル3</span>
+            </div>
         </div>
+
         <div class="content-section">
-            <h2 class="section-title">🛡️ 安全性情報</h2>
-            <p>DreamLink™の安全性プロファイル、有害事象報告、リスク評価に関する包括的な情報です。</p>
+            <h2 class="section-title">📋 安全性概要</h2>
+            <p>
+                本文書は、DreamLink™（DL-X789-OMEGA）の安全性プロファイルに関する包括的な情報をまとめたものです。Phase I〜IIa臨床試験（累計被験者数78名）から得られたデータに基づいています。
+            </p>
+            <p style="margin-top: 1rem;">
+                全体として、DreamLink™は良好な忍容性を示しており、大部分の有害事象は軽度から中等度であり、投与継続または中止により回復しています。
+            </p>
+
+            <div class="info-box">
+                <h3>📊 安全性サマリー</h3>
+                <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                    <li>有害事象発現率（全Grade）: 42.3%</li>
+                    <li>重篤な有害事象（SAE）発現率: 0%</li>
+                    <li>有害事象による投与中止率: 3.8%</li>
+                    <li>死亡例: 0件</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">⚠️ 有害事象</h2>
+            
+            <p>臨床試験で報告された有害事象を発現頻度別に分類しています。</p>
+
+            <div class="severity-grid">
+                <div class="severity-card common">
+                    <div class="severity-card-title">
+                        よく見られる <span class="frequency-badge">≥5%</span>
+                    </div>
+                    <ul>
+                        <li>軽度の悪夢（8.3%）</li>
+                        <li>鮮明すぎる夢（8.4%）</li>
+                        <li>一時的な入眠困難（6.4%）</li>
+                        <li>起床時の軽い倦怠感（6.3%）</li>
+                        <li>軽度の頭痛（5.1%）</li>
+                    </ul>
+                </div>
+
+                <div class="severity-card uncommon">
+                    <div class="severity-card-title">
+                        時々見られる <span class="frequency-badge">1-5%</span>
+                    </div>
+                    <ul>
+                        <li>一過性の睡眠麻痺（2.6%）</li>
+                        <li>起床時の軽度見当識障害（2.6%）</li>
+                        <li>軽度の食欲変化（1.3%）</li>
+                        <li>軽度の消化器症状（1.3%）</li>
+                    </ul>
+                </div>
+
+                <div class="severity-card rare">
+                    <div class="severity-card-title">
+                        まれに見られる <span class="frequency-badge">&lt;1%</span>
+                    </div>
+                    <ul>
+                        <li>中等度の悪夢（0.6%）</li>
+                        <li>日中の軽い眠気（0.4%）</li>
+                        <li>軽度の気分変動（0.3%）</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="caution-box">
+                <h3>⚡ 睡眠構造への影響について</h3>
+                <p>DreamLink™はREM睡眠を延長する作用があるため、投与初期に睡眠パターンの変化を感じることがあります。これは薬理作用に伴う現象であり、多くの場合1-2週間で睡眠の質の向上として体感されるようになります。投与初期は十分な睡眠時間（7-8時間）を確保してください。</p>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">🚫 禁忌</h2>
+            
+            <p>以下の患者には投与しないでください。</p>
+
+            <ul class="contraindication-list">
+                <li><strong>本剤の成分に対し過敏症の既往歴のある患者</strong></li>
+                <li><strong>妊婦または妊娠している可能性のある女性</strong>（安全性が確立していない）</li>
+                <li><strong>授乳中の女性</strong>（母乳への移行が不明）</li>
+                <li><strong>18歳未満の小児</strong>（小児における安全性は確立していない）</li>
+                <li><strong>重度の肝機能障害のある患者</strong>（血中濃度上昇のおそれ）</li>
+                <li><strong>睡眠時無呼吸症候群で未治療の患者</strong>（睡眠構造への影響を考慮）</li>
+            </ul>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">💊 薬物相互作用</h2>
+            
+            <p>DreamLink™は主にCYP3A4で代謝されます。以下の薬剤との併用には注意が必要です。</p>
+
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>薬剤</th>
+                        <th>レベル</th>
+                        <th>影響</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>アルコール</td>
+                        <td style="color: var(--warning);">併用禁忌</td>
+                        <td>中枢神経抑制作用が増強され、予測不能な症状を引き起こす可能性</td>
+                    </tr>
+                    <tr>
+                        <td>中枢神経抑制剤</td>
+                        <td style="color: var(--caution);">併用注意</td>
+                        <td>相互に作用を増強する可能性。慎重に投与すること</td>
+                    </tr>
+                    <tr>
+                        <td>CYP3A4阻害剤</td>
+                        <td style="color: var(--caution);">併用注意</td>
+                        <td>本剤の血中濃度が上昇する可能性。減量を検討</td>
+                    </tr>
+                    <tr>
+                        <td>CYP3A4誘導剤</td>
+                        <td style="color: var(--caution);">併用注意</td>
+                        <td>本剤の血中濃度が低下し、効果が減弱する可能性</td>
+                    </tr>
+                    <tr>
+                        <td>他の睡眠薬</td>
+                        <td style="color: var(--caution);">併用注意</td>
+                        <td>睡眠構造への影響が複合的になる可能性</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">🔍 モニタリング・投与中止基準</h2>
+            
+            <p>投与中は睡眠状態、日中の覚醒度、精神状態を定期的にモニタリングしてください。</p>
+
+            <div class="warning-box">
+                <h3>🚨 即時中止を要する症状</h3>
+                <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                    <li>過敏症状（発疹、かゆみ、呼吸困難等）</li>
+                    <li>持続する重度の悪夢（日常生活に支障をきたすレベル）</li>
+                    <li>日中の著しい眠気や認知機能の低下</li>
+                    <li>精神症状の出現（不安、抑うつ、離人感等）</li>
+                </ul>
+            </div>
+
+            <div class="caution-box">
+                <h3>⚠️ 服用時の注意</h3>
+                <p>本剤服用後は、十分な睡眠時間（7-8時間）を確保できる場合にのみ服用してください。服用後および翌朝の運転・危険を伴う機械の操作は避けてください。</p>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">📎 関連文書</h2>
+            <ul style="margin-left: 2rem;">
+                <li><a href="research-report-dl-x789-omega.html" style="color: var(--accent);">DL-X789-OMEGA 研究レポート</a></li>
+                <li><a href="product-overview-dl-x789-omega.html" style="color: var(--accent);">DL-X789-OMEGA 製品概要</a></li>
+                <li><a href="product-clinical-dl-x789-omega.html" style="color: var(--accent);">DL-X789-OMEGA 臨床試験結果</a></li>
+                <li><a href="analysis-report-dl-x789-omega.html" style="color: var(--accent);">DL-X789-OMEGA 統計分析レポート</a></li>
+            </ul>
         </div>
     </div>
-    <footer><p>&copy; 2025 ニューロライフ製薬株式会社</p></footer>
+
+    <footer>
+        <p>&copy; 2025 ニューロライフ製薬株式会社 All rights reserved.</p>
+        <p style="margin-top: 0.5rem; font-size: 0.8rem; opacity: 0.6;">
+            機密情報 - 社内限定 | 文書番号: NL-SF-2024-0928-DLX789O
+        </p>
+    </footer>
 </body>
 </html>

@@ -510,7 +510,7 @@
             <form class="auth-form" id="authForm" onsubmit="return authenticate(event)">
                 <div class="form-group">
                     <label for="participantId">被験者ID</label>
-                    <input type="text" id="participantId" placeholder="例: test">
+                    <input type="text" id="participantId" placeholder="例: AB12345678">
                 </div>
                 <div class="form-group">
                     <label for="password">パスワード</label>
@@ -553,11 +553,63 @@
                     <h2>臨床試験DL-X789-OMEGA 被験者の皆様へ</h2>
                     <p style="line-height: 2; font-size: 1.05rem;">
                         この度は当社の臨床試験にご参加いただき、誠にありがとうございます。<br>
-                        被験者番号<strong style="color: var(--accent);">2847</strong>番から<strong style="color: var(--accent);">2899</strong>番の方々には、既に郵送にて詳細資料をお送りしております。<br>
-                        システム移行に伴い、新しいポータルサイトへの移行を進めておりますが、現在は<strong style="color: var(--warning);">閲覧のみ</strong>可能となっております。<br>
-                        ご不明な点がございましたら、臨床試験サポートデスク（📧 support@neurolife.jp）までご連絡ください。<br>
-                        <span style="opacity: 0.7;">※ 本ページへのアクセスには被験者IDとパスワードが必要です。郵送書類をご確認ください。</span>
+                        こちらは被験者専用ページとなります。<br>
+                        こちらのページでは弊社からのお知らせ、臨床試験のスケジュールについて連携しますのでご確認のほどをよろしくお願いします。<br>
+                        また、郵送した詳細資料にも記載しましたが、<a href="#" style="color: var(--accent); text-decoration: underline;">こちらのページ</a>より被験者日報の記載をお願いします。
                     </p>
+                </div>
+
+                <div class="content-card" style="margin-top: 2rem;">
+                    <h2>📢 会社からのお知らせ</h2>
+                    <div style="border-left: 4px solid var(--accent); padding-left: 1.5rem; margin-top: 1.5rem;">
+                        <div style="margin-bottom: 2rem;">
+                            <h3 style="color: var(--accent); font-size: 1.1rem; margin: 0 0 0.5rem 0;">被験者日報の入力について</h3>
+                            <p style="line-height: 1.8; margin: 0;">
+                                被験者日報は毎日ご記入いただくことで、より正確なデータ収集が可能となります。<br>
+                                体調の変化や服薬状況など、些細なことでも記録をお願いいたします。
+                            </p>
+                        </div>
+                        
+                        <div style="margin-bottom: 2rem;">
+                            <h3 style="color: var(--accent); font-size: 1.1rem; margin: 0 0 0.5rem 0;">体調不良時の対応</h3>
+                            <p style="line-height: 1.8; margin: 0;">
+                                試験期間中に体調不良を感じた場合は、速やかに担当医師または緊急連絡先までご連絡ください。<br>
+                                夜間・休日でも24時間体制でサポートいたします。
+                            </p>
+                        </div>
+
+                        <div style="margin-bottom: 2rem;">
+                            <h3 style="color: var(--accent); font-size: 1.1rem; margin: 0 0 0.5rem 0;">来院時の持ち物</h3>
+                            <p style="line-height: 1.8; margin: 0;">
+                                来院時には必ず被験者手帳、保険証をご持参ください。<br>
+                                また、服薬中の薬剤がある場合は、お薬手帳もお持ちください。
+                            </p>
+                        </div>
+
+                        <div style="margin-bottom: 2rem;">
+                            <h3 style="color: var(--accent); font-size: 1.1rem; margin: 0 0 0.5rem 0;">併用禁止薬・食品について</h3>
+                            <p style="line-height: 1.8; margin: 0;">
+                                試験薬との相互作用を避けるため、併用禁止薬および特定の食品があります。<br>
+                                詳細は配布資料をご確認いただき、不明点は必ずお問い合わせください。
+                            </p>
+                        </div>
+
+                        <div style="margin-bottom: 2rem;">
+                            <h3 style="color: var(--accent); font-size: 1.1rem; margin: 0 0 0.5rem 0;">個人情報の取り扱いについて</h3>
+                            <p style="line-height: 1.8; margin: 0;">
+                                本試験で得られたデータは厳重に管理され、個人が特定されることはありません。<br>
+                                データは研究目的のみに使用されます。
+                            </p>
+                        </div>
+
+                        <div style="margin-bottom: 0;">
+                            <h3 style="color: var(--accent); font-size: 1.1rem; margin: 0 0 0.5rem 0;">試験中止・離脱について</h3>
+                            <p style="line-height: 1.8; margin: 0;">
+                                被験者の方はいつでも理由を問わず試験を中止することができます。<br>
+                                中止を希望される場合は、担当医師までお申し出ください。
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </main>
@@ -571,7 +623,7 @@
             </span>
         </div>
     </footer>
-    <script>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
         let warningShown = false;
         let userInteractionDetected = false;
 
@@ -586,11 +638,15 @@
             const errorMessage = document.getElementById('errorMessage');
             const authOverlay = document.getElementById('authOverlay');
             
+            // 有効な被験者ID一覧
+            const validIds = ['TM19580412', 'SS20020615', 'KY19720514', 'WD19990228', 'TK19930822', 'YM19820315'];
+            const validPassword = 'camellia';
+            
             console.log('=== 認証試行 ===');
-            console.log('入力されたID:', participantId, '| 期待値: test');
-            console.log('入力されたパスワード:', password, '| 期待値: test');
-            console.log('ID一致:', participantId === 'test');
-            console.log('パスワード一致:', password === 'test');
+            console.log('入力されたID:', participantId);
+            console.log('入力されたパスワード:', password);
+            console.log('ID有効性:', validIds.includes(participantId));
+            console.log('パスワード一致:', password === validPassword);
             console.log('authOverlay要素:', authOverlay);
             
             if (!participantId || !password) {
@@ -598,7 +654,7 @@
                 console.log('エラー: 未入力');
                 return false;
             }
-            if (participantId === 'test' && password === 'test') {
+            if (validIds.includes(participantId) && password === validPassword) {
                 console.log('✓ 認証成功！');
                 console.log('hiddenクラス追加前:', authOverlay.className);
                 authOverlay.classList.add('hidden');

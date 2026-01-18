@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NS-2847-ALPHA 研究成果 | ニューロライフ製薬</title>
+    <title>NS-2847-ALPHA 研究成果まとめ | ニューロライフ製薬</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Noto+Sans+JP:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -15,7 +15,9 @@
             --warning: #ff6b6b;
             --success: #51cf66;
         }
+
         * { margin: 0; padding: 0; box-sizing: border-box; }
+
         body {
             font-family: 'Noto Sans JP', sans-serif;
             background: linear-gradient(135deg, var(--dark) 0%, var(--primary) 100%);
@@ -23,6 +25,7 @@
             min-height: 100vh;
             line-height: 1.8;
         }
+
         header {
             position: fixed;
             top: 0;
@@ -45,11 +48,7 @@
             gap: 2rem;
         }
 
-        .logo-container {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
+        .logo-container { display: flex; align-items: center; gap: 1rem; }
 
         .logo-icon {
             width: 50px;
@@ -66,10 +65,7 @@
             box-shadow: 0 4px 20px rgba(5, 195, 221, 0.4);
         }
 
-        .logo-text {
-            display: flex;
-            flex-direction: column;
-        }
+        .logo-text { display: flex; flex-direction: column; }
 
         .logo {
             font-family: 'Orbitron', sans-serif;
@@ -100,7 +96,13 @@
             color: var(--accent);
             background: rgba(5, 195, 221, 0.1);
         }
-        .container { max-width: 1000px; margin: 2rem auto; padding: 120px 2rem 0; }
+
+        .container {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 120px 2rem 0;
+        }
+
         .document-header {
             background: rgba(10, 77, 104, 0.3);
             backdrop-filter: blur(10px);
@@ -109,25 +111,49 @@
             padding: 2rem;
             margin-bottom: 2rem;
         }
-        .doc-code {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.5rem;
-            color: var(--success);
-            margin-bottom: 1rem;
-        }
+
         .doc-title {
             font-family: 'Orbitron', sans-serif;
             font-size: 2rem;
             color: var(--accent);
             margin-bottom: 1rem;
         }
+
+        .doc-code {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            color: var(--success);
+            margin-bottom: 1rem;
+        }
+
+        .doc-meta {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+            font-size: 0.9rem;
+            color: rgba(240, 249, 255, 0.7);
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            background: rgba(81, 207, 102, 0.2);
+            border: 1px solid var(--success);
+            color: var(--success);
+        }
+
         .content-section {
             background: rgba(5, 25, 35, 0.6);
+            backdrop-filter: blur(10px);
             border: 1px solid rgba(5, 195, 221, 0.3);
             border-radius: 8px;
             padding: 2rem;
             margin-bottom: 1.5rem;
         }
+
         .section-title {
             font-family: 'Orbitron', sans-serif;
             font-size: 1.5rem;
@@ -136,6 +162,78 @@
             padding-bottom: 0.5rem;
             border-bottom: 2px solid var(--accent);
         }
+
+        .highlight-box {
+            background: rgba(81, 207, 102, 0.1);
+            border: 2px solid var(--success);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .highlight-box h3 {
+            color: var(--success);
+            margin-bottom: 0.5rem;
+        }
+
+        .result-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .result-item {
+            background: rgba(5, 195, 221, 0.1);
+            border: 1px solid rgba(5, 195, 221, 0.3);
+            border-radius: 8px;
+            padding: 1.25rem;
+            text-align: center;
+        }
+
+        .result-value {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            color: var(--success);
+            margin-bottom: 0.25rem;
+        }
+
+        .result-label {
+            font-size: 0.85rem;
+            color: rgba(240, 249, 255, 0.7);
+        }
+
+        .timeline-item {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(5, 195, 221, 0.2);
+        }
+
+        .timeline-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .timeline-date {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.9rem;
+            color: var(--accent);
+            min-width: 100px;
+        }
+
+        .timeline-content h4 {
+            color: var(--light);
+            margin-bottom: 0.25rem;
+        }
+
+        .timeline-content p {
+            font-size: 0.9rem;
+            color: rgba(240, 249, 255, 0.8);
+        }
+
         footer {
             text-align: center;
             padding: 2rem;
@@ -145,10 +243,20 @@
             font-size: 0.9rem;
             opacity: 0.8;
         }
+
+        @media (max-width: 768px) {
+            header { padding: 1rem 1.5rem; }
+            .logo-icon { width: 40px; height: 40px; font-size: 1.2rem; }
+            .logo { font-size: 1.2rem; }
+            .container { padding: 100px 1rem 0; }
+            .doc-title { font-size: 1.5rem; }
+            .timeline-item { flex-direction: column; gap: 0.5rem; }
+            .timeline-date { min-width: auto; }
+        }
     </style>
 </head>
 <body>
-        <header>
+    <header>
         <div class="header-content">
             <div class="logo-container">
                 <div class="logo-icon">NL</div>
@@ -162,25 +270,142 @@
             </nav>
         </div>
     </header>
+
     <div class="container">
         <div class="document-header">
             <div class="doc-code">NS-2847-ALPHA</div>
             <div class="doc-title">NeuroSync™ 研究成果まとめ</div>
+            <div class="doc-meta">
+                <div class="doc-meta-item">📅 作成日: 2025年1月10日</div>
+                <div class="doc-meta-item">👤 担当: 研究開発統括部</div>
+            </div>
+            <div style="margin-top: 1rem;">
+                <span class="status-badge">承認申請準備中</span>
+            </div>
         </div>
+
         <div class="content-section">
-            <h2 class="section-title">📊 研究成果概要</h2>
-            <p>NeuroSync™の研究プログラムにおける主要な成果をまとめた文書です。</p>
+            <h2 class="section-title">🎯 研究プログラム概要</h2>
+            <p>
+                NeuroSync™（NS-2847-ALPHA）は、神経可塑性を促進し認知機能を向上させる次世代神経調整薬として2021年より開発を開始しました。約4年間の研究開発を経て、現在Phase III試験が完了間近であり、2025年内の承認申請を予定しています。
+            </p>
+
+            <div class="highlight-box">
+                <h3>✅ 主要達成事項</h3>
+                <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                    <li>BDNF活性化による神経可塑性促進メカニズムの解明</li>
+                    <li>全臨床試験フェーズでの主要評価項目達成</li>
+                    <li>良好な安全性プロファイルの確立</li>
+                    <li>査読付き論文5報、学会発表多数</li>
+                </ul>
+            </div>
         </div>
+
+        <div class="content-section">
+            <h2 class="section-title">📊 主要成果データ</h2>
+
+            <div class="result-grid">
+                <div class="result-item">
+                    <div class="result-value">+22.8%</div>
+                    <div class="result-label">作業記憶改善率</div>
+                </div>
+                <div class="result-item">
+                    <div class="result-value">+38.4%</div>
+                    <div class="result-label">注意力持続時間</div>
+                </div>
+                <div class="result-item">
+                    <div class="result-value">-5.8pt</div>
+                    <div class="result-label">ADAS-Cog改善</div>
+                </div>
+                <div class="result-item">
+                    <div class="result-value">91.2%</div>
+                    <div class="result-label">試験継続率</div>
+                </div>
+            </div>
+
+            <p style="margin-top: 1rem; font-size: 0.9rem; opacity: 0.8;">
+                ※ Phase III中間解析（26週時点）データ。プラセボ対照、50mg/日投与群。
+            </p>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">📅 開発マイルストーン</h2>
+
+            <div class="timeline-item">
+                <div class="timeline-date">2021年Q4</div>
+                <div class="timeline-content">
+                    <h4>研究開発開始</h4>
+                    <p>NS-2847-ALPHA候補化合物の選定、前臨床試験計画策定</p>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-date">2022年Q2</div>
+                <div class="timeline-content">
+                    <h4>前臨床試験完了</h4>
+                    <p>動物モデルでの有効性・安全性確認、治験届提出</p>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-date">2022年Q3</div>
+                <div class="timeline-content">
+                    <h4>Phase I開始</h4>
+                    <p>健常成人対象の安全性・薬物動態試験を開始</p>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-date">2023年Q3</div>
+                <div class="timeline-content">
+                    <h4>Phase II開始</h4>
+                    <p>用量設定試験開始、有効性シグナル確認</p>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-date">2024年Q2</div>
+                <div class="timeline-content">
+                    <h4>Phase III開始</h4>
+                    <p>大規模検証試験開始、主要評価項目達成見込み</p>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-date">2025年Q1</div>
+                <div class="timeline-content">
+                    <h4>Phase III完了予定</h4>
+                    <p>最終解析、承認申請資料作成開始</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">🔮 今後の展望</h2>
+            <p>
+                2025年内にPMDA（日本）およびFDA（米国）への承認申請を予定しています。承認取得後は、軽度認知障害を主要適応として上市し、その後アルツハイマー型認知症（早期）、ADHDなどへの適応拡大を目指します。
+            </p>
+            <p style="margin-top: 1rem;">
+                また、次世代製剤（徐放性製剤、経皮吸収製剤）の開発も並行して進めており、患者の利便性向上を図ります。
+            </p>
+        </div>
+
         <div class="content-section">
             <h2 class="section-title">📎 関連文書</h2>
             <ul style="margin-left: 2rem;">
-                <li><a href="research-report-ns-2847-alpha.html" style="color: var(--accent);">研究レポート</a></li>
-                <li><a href="archive-library.html" style="color: var(--accent);">アーカイブに戻る</a></li>
+                <li><a href="research-report-ns-2847-alpha.html" style="color: var(--accent);">NS-2847-ALPHA 研究レポート</a></li>
+                <li><a href="product-clinical-ns-2847-alpha.html" style="color: var(--accent);">NS-2847-ALPHA 臨床試験結果</a></li>
+                <li><a href="academic-paper-ns-2847-alpha.html" style="color: var(--accent);">NS-2847-ALPHA 学術論文集</a></li>
+                <li><a href="analysis-report-ns-2847-alpha.html" style="color: var(--accent);">NS-2847-ALPHA 統計分析レポート</a></li>
             </ul>
         </div>
     </div>
+
     <footer>
         <p>&copy; 2025 ニューロライフ製薬株式会社 All rights reserved.</p>
+        <p style="margin-top: 0.5rem; font-size: 0.8rem; opacity: 0.6;">
+            文書番号: NL-RS-2025-0110-NS2847A
+        </p>
     </footer>
 </body>
 </html>

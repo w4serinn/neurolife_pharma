@@ -2,13 +2,34 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DL-X789-OMEGA 製品概要 | ニューロライフ製薬</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Noto+Sans+JP:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
-        :root { --primary: #0a4d68; --accent: #05c3dd;
-            --secondary: #088395; --dark: #051923; --light: #f0f9ff; }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Noto Sans JP', sans-serif; background: linear-gradient(135deg, var(--dark) 0%, var(--primary) 100%); color: var(--light); min-height: 100vh; line-height: 1.8; }
+        :root {
+            --primary: #0a4d68;
+            --secondary: #088395;
+            --accent: #05c3dd;
+            --dark: #051923;
+            --light: #f0f9ff;
+            --warning: #ff6b6b;
+            --success: #51cf66;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background: linear-gradient(135deg, var(--dark) 0%, var(--primary) 100%);
+            color: var(--light);
+            min-height: 100vh;
+            line-height: 1.8;
+        }
+
         header {
             position: fixed;
             top: 0;
@@ -87,20 +108,233 @@
             background: rgba(5, 195, 221, 0.1);
         }
 
-.header-content { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-family: 'Orbitron', sans-serif; font-size: 1.8rem; font-weight: 900; color: var(--accent); text-decoration: none; }
-        nav a { color: var(--light); text-decoration: none; padding: 0.5rem 1rem; margin-left: 1rem; }
-        .container { max-width: 1000px; margin: 2rem auto; padding: 120px 2rem 0; }
-        .document-header { background: rgba(10, 77, 104, 0.3); border: 2px solid var(--accent); border-radius: 12px; padding: 2rem; margin-bottom: 2rem; }
-        .doc-code { font-family: 'Orbitron', sans-serif; font-size: 1.5rem; color: #51cf66; margin-bottom: 1rem; }
-        .doc-title { font-family: 'Orbitron', sans-serif; font-size: 2rem; color: var(--accent); }
-        .content-section { background: rgba(5, 25, 35, 0.6); border: 1px solid rgba(5, 195, 221, 0.3); border-radius: 8px; padding: 2rem; margin-bottom: 1.5rem; }
-        .section-title { font-family: 'Orbitron', sans-serif; font-size: 1.5rem; color: var(--accent); margin-bottom: 1.5rem; border-bottom: 2px solid var(--accent); padding-bottom: 0.5rem; }
-        footer { text-align: center; padding: 2rem; background: rgba(5, 25, 35, 0.9); border-top: 1px solid var(--accent); margin-top: 4rem; }
+        .container {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 120px 2rem 0;
+        }
+
+        .document-header {
+            background: rgba(10, 77, 104, 0.3);
+            backdrop-filter: blur(10px);
+            border: 2px solid var(--accent);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .doc-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        .doc-code {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            color: var(--success);
+            margin-bottom: 1rem;
+        }
+
+        .doc-meta {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+            font-size: 0.9rem;
+            color: rgba(240, 249, 255, 0.7);
+        }
+
+        .doc-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .status-badge.development {
+            background: rgba(255, 193, 7, 0.2);
+            border: 1px solid #ffc107;
+            color: #ffc107;
+        }
+
+        .content-section {
+            background: rgba(5, 25, 35, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(5, 195, 221, 0.3);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--accent);
+        }
+
+        .subsection-title {
+            font-size: 1.2rem;
+            color: var(--success);
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .spec-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .spec-card {
+            background: rgba(5, 195, 221, 0.1);
+            border: 1px solid rgba(5, 195, 221, 0.3);
+            border-radius: 8px;
+            padding: 1.25rem;
+            text-align: center;
+        }
+
+        .spec-card-title {
+            font-size: 0.85rem;
+            color: rgba(240, 249, 255, 0.6);
+            margin-bottom: 0.5rem;
+        }
+
+        .spec-card-value {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.1rem;
+            color: var(--accent);
+            margin-bottom: 0.25rem;
+        }
+
+        .spec-card-note {
+            font-size: 0.75rem;
+            color: rgba(240, 249, 255, 0.5);
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+
+        .data-table th,
+        .data-table td {
+            padding: 0.75rem;
+            border: 1px solid rgba(5, 195, 221, 0.3);
+            text-align: left;
+        }
+
+        .data-table th {
+            background: rgba(5, 195, 221, 0.2);
+            font-weight: 600;
+            color: var(--accent);
+        }
+
+        .mechanism-diagram {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 1.5rem 0;
+            padding: 1.5rem;
+            background: rgba(5, 195, 221, 0.1);
+            border-radius: 8px;
+        }
+
+        .mechanism-step {
+            text-align: center;
+            padding: 0.75rem;
+            background: rgba(5, 195, 221, 0.15);
+            border-radius: 8px;
+            flex: 1;
+            min-width: 100px;
+            font-weight: 500;
+        }
+
+        .mechanism-arrow {
+            color: var(--accent);
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .info-box {
+            background: rgba(81, 207, 102, 0.1);
+            border: 2px solid var(--success);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .info-box h3 {
+            color: var(--success);
+            margin-bottom: 0.75rem;
+            font-size: 1.1rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(5, 25, 35, 0.9);
+            border-top: 1px solid var(--accent);
+            margin-top: 4rem;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 1rem 1.5rem;
+            }
+
+            .logo-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+            }
+
+            .logo {
+                font-size: 1.2rem;
+            }
+
+            .container {
+                padding: 100px 1rem 0;
+            }
+
+            .doc-title {
+                font-size: 1.5rem;
+            }
+
+            .data-table {
+                font-size: 0.85rem;
+            }
+
+            .mechanism-step {
+                display: block;
+                margin: 0.5rem auto;
+            }
+
+            .mechanism-arrow {
+                display: block;
+                transform: rotate(90deg);
+            }
+        }
     </style>
 </head>
 <body>
-        <header>
+    <header>
         <div class="header-content">
             <div class="logo-container">
                 <div class="logo-icon">NL</div>
@@ -114,16 +348,239 @@
             </nav>
         </div>
     </header>
+
     <div class="container">
         <div class="document-header">
             <div class="doc-code">DL-X789-OMEGA</div>
             <div class="doc-title">DreamLink™ 製品詳細仕様</div>
+            <div class="doc-meta">
+                <div class="doc-meta-item">📅 作成日: 2024年9月15日</div>
+                <div class="doc-meta-item">👤 担当: 製品開発部門</div>
+                <div class="doc-meta-item">🔄 最終更新: 2025年1月12日</div>
+            </div>
+            <div style="margin-top: 1rem;">
+                <span class="status-badge development">開発段階 - Phase II（有効性確認試験進行中）</span>
+            </div>
         </div>
+
         <div class="content-section">
-            <h2 class="section-title">💊 製品概要</h2>
-            <p>DreamLink™（製品コード: DL-X789-OMEGA）の詳細な製品仕様書です。成分、用法用量、効能効果などの情報を含みます。</p>
+            <h2 class="section-title">💊 製品基本情報</h2>
+            
+            <div class="spec-grid">
+                <div class="spec-card">
+                    <div class="spec-card-title">製品名</div>
+                    <div class="spec-card-value">DreamLink™</div>
+                    <div class="spec-card-note">商標登録申請中</div>
+                </div>
+                <div class="spec-card">
+                    <div class="spec-card-title">製品コード</div>
+                    <div class="spec-card-value">DL-X789-OMEGA</div>
+                    <div class="spec-card-note">内部識別番号</div>
+                </div>
+                <div class="spec-card">
+                    <div class="spec-card-title">薬効分類</div>
+                    <div class="spec-card-value">睡眠調整薬</div>
+                    <div class="spec-card-note">明晰夢誘導剤</div>
+                </div>
+                <div class="spec-card">
+                    <div class="spec-card-title">開発フェーズ</div>
+                    <div class="spec-card-value">Phase II</div>
+                    <div class="spec-card-note">有効性確認試験進行中</div>
+                </div>
+            </div>
+
+            <h3 class="subsection-title">製品概要</h3>
+            <p>
+                DreamLink™は、睡眠の質を向上させ、明晰夢を誘導する画期的な睡眠調整薬です。深い休息と創造的な夢体験を同時に実現し、REM睡眠の質的向上を通じて心身の回復を促進します。
+            </p>
+            <p style="margin-top: 1rem;">
+                独自のREM睡眠延長技術と前頭前皮質活性化メカニズムにより、夢の中での自己認識能力を高め、ストレス軽減や創造性向上に寄与します。
+            </p>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">🧬 有効成分・組成</h2>
+            
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>成分名</th>
+                        <th>含有量</th>
+                        <th>機能</th>
+                        <th>備考</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>DL-Core化合物</td>
+                        <td>2.5mg</td>
+                        <td>REM睡眠延長・安定化</td>
+                        <td>独自合成物質</td>
+                    </tr>
+                    <tr>
+                        <td>コリン作動性モジュレーター</td>
+                        <td>5mg</td>
+                        <td>前頭前皮質活性化</td>
+                        <td>特許取得済</td>
+                    </tr>
+                    <tr>
+                        <td>GABAergic調整因子</td>
+                        <td>3mg</td>
+                        <td>睡眠段階遷移制御</td>
+                        <td>独自開発</td>
+                    </tr>
+                    <tr>
+                        <td>セロトニン調整複合体</td>
+                        <td>4mg</td>
+                        <td>睡眠深度最適化</td>
+                        <td>安定化製剤</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">⚙️ 作用機序</h2>
+            
+            <div class="mechanism-diagram">
+                <div class="mechanism-step">経口投与</div>
+                <span class="mechanism-arrow">→</span>
+                <div class="mechanism-step">REM延長</div>
+                <span class="mechanism-arrow">→</span>
+                <div class="mechanism-step">前頭葉活性化</div>
+                <span class="mechanism-arrow">→</span>
+                <div class="mechanism-step">明晰夢誘導</div>
+                <span class="mechanism-arrow">→</span>
+                <div class="mechanism-step">深い休息</div>
+            </div>
+
+            <h3 class="subsection-title">主要作用メカニズム</h3>
+            <p><strong>1. REM睡眠の選択的延長</strong></p>
+            <p style="margin-left: 1.5rem; margin-bottom: 1rem;">
+                通常の約1.8倍のREM睡眠時間を実現し、夢を見る時間を大幅に増加させます。これにより記憶の統合と感情処理が促進されます。
+            </p>
+
+            <p><strong>2. 前頭前皮質の選択的活性化</strong></p>
+            <p style="margin-left: 1.5rem; margin-bottom: 1rem;">
+                夢の中での自己認識能力を高め、明晰夢状態を誘導します。これにより夢の内容を意識的にコントロールできるようになります。
+            </p>
+
+            <p><strong>3. 海馬-新皮質連携の強化</strong></p>
+            <p style="margin-left: 1.5rem; margin-bottom: 1rem;">
+                記憶の統合プロセスを最適化し、夢内容の鮮明度と翌朝の想起率を向上させます。
+            </p>
+
+            <p><strong>4. 睡眠段階遷移の最適化</strong></p>
+            <p style="margin-left: 1.5rem;">
+                ノンレム睡眠とREM睡眠のバランスを調整し、全体的な睡眠の質を向上させます。深い休息感と翌朝のすっきりとした目覚めを実現します。
+            </p>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">💉 用法・用量</h2>
+            
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>投与形態</th>
+                        <th>用量</th>
+                        <th>投与頻度</th>
+                        <th>備考</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>経口錠剤（低用量）</td>
+                        <td>1.5mg</td>
+                        <td>1日1回（就寝30分前）</td>
+                        <td>初期投与量</td>
+                    </tr>
+                    <tr>
+                        <td>経口錠剤（標準）</td>
+                        <td>2.5mg</td>
+                        <td>1日1回（就寝30分前）</td>
+                        <td>2週間後に増量可</td>
+                    </tr>
+                    <tr>
+                        <td>経口錠剤（高用量）</td>
+                        <td>3.0mg</td>
+                        <td>1日1回（就寝30分前）</td>
+                        <td>明晰夢強化用</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3 class="subsection-title">投与スケジュール</h3>
+            <div class="info-box">
+                <h3>💡 最適な使用タイミング</h3>
+                <p>
+                    就寝の約30分前に服用することで、入眠時から薬効が発揮されます。REM睡眠は通常入眠後90分頃から始まるため、このタイミングで投与することで最大の効果が得られます。週に5-6日の使用を推奨し、休薬日を設けることで耐性形成を防ぎます。
+                </p>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">🎯 想定適応症</h2>
+            
+            <h3 class="subsection-title">主要適応（Phase II評価中）</h3>
+            <ul style="margin-left: 2rem; margin-bottom: 1rem;">
+                <li>慢性的な睡眠の質低下</li>
+                <li>創造性向上のための明晰夢誘導</li>
+                <li>ストレス関連の睡眠障害</li>
+                <li>悪夢障害の治療補助</li>
+            </ul>
+
+            <h3 class="subsection-title">探索的適応（将来的検討）</h3>
+            <ul style="margin-left: 2rem;">
+                <li>PTSD患者の睡眠改善</li>
+                <li>夢を活用した心理療法との併用</li>
+                <li>アーティストやクリエイターの創造性支援</li>
+            </ul>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">✨ 期待される効果</h2>
+            
+            <div class="spec-grid">
+                <div class="spec-card">
+                    <div class="spec-card-value">+45%</div>
+                    <div class="spec-card-title">REM睡眠時間延長</div>
+                </div>
+                <div class="spec-card">
+                    <div class="spec-card-value">68%</div>
+                    <div class="spec-card-title">明晰夢誘導率</div>
+                </div>
+                <div class="spec-card">
+                    <div class="spec-card-value">+32%</div>
+                    <div class="spec-card-title">夢想起率向上</div>
+                </div>
+                <div class="spec-card">
+                    <div class="spec-card-value">89%</div>
+                    <div class="spec-card-title">睡眠満足度</div>
+                </div>
+            </div>
+
+            <p style="margin-top: 1rem; font-size: 0.9rem; opacity: 0.8;">
+                ※ Phase IIa試験（8週時点）データ。プラセボ対照、2.5mg/日投与群。
+            </p>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">📎 関連文書</h2>
+            <ul style="margin-left: 2rem;">
+                <li><a href="research-report-dl-x789-omega.html" style="color: var(--accent);">DL-X789-OMEGA 研究レポート</a></li>
+                <li><a href="product-clinical-dl-x789-omega.html" style="color: var(--accent);">DL-X789-OMEGA 臨床試験結果</a></li>
+                <li><a href="product-safety-dl-x789-omega.html" style="color: var(--accent);">DL-X789-OMEGA 安全性情報</a></li>
+                <li><a href="analysis-report-dl-x789-omega.html" style="color: var(--accent);">DL-X789-OMEGA 統計分析レポート</a></li>
+            </ul>
         </div>
     </div>
-    <footer><p>&copy; 2025 ニューロライフ製薬株式会社</p></footer>
+
+    <footer>
+        <p>&copy; 2025 ニューロライフ製薬株式会社 All rights reserved.</p>
+        <p style="margin-top: 0.5rem; font-size: 0.8rem; opacity: 0.6;">
+            機密情報 - 社内限定 | 文書番号: NL-PO-2024-0915-DLX789O
+        </p>
+    </footer>
 </body>
 </html>

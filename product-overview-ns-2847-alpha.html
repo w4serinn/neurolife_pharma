@@ -2,13 +2,34 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NS-2847-ALPHA 製品概要 | ニューロライフ製薬</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Noto+Sans+JP:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
-        :root { --primary: #0a4d68; --accent: #05c3dd;
-            --secondary: #088395; --dark: #051923; --light: #f0f9ff; }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Noto Sans JP', sans-serif; background: linear-gradient(135deg, var(--dark) 0%, var(--primary) 100%); color: var(--light); min-height: 100vh; line-height: 1.8; }
+        :root {
+            --primary: #0a4d68;
+            --secondary: #088395;
+            --accent: #05c3dd;
+            --dark: #051923;
+            --light: #f0f9ff;
+            --warning: #ff6b6b;
+            --success: #51cf66;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background: linear-gradient(135deg, var(--dark) 0%, var(--primary) 100%);
+            color: var(--light);
+            min-height: 100vh;
+            line-height: 1.8;
+        }
+
         header {
             position: fixed;
             top: 0;
@@ -87,20 +108,252 @@
             background: rgba(5, 195, 221, 0.1);
         }
 
-.header-content { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-family: 'Orbitron', sans-serif; font-size: 1.8rem; font-weight: 900; color: var(--accent); text-decoration: none; }
-        nav a { color: var(--light); text-decoration: none; padding: 0.5rem 1rem; margin-left: 1rem; }
-        .container { max-width: 1000px; margin: 2rem auto; padding: 120px 2rem 0; }
-        .document-header { background: rgba(10, 77, 104, 0.3); border: 2px solid var(--accent); border-radius: 12px; padding: 2rem; margin-bottom: 2rem; }
-        .doc-code { font-family: 'Orbitron', sans-serif; font-size: 1.5rem; color: #51cf66; margin-bottom: 1rem; }
-        .doc-title { font-family: 'Orbitron', sans-serif; font-size: 2rem; color: var(--accent); }
-        .content-section { background: rgba(5, 25, 35, 0.6); border: 1px solid rgba(5, 195, 221, 0.3); border-radius: 8px; padding: 2rem; margin-bottom: 1.5rem; }
-        .section-title { font-family: 'Orbitron', sans-serif; font-size: 1.5rem; color: var(--accent); margin-bottom: 1.5rem; border-bottom: 2px solid var(--accent); padding-bottom: 0.5rem; }
-        footer { text-align: center; padding: 2rem; background: rgba(5, 25, 35, 0.9); border-top: 1px solid var(--accent); margin-top: 4rem; }
+        .container {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 120px 2rem 0;
+        }
+
+        .document-header {
+            background: rgba(10, 77, 104, 0.3);
+            backdrop-filter: blur(10px);
+            border: 2px solid var(--accent);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .doc-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        .doc-code {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            color: var(--success);
+            margin-bottom: 1rem;
+        }
+
+        .doc-meta {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+            font-size: 0.9rem;
+            color: rgba(240, 249, 255, 0.7);
+        }
+
+        .doc-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            background: rgba(255, 107, 107, 0.2);
+            border: 1px solid var(--warning);
+            color: var(--warning);
+        }
+
+        .status-badge.development {
+            background: rgba(255, 193, 7, 0.2);
+            border: 1px solid #ffc107;
+            color: #ffc107;
+        }
+
+        .content-section {
+            background: rgba(5, 25, 35, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(5, 195, 221, 0.3);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--accent);
+        }
+
+        .subsection-title {
+            font-size: 1.2rem;
+            color: var(--success);
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+
+        .data-table th,
+        .data-table td {
+            padding: 0.75rem;
+            border: 1px solid rgba(5, 195, 221, 0.3);
+            text-align: left;
+        }
+
+        .data-table th {
+            background: rgba(5, 195, 221, 0.2);
+            font-weight: 600;
+            color: var(--accent);
+        }
+
+        .data-table tr:hover {
+            background: rgba(5, 195, 221, 0.05);
+        }
+
+        .spec-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .spec-card {
+            background: rgba(5, 195, 221, 0.1);
+            border: 1px solid rgba(5, 195, 221, 0.3);
+            border-radius: 8px;
+            padding: 1.5rem;
+        }
+
+        .spec-card-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.9rem;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .spec-card-value {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--light);
+        }
+
+        .spec-card-note {
+            font-size: 0.85rem;
+            color: rgba(240, 249, 255, 0.6);
+            margin-top: 0.5rem;
+        }
+
+        .mechanism-diagram {
+            background: rgba(5, 25, 35, 0.8);
+            border: 1px solid rgba(5, 195, 221, 0.4);
+            border-radius: 8px;
+            padding: 2rem;
+            margin: 1.5rem 0;
+            text-align: center;
+        }
+
+        .mechanism-step {
+            display: inline-block;
+            background: rgba(5, 195, 221, 0.2);
+            border: 1px solid var(--accent);
+            border-radius: 8px;
+            padding: 1rem 1.5rem;
+            margin: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .mechanism-arrow {
+            display: inline-block;
+            color: var(--accent);
+            font-size: 1.5rem;
+            margin: 0 0.5rem;
+        }
+
+        .warning-box {
+            background: rgba(255, 107, 107, 0.1);
+            border: 2px solid var(--warning);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .warning-box h3 {
+            color: var(--warning);
+            margin-bottom: 0.5rem;
+        }
+
+        .info-box {
+            background: rgba(5, 195, 221, 0.1);
+            border: 2px solid var(--accent);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .info-box h3 {
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(5, 25, 35, 0.9);
+            border-top: 1px solid var(--accent);
+            margin-top: 4rem;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 1rem 1.5rem;
+            }
+
+            .logo-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+            }
+
+            .logo {
+                font-size: 1.2rem;
+            }
+
+            .container {
+                padding: 100px 1rem 0;
+            }
+
+            .doc-title {
+                font-size: 1.5rem;
+            }
+
+            .data-table {
+                font-size: 0.85rem;
+            }
+
+            .mechanism-step {
+                display: block;
+                margin: 0.5rem auto;
+            }
+
+            .mechanism-arrow {
+                display: block;
+                transform: rotate(90deg);
+            }
+        }
     </style>
 </head>
 <body>
-        <header>
+    <header>
         <div class="header-content">
             <div class="logo-container">
                 <div class="logo-icon">NL</div>
@@ -114,16 +367,263 @@
             </nav>
         </div>
     </header>
+
     <div class="container">
         <div class="document-header">
             <div class="doc-code">NS-2847-ALPHA</div>
             <div class="doc-title">NeuroSync™ 製品詳細仕様</div>
+            <div class="doc-meta">
+                <div class="doc-meta-item">📅 作成日: 2024年8月12日</div>
+                <div class="doc-meta-item">👤 担当: 製品開発部門</div>
+                <div class="doc-meta-item">🔄 最終更新: 2024年11月5日</div>
+            </div>
+            <div style="margin-top: 1rem;">
+                <span class="status-badge development">開発段階 - Phase III（承認申請準備中）</span>
+                <span class="status-badge">機密情報 - レベル3</span>
+            </div>
         </div>
+
         <div class="content-section">
-            <h2 class="section-title">💊 製品概要</h2>
-            <p>NeuroSync™（製品コード: NS-2847-ALPHA）の詳細な製品仕様書です。成分、用法用量、効能効果などの情報を含みます。</p>
+            <h2 class="section-title">💊 製品基本情報</h2>
+            
+            <div class="spec-grid">
+                <div class="spec-card">
+                    <div class="spec-card-title">製品名</div>
+                    <div class="spec-card-value">NeuroSync™</div>
+                    <div class="spec-card-note">商標登録申請中</div>
+                </div>
+                <div class="spec-card">
+                    <div class="spec-card-title">製品コード</div>
+                    <div class="spec-card-value">NS-2847-ALPHA</div>
+                    <div class="spec-card-note">内部識別番号</div>
+                </div>
+                <div class="spec-card">
+                    <div class="spec-card-title">薬効分類</div>
+                    <div class="spec-card-value">神経調整薬</div>
+                    <div class="spec-card-note">中枢神経系作用薬</div>
+                </div>
+                <div class="spec-card">
+                    <div class="spec-card-title">開発フェーズ</div>
+                    <div class="spec-card-value">Phase III</div>
+                    <div class="spec-card-note">承認申請準備中</div>
+                </div>
+            </div>
+
+            <h3 class="subsection-title">製品概要</h3>
+            <p>
+                NeuroSync™は、神経可塑性を促進し認知機能を向上させることを目的とした次世代神経調整薬です。独自開発のシナプス増強技術「SYNAPSE-X」を核として、脳内神経回路の最適化を実現します。
+            </p>
+            <p style="margin-top: 1rem;">
+                従来の認知機能改善薬とは異なり、NeuroSync™は神経細胞間の信号伝達効率そのものを改善することで、より根本的かつ持続的な効果を発揮します。
+            </p>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">🧬 有効成分・組成</h2>
+            
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>成分名</th>
+                        <th>含有量</th>
+                        <th>機能</th>
+                        <th>備考</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>NS-Core Compound</td>
+                        <td>25mg</td>
+                        <td>主要活性成分</td>
+                        <td>独自合成物質</td>
+                    </tr>
+                    <tr>
+                        <td>ニューロトロフィン誘導体</td>
+                        <td>10mg</td>
+                        <td>神経成長因子促進</td>
+                        <td>BDNF様作用</td>
+                    </tr>
+                    <tr>
+                        <td>シナプス安定化剤 SX-7</td>
+                        <td>15mg</td>
+                        <td>シナプス構造維持</td>
+                        <td>特許取得済</td>
+                    </tr>
+                    <tr>
+                        <td>血液脳関門透過促進剤</td>
+                        <td>5mg</td>
+                        <td>CNS到達率向上</td>
+                        <td>特許出願中</td>
+                    </tr>
+                    <tr>
+                        <td>ミトコンドリア活性化因子</td>
+                        <td>8mg</td>
+                        <td>神経細胞エネルギー代謝改善</td>
+                        <td>ATP産生促進</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="info-box">
+                <h3>💡 技術的特徴</h3>
+                <p>NeuroSync™の有効成分は、独自のナノカプセル技術により血液脳関門を効率的に通過します。これにより、従来薬と比較して約3.2倍のCNS到達率を実現しています。</p>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">⚙️ 作用機序</h2>
+            
+            <div class="mechanism-diagram">
+                <div class="mechanism-step">投与・吸収</div>
+                <span class="mechanism-arrow">→</span>
+                <div class="mechanism-step">血液脳関門透過</div>
+                <span class="mechanism-arrow">→</span>
+                <div class="mechanism-step">標的ニューロン結合</div>
+                <span class="mechanism-arrow">→</span>
+                <div class="mechanism-step">シナプス可塑性誘導</div>
+                <span class="mechanism-arrow">→</span>
+                <div class="mechanism-step">認知機能向上</div>
+            </div>
+
+            <h3 class="subsection-title">主要作用メカニズム</h3>
+            <p><strong>1. グルタミン酸受容体の感受性調整</strong></p>
+            <p style="margin-left: 1.5rem; margin-bottom: 1rem;">
+                NMDA受容体およびAMPA受容体の活性を最適化し、長期増強（LTP）の誘導閾値を低下させます。これにより、学習・記憶形成が促進されます。
+            </p>
+
+            <p><strong>2. BDNF発現促進</strong></p>
+            <p style="margin-left: 1.5rem; margin-bottom: 1rem;">
+                脳由来神経栄養因子（BDNF）の産生を促進し、神経細胞の生存・分化・シナプス形成を支援します。海馬領域において特に顕著な効果が確認されています。
+            </p>
+
+            <p><strong>3. シナプス構造リモデリング</strong></p>
+            <p style="margin-left: 1.5rem; margin-bottom: 1rem;">
+                樹状突起スパインの形態変化を促進し、シナプス接続の強化と新規シナプス形成を誘導します。特定条件下では持続的な神経回路再編成が観察されています。
+            </p>
+
+            <p><strong>4. ミトコンドリア機能強化</strong></p>
+            <p style="margin-left: 1.5rem;">
+                神経細胞内のATP産生を増強し、エネルギー依存性の高い認知プロセスを支援します。
+            </p>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">💉 用法・用量</h2>
+            
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>投与形態</th>
+                        <th>用量</th>
+                        <th>投与頻度</th>
+                        <th>備考</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>経口錠剤（標準）</td>
+                        <td>25mg</td>
+                        <td>1日1回（朝食後）</td>
+                        <td>初期投与量</td>
+                    </tr>
+                    <tr>
+                        <td>経口錠剤（高用量）</td>
+                        <td>50mg</td>
+                        <td>1日1回（朝食後）</td>
+                        <td>2週間後に増量可</td>
+                    </tr>
+                    <tr>
+                        <td>経口錠剤（最大用量）</td>
+                        <td>75mg</td>
+                        <td>1日1回（朝食後）</td>
+                        <td>医師の判断による</td>
+                    </tr>
+                    <tr>
+                        <td>注射剤（静脈内）</td>
+                        <td>10mg/mL</td>
+                        <td>医療機関のみ</td>
+                        <td>急性期治療用</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3 class="subsection-title">投与スケジュール</h3>
+            <p>
+                標準的な治療期間は12週間です。効果発現は通常、投与開始後2〜3週間で認められます。長期投与（12週間以上）を行う場合は、4週間ごとの経過観察が推奨されます。
+            </p>
+
+            <div class="warning-box">
+                <h3>⚠️ 投与に関する注意</h3>
+                <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                    <li>突然の投与中止は避けてください（漸減が必要）</li>
+                    <li>他の中枢神経系作用薬との併用には注意が必要です</li>
+                    <li>アルコールとの併用は禁忌です</li>
+                    <li>投与開始後4週間は車両運転を避けてください</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">🎯 適応症（予定）</h2>
+            
+            <h3 class="subsection-title">主要適応症</h3>
+            <ul style="margin-left: 2rem;">
+                <li>軽度認知障害（MCI）</li>
+                <li>加齢性認知機能低下</li>
+                <li>外傷性脳損傷後の認知リハビリテーション補助</li>
+            </ul>
+
+            <h3 class="subsection-title">探索的適応症</h3>
+            <ul style="margin-left: 2rem;">
+                <li>注意欠陥・多動性障害（ADHD） - Phase II完了</li>
+                <li>アルツハイマー型認知症（早期） - Phase II進行中</li>
+                <li>健常者の認知機能最適化（拡張認知プログラム）</li>
+            </ul>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">📦 製品規格</h2>
+            
+            <div class="spec-grid">
+                <div class="spec-card">
+                    <div class="spec-card-title">剤形</div>
+                    <div class="spec-card-value">フィルムコート錠</div>
+                    <div class="spec-card-note">楕円形・白色</div>
+                </div>
+                <div class="spec-card">
+                    <div class="spec-card-title">包装</div>
+                    <div class="spec-card-value">28錠/箱</div>
+                    <div class="spec-card-note">PTPシート</div>
+                </div>
+                <div class="spec-card">
+                    <div class="spec-card-title">保存条件</div>
+                    <div class="spec-card-value">2-8°C</div>
+                    <div class="spec-card-note">遮光・冷蔵保存</div>
+                </div>
+                <div class="spec-card">
+                    <div class="spec-card-title">有効期限</div>
+                    <div class="spec-card-value">24ヶ月</div>
+                    <div class="spec-card-note">製造日より</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">📎 関連文書</h2>
+            <ul style="margin-left: 2rem;">
+                <li><a href="research-report-ns-2847-alpha.html" style="color: var(--accent);">NS-2847-ALPHA 研究レポート</a></li>
+                <li><a href="product-clinical-ns-2847-alpha.html" style="color: var(--accent);">NS-2847-ALPHA 臨床試験結果</a></li>
+                <li><a href="product-safety-ns-2847-alpha.html" style="color: var(--accent);">NS-2847-ALPHA 安全性評価レポート</a></li>
+                <li><a href="experiment-data-ns-2847-alpha.html" style="color: var(--accent);">NS-2847-ALPHA 実験データベース</a></li>
+            </ul>
         </div>
     </div>
-    <footer><p>&copy; 2025 ニューロライフ製薬株式会社</p></footer>
+
+    <footer>
+        <p>&copy; 2025 ニューロライフ製薬株式会社 All rights reserved.</p>
+        <p style="margin-top: 0.5rem; font-size: 0.8rem; opacity: 0.6;">
+            機密情報 - 社内限定 | 文書番号: NL-PO-2024-0812-NS2847A
+        </p>
+    </footer>
 </body>
 </html>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DL-X789-OMEGA 研究成果 | ニューロライフ製薬</title>
+    <title>DL-X789-OMEGA 研究成果まとめ | ニューロライフ製薬</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Noto+Sans+JP:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -12,7 +12,6 @@
             --accent: #05c3dd;
             --dark: #051923;
             --light: #f0f9ff;
-            --warning: #ff6b6b;
             --success: #51cf66;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -35,7 +34,6 @@
             z-index: 100;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
         }
-
         .header-content {
             max-width: 1400px;
             margin: 0 auto;
@@ -44,13 +42,7 @@
             align-items: center;
             gap: 2rem;
         }
-
-        .logo-container {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
+        .logo-container { display: flex; align-items: center; gap: 1rem; }
         .logo-icon {
             width: 50px;
             height: 50px;
@@ -65,61 +57,40 @@
             color: var(--dark);
             box-shadow: 0 4px 20px rgba(5, 195, 221, 0.4);
         }
-
         .logo-text {
             display: flex;
             flex-direction: column;
         }
-
-        .logo {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.5rem;
-            font-weight: 900;
-            color: var(--accent);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            text-shadow: 0 0 20px rgba(5, 195, 221, 0.5);
-        }
-
-        .logo-subtitle {
-            font-size: 0.7rem;
-            color: rgba(240, 249, 255, 0.6);
-            letter-spacing: 3px;
-            font-weight: 300;
-        }
-
+        .logo { font-family: 'Orbitron', sans-serif; font-size: 1.5rem; font-weight: 900; color: var(--accent); text-transform: uppercase; letter-spacing: 2px; text-shadow: 0 0 20px rgba(5, 195, 221, 0.5); }
+        .logo-subtitle { font-size: 0.7rem; color: rgba(240, 249, 255, 0.6); letter-spacing: 3px; font-weight: 300; }
         nav a {
             color: var(--light);
             text-decoration: none;
             padding: 0.5rem 1rem;
             border-radius: 8px;
-            transition: all 0.3s;
+            transition: all 0.3s ease;
+            font-weight: 400;
         }
-
         nav a:hover {
             color: var(--accent);
             background: rgba(5, 195, 221, 0.1);
+            transform: translateY(-2px);
         }
         .container { max-width: 1000px; margin: 2rem auto; padding: 120px 2rem 0; }
         .document-header {
             background: rgba(10, 77, 104, 0.3);
-            backdrop-filter: blur(10px);
             border: 2px solid var(--accent);
             border-radius: 12px;
             padding: 2rem;
             margin-bottom: 2rem;
         }
-        .doc-code {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.5rem;
-            color: var(--success);
-            margin-bottom: 1rem;
-        }
-        .doc-title {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 2rem;
-            color: var(--accent);
-            margin-bottom: 1rem;
+        .doc-code { font-family: 'Orbitron', sans-serif; font-size: 1.5rem; color: var(--success); margin-bottom: 1rem; }
+        .doc-title { font-family: 'Orbitron', sans-serif; font-size: 2rem; color: var(--accent); margin-bottom: 1rem; }
+        .doc-meta { display: flex; gap: 2rem; flex-wrap: wrap; font-size: 0.9rem; color: rgba(240, 249, 255, 0.7); }
+        .status-badge {
+            display: inline-block; padding: 0.4rem 1rem; border-radius: 20px;
+            font-size: 0.85rem; font-weight: 600;
+            background: rgba(255, 193, 7, 0.2); border: 1px solid #ffc107; color: #ffc107;
         }
         .content-section {
             background: rgba(5, 25, 35, 0.6);
@@ -136,19 +107,50 @@
             padding-bottom: 0.5rem;
             border-bottom: 2px solid var(--accent);
         }
-        footer {
+        .highlight-box {
+            background: rgba(81, 207, 102, 0.1);
+            border: 2px solid var(--success);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+        .highlight-box h3 { color: var(--success); margin-bottom: 0.5rem; }
+        .result-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        .result-item {
+            background: rgba(5, 195, 221, 0.1);
+            border: 1px solid rgba(5, 195, 221, 0.3);
+            border-radius: 8px;
+            padding: 1.25rem;
             text-align: center;
-            padding: 2rem;
+        }
+        .result-value { font-family: 'Orbitron', sans-serif; font-size: 1.8rem; color: var(--success); margin-bottom: 0.25rem; }
+        .result-label { font-size: 0.85rem; color: rgba(240, 249, 255, 0.7); }
+        .timeline-item {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(5, 195, 221, 0.2);
+        }
+        .timeline-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+        .timeline-date { font-family: 'Orbitron', sans-serif; font-size: 0.9rem; color: var(--accent); min-width: 100px; }
+        .timeline-content h4 { color: var(--light); margin-bottom: 0.25rem; }
+        .timeline-content p { font-size: 0.9rem; color: rgba(240, 249, 255, 0.8); }
+        footer {
+            text-align: center; padding: 2rem;
             background: rgba(5, 25, 35, 0.9);
             border-top: 1px solid var(--accent);
-            margin-top: 4rem;
-            font-size: 0.9rem;
-            opacity: 0.8;
+            margin-top: 4rem; font-size: 0.9rem; opacity: 0.8;
         }
     </style>
 </head>
 <body>
-        <header>
+    <header>
         <div class="header-content">
             <div class="logo-container">
                 <div class="logo-icon">NL</div>
@@ -157,30 +159,135 @@
                     <div class="logo-subtitle">PHARMACEUTICALS</div>
                 </div>
             </div>
-            <nav>
-                <a href="archive-library.html">アーカイブに戻る</a>
-            </nav>
+            <nav><a href="archive-library.html">アーカイブに戻る</a></nav>
         </div>
     </header>
+
     <div class="container">
         <div class="document-header">
             <div class="doc-code">DL-X789-OMEGA</div>
             <div class="doc-title">DreamLink™ 研究成果まとめ</div>
+            <div class="doc-meta">
+                <div class="doc-meta-item">📅 作成日: 2025年1月12日</div>
+                <div class="doc-meta-item">👤 担当: 研究開発統括部</div>
+            </div>
+            <div style="margin-top: 1rem;">
+                <span class="status-badge">Phase IIa 進行中</span>
+            </div>
         </div>
+
         <div class="content-section">
-            <h2 class="section-title">📊 研究成果概要</h2>
-            <p>DreamLink™の研究プログラムにおける主要な成果をまとめた文書です。</p>
+            <h2 class="section-title">🎯 研究プログラム概要</h2>
+            <p>
+                DreamLink™（DL-X789-OMEGA）は、睡眠の質を向上させ、明晰夢を誘導する画期的な睡眠調整薬として2023年より開発を開始しました。約1年半の研究開発を経て、現在Phase IIa試験が進行中であり、2026年秋の一般販売開始を予定しています。
+            </p>
+
+            <div class="highlight-box">
+                <h3>✅ 主要達成事項</h3>
+                <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                    <li>REM睡眠延長・前頭前皮質活性化メカニズムの解明</li>
+                    <li>Phase I試験で良好な安全性プロファイルを確認</li>
+                    <li>Phase IIa用量設定試験で最適用量（2.5mg/日）を決定</li>
+                    <li>査読付き論文3報、学会発表多数</li>
+                </ul>
+            </div>
         </div>
+
+        <div class="content-section">
+            <h2 class="section-title">📊 主要成果データ</h2>
+
+            <div class="result-grid">
+                <div class="result-item">
+                    <div class="result-value">+45%</div>
+                    <div class="result-label">REM睡眠延長率</div>
+                </div>
+                <div class="result-item">
+                    <div class="result-value">68%</div>
+                    <div class="result-label">明晰夢誘導率</div>
+                </div>
+                <div class="result-item">
+                    <div class="result-value">+32%</div>
+                    <div class="result-label">夢想起率向上</div>
+                </div>
+                <div class="result-item">
+                    <div class="result-value">92.3%</div>
+                    <div class="result-label">試験継続率</div>
+                </div>
+            </div>
+
+            <p style="margin-top: 1rem; font-size: 0.9rem; opacity: 0.8;">
+                ※ Phase IIa試験（4週時点）暫定データ。プラセボ対照、2.5mg/日投与群。
+            </p>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">📅 開発マイルストーン</h2>
+
+            <div class="timeline-item">
+                <div class="timeline-date">2023年Q3</div>
+                <div class="timeline-content">
+                    <h4>研究開発開始</h4>
+                    <p>DL-X789-OMEGA候補化合物の選定、前臨床試験計画策定</p>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-date">2024年Q1</div>
+                <div class="timeline-content">
+                    <h4>前臨床試験完了</h4>
+                    <p>動物モデルでの有効性・安全性確認、治験届提出</p>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-date">2024年Q2</div>
+                <div class="timeline-content">
+                    <h4>Phase I開始</h4>
+                    <p>健常成人対象の安全性・薬物動態試験を開始</p>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-date">2024年Q4</div>
+                <div class="timeline-content">
+                    <h4>Phase IIa開始</h4>
+                    <p>用量設定試験開始、明晰夢誘導効果を確認</p>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-date">2025年Q2</div>
+                <div class="timeline-content">
+                    <h4>Phase IIb開始予定</h4>
+                    <p>有効性確認試験開始、Phase III計画策定</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">🔮 今後の展望</h2>
+            <p>
+                2025年中にPhase IIa試験を完了し、Phase IIb試験を開始します。2026年秋の承認申請、2027年初頭の一般販売開始を目標とし、睡眠の質改善を主要適応として上市を予定しています。
+            </p>
+            <p style="margin-top: 1rem;">
+                将来的には、創造性向上支援、PTSD治療との併用療法、悪夢障害治療など、適応拡大を目指します。
+            </p>
+        </div>
+
         <div class="content-section">
             <h2 class="section-title">📎 関連文書</h2>
             <ul style="margin-left: 2rem;">
-                <li><a href="research-report-dl-x789-omega.html" style="color: var(--accent);">研究レポート</a></li>
-                <li><a href="archive-library.html" style="color: var(--accent);">アーカイブに戻る</a></li>
+                <li><a href="research-report-dl-x789-omega.html" style="color: var(--accent);">DL-X789-OMEGA 研究レポート</a></li>
+                <li><a href="product-clinical-dl-x789-omega.html" style="color: var(--accent);">DL-X789-OMEGA 臨床試験結果</a></li>
+                <li><a href="academic-paper-dl-x789-omega.html" style="color: var(--accent);">DL-X789-OMEGA 学術論文集</a></li>
+                <li><a href="analysis-report-dl-x789-omega.html" style="color: var(--accent);">DL-X789-OMEGA 統計分析レポート</a></li>
             </ul>
         </div>
     </div>
+
     <footer>
         <p>&copy; 2025 ニューロライフ製薬株式会社 All rights reserved.</p>
+        <p style="margin-top: 0.5rem; font-size: 0.8rem; opacity: 0.6;">文書番号: NL-RS-2025-0112-DLX789O</p>
     </footer>
 </body>
 </html>

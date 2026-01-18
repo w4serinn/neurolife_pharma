@@ -2,13 +2,34 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MP-1923-BETA 製品概要 | ニューロライフ製薬</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Noto+Sans+JP:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
-        :root { --primary: #0a4d68; --accent: #05c3dd;
-            --secondary: #088395; --dark: #051923; --light: #f0f9ff; }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Noto Sans JP', sans-serif; background: linear-gradient(135deg, var(--dark) 0%, var(--primary) 100%); color: var(--light); min-height: 100vh; line-height: 1.8; }
+        :root {
+            --primary: #0a4d68;
+            --secondary: #088395;
+            --accent: #05c3dd;
+            --dark: #051923;
+            --light: #f0f9ff;
+            --warning: #ff6b6b;
+            --success: #51cf66;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background: linear-gradient(135deg, var(--dark) 0%, var(--primary) 100%);
+            color: var(--light);
+            min-height: 100vh;
+            line-height: 1.8;
+        }
+
         header {
             position: fixed;
             top: 0;
@@ -87,20 +108,232 @@
             background: rgba(5, 195, 221, 0.1);
         }
 
-.header-content { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-family: 'Orbitron', sans-serif; font-size: 1.8rem; font-weight: 900; color: var(--accent); text-decoration: none; }
-        nav a { color: var(--light); text-decoration: none; padding: 0.5rem 1rem; margin-left: 1rem; }
-        .container { max-width: 1000px; margin: 2rem auto; padding: 120px 2rem 0; }
-        .document-header { background: rgba(10, 77, 104, 0.3); border: 2px solid var(--accent); border-radius: 12px; padding: 2rem; margin-bottom: 2rem; }
-        .doc-code { font-family: 'Orbitron', sans-serif; font-size: 1.5rem; color: #51cf66; margin-bottom: 1rem; }
-        .doc-title { font-family: 'Orbitron', sans-serif; font-size: 2rem; color: var(--accent); }
-        .content-section { background: rgba(5, 25, 35, 0.6); border: 1px solid rgba(5, 195, 221, 0.3); border-radius: 8px; padding: 2rem; margin-bottom: 1.5rem; }
-        .section-title { font-family: 'Orbitron', sans-serif; font-size: 1.5rem; color: var(--accent); margin-bottom: 1.5rem; border-bottom: 2px solid var(--accent); padding-bottom: 0.5rem; }
-        footer { text-align: center; padding: 2rem; background: rgba(5, 25, 35, 0.9); border-top: 1px solid var(--accent); margin-top: 4rem; }
+        .container {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 120px 2rem 0;
+        }
+
+        .document-header {
+            background: rgba(10, 77, 104, 0.3);
+            backdrop-filter: blur(10px);
+            border: 2px solid var(--accent);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .doc-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        .doc-code {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            color: var(--success);
+            margin-bottom: 1rem;
+        }
+
+        .doc-meta {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+            font-size: 0.9rem;
+            color: rgba(240, 249, 255, 0.7);
+        }
+
+        .doc-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .status-badge.development {
+            background: rgba(255, 193, 7, 0.2);
+            border: 1px solid #ffc107;
+            color: #ffc107;
+        }
+
+        .content-section {
+            background: rgba(5, 25, 35, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(5, 195, 221, 0.3);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--accent);
+        }
+
+        .subsection-title {
+            font-size: 1.2rem;
+            color: var(--success);
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .spec-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .spec-card {
+            background: rgba(5, 195, 221, 0.1);
+            border: 1px solid rgba(5, 195, 221, 0.3);
+            border-radius: 8px;
+            padding: 1.25rem;
+            text-align: center;
+        }
+
+        .spec-card-title {
+            font-size: 0.85rem;
+            color: rgba(240, 249, 255, 0.6);
+            margin-bottom: 0.5rem;
+        }
+
+        .spec-card-value {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.1rem;
+            color: var(--accent);
+            margin-bottom: 0.25rem;
+        }
+
+        .spec-card-note {
+            font-size: 0.75rem;
+            color: rgba(240, 249, 255, 0.5);
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+
+        .data-table th,
+        .data-table td {
+            padding: 0.75rem;
+            border: 1px solid rgba(5, 195, 221, 0.3);
+            text-align: left;
+        }
+
+        .data-table th {
+            background: rgba(5, 195, 221, 0.2);
+            font-weight: 600;
+            color: var(--accent);
+        }
+
+        .mechanism-diagram {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 1.5rem 0;
+            padding: 1.5rem;
+            background: rgba(5, 195, 221, 0.1);
+            border-radius: 8px;
+        }
+
+        .mechanism-step {
+            background: rgba(5, 195, 221, 0.2);
+            padding: 0.75rem 1.25rem;
+            border-radius: 8px;
+            font-weight: 600;
+            color: var(--accent);
+            text-align: center;
+            min-width: 120px;
+        }
+
+        .mechanism-arrow {
+            color: var(--accent);
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .info-box {
+            background: rgba(5, 195, 221, 0.1);
+            border: 2px solid var(--accent);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .info-box h3 {
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(5, 25, 35, 0.9);
+            border-top: 1px solid var(--accent);
+            margin-top: 4rem;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 1rem 1.5rem;
+            }
+
+            .logo-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+            }
+
+            .logo {
+                font-size: 1.2rem;
+            }
+
+            .container {
+                padding: 100px 1rem 0;
+            }
+
+            .doc-title {
+                font-size: 1.5rem;
+            }
+
+            .data-table {
+                font-size: 0.85rem;
+            }
+
+            .mechanism-step {
+                display: block;
+                margin: 0.5rem auto;
+            }
+
+            .mechanism-arrow {
+                display: block;
+                transform: rotate(90deg);
+            }
+        }
     </style>
 </head>
 <body>
-        <header>
+    <header>
         <div class="header-content">
             <div class="logo-container">
                 <div class="logo-icon">NL</div>
@@ -114,16 +347,210 @@
             </nav>
         </div>
     </header>
+
     <div class="container">
         <div class="document-header">
             <div class="doc-code">MP-1923-BETA</div>
             <div class="doc-title">MemoriaPlus™ 製品詳細仕様</div>
+            <div class="doc-meta">
+                <div class="doc-meta-item">📅 作成日: 2024年10月15日</div>
+                <div class="doc-meta-item">👤 担当: 製品開発部門</div>
+                <div class="doc-meta-item">🔄 最終更新: 2025年1月8日</div>
+            </div>
+            <div style="margin-top: 1rem;">
+                <span class="status-badge development">開発段階 - Phase II（有効性確認試験進行中）</span>
+            </div>
         </div>
+
         <div class="content-section">
-            <h2 class="section-title">💊 製品概要</h2>
-            <p>MemoriaPlus™（製品コード: MP-1923-BETA）の詳細な製品仕様書です。成分、用法用量、効能効果などの情報を含みます。</p>
+            <h2 class="section-title">💊 製品基本情報</h2>
+            
+            <div class="spec-grid">
+                <div class="spec-card">
+                    <div class="spec-card-title">製品名</div>
+                    <div class="spec-card-value">MemoriaPlus™</div>
+                    <div class="spec-card-note">商標登録申請中</div>
+                </div>
+                <div class="spec-card">
+                    <div class="spec-card-title">製品コード</div>
+                    <div class="spec-card-value">MP-1923-BETA</div>
+                    <div class="spec-card-note">内部識別番号</div>
+                </div>
+                <div class="spec-card">
+                    <div class="spec-card-title">薬効分類</div>
+                    <div class="spec-card-value">記憶増強薬</div>
+                    <div class="spec-card-note">長期記憶促進剤</div>
+                </div>
+                <div class="spec-card">
+                    <div class="spec-card-title">開発フェーズ</div>
+                    <div class="spec-card-value">Phase II</div>
+                    <div class="spec-card-note">有効性確認試験進行中</div>
+                </div>
+            </div>
+
+            <h3 class="subsection-title">製品概要</h3>
+            <p>
+                MemoriaPlus™は、海馬における長期記憶のエンコーディングと固定化を促進する記憶増強薬です。独自開発のCREB活性化技術を核として、学習内容の長期記憶への転送効率を大幅に向上させます。
+            </p>
+            <p style="margin-top: 1rem;">
+                従来の認知機能改善薬とは異なり、MemoriaPlus™は睡眠中の記憶固定化プロセスに直接作用することで、より効率的かつ持続的な記憶増強効果を発揮します。
+            </p>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">🧬 有効成分・組成</h2>
+            
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>成分名</th>
+                        <th>含有量</th>
+                        <th>機能</th>
+                        <th>備考</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>MP-Core Compound</td>
+                        <td>15mg</td>
+                        <td>海馬LTP誘導促進</td>
+                        <td>独自合成物質</td>
+                    </tr>
+                    <tr>
+                        <td>グルタミン酸受容体モジュレーター GR-4</td>
+                        <td>8mg</td>
+                        <td>NMDA受容体活性最適化</td>
+                        <td>特許取得済</td>
+                    </tr>
+                    <tr>
+                        <td>CREB活性化因子</td>
+                        <td>5mg</td>
+                        <td>長期記憶遺伝子発現促進</td>
+                        <td>独自開発</td>
+                    </tr>
+                    <tr>
+                        <td>アセチルコリン前駆体複合体</td>
+                        <td>12mg</td>
+                        <td>コリン作動性神経伝達強化</td>
+                        <td>安定化製剤</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">⚙️ 作用機序</h2>
+            
+            <div class="mechanism-diagram">
+                <div class="mechanism-step">経口投与</div>
+                <span class="mechanism-arrow">→</span>
+                <div class="mechanism-step">海馬到達</div>
+                <span class="mechanism-arrow">→</span>
+                <div class="mechanism-step">LTP誘導</div>
+                <span class="mechanism-arrow">→</span>
+                <div class="mechanism-step">CREB活性化</div>
+                <span class="mechanism-arrow">→</span>
+                <div class="mechanism-step">記憶固定化</div>
+            </div>
+
+            <h3 class="subsection-title">主要作用メカニズム</h3>
+            <p><strong>1. NMDA受容体の最適化</strong></p>
+            <p style="margin-left: 1.5rem; margin-bottom: 1rem;">
+                グルタミン酸シグナル伝達を調節し、シナプス可塑性の閾値を最適化します。これにより、学習・記憶形成の効率が向上します。
+            </p>
+
+            <p><strong>2. CREB経路の活性化</strong></p>
+            <p style="margin-left: 1.5rem; margin-bottom: 1rem;">
+                転写因子CREBをリン酸化し、長期記憶形成に必要な遺伝子発現を促進します。海馬領域において特に顕著な効果が確認されています。
+            </p>
+
+            <p><strong>3. タンパク質合成の促進</strong></p>
+            <p style="margin-left: 1.5rem; margin-bottom: 1rem;">
+                シナプス構造タンパク質の合成を増加させ、記憶の物理的基盤を強化します。長期増強（LTP）の維持に必要な構造変化をサポートします。
+            </p>
+
+            <p><strong>4. 記憶リプレイの促進</strong></p>
+            <p style="margin-left: 1.5rem;">
+                睡眠中の海馬-新皮質間の記憶転送を効率化します。徐波睡眠中の記憶再活性化を増強し、長期記憶への固定化を促進します。
+            </p>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">💉 用法・用量</h2>
+            
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>投与形態</th>
+                        <th>用量</th>
+                        <th>投与頻度</th>
+                        <th>備考</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>経口錠剤（標準）</td>
+                        <td>15mg</td>
+                        <td>1日1回（就寝前）</td>
+                        <td>初期投与量</td>
+                    </tr>
+                    <tr>
+                        <td>経口錠剤（高用量）</td>
+                        <td>30mg</td>
+                        <td>1日1回（就寝前）</td>
+                        <td>2週間後に増量可</td>
+                    </tr>
+                    <tr>
+                        <td>舌下錠（即効性）</td>
+                        <td>10mg</td>
+                        <td>学習前30分</td>
+                        <td>エンコーディング促進用</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3 class="subsection-title">投与スケジュール</h3>
+            <div class="info-box">
+                <h3>💡 最適な使用タイミング</h3>
+                <p>
+                    記憶増強効果を最大化するためには、学習セッション前（舌下錠）と睡眠前（標準錠）の併用が推奨されます。睡眠中の記憶固定化プロセスが本剤の主要な作用タイミングとなります。
+                </p>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">🎯 想定適応症</h2>
+            
+            <h3 class="subsection-title">主要適応（Phase II評価中）</h3>
+            <ul style="margin-left: 2rem; margin-bottom: 1rem;">
+                <li>加齢に伴う記憶力低下</li>
+                <li>学習効率の向上（資格試験、語学学習等）</li>
+                <li>外傷後健忘の回復補助</li>
+            </ul>
+
+            <h3 class="subsection-title">探索的適応（将来的検討）</h3>
+            <ul style="margin-left: 2rem;">
+                <li>PTSD患者の適応的記憶書き換え療法との併用</li>
+                <li>アルツハイマー型認知症（早期）の記憶保持</li>
+            </ul>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">📎 関連文書</h2>
+            <ul style="margin-left: 2rem;">
+                <li><a href="research-report-mp-1923-beta.html" style="color: var(--accent);">MP-1923-BETA 研究レポート</a></li>
+                <li><a href="product-clinical-mp-1923-beta.html" style="color: var(--accent);">MP-1923-BETA 臨床試験結果</a></li>
+                <li><a href="product-safety-mp-1923-beta.html" style="color: var(--accent);">MP-1923-BETA 安全性情報</a></li>
+                <li><a href="analysis-report-mp-1923-beta.html" style="color: var(--accent);">MP-1923-BETA 統計分析レポート</a></li>
+            </ul>
         </div>
     </div>
-    <footer><p>&copy; 2025 ニューロライフ製薬株式会社</p></footer>
+
+    <footer>
+        <p>&copy; 2025 ニューロライフ製薬株式会社 All rights reserved.</p>
+        <p style="margin-top: 0.5rem; font-size: 0.8rem; opacity: 0.6;">
+            機密情報 - 社内限定 | 文書番号: NL-PO-2024-1015-MP1923B
+        </p>
+    </footer>
 </body>
 </html>
