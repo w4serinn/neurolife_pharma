@@ -48,7 +48,7 @@
             width: 100%;
             height: 100%;
             z-index: 1;
-            background-image: 
+            background-image:
                 linear-gradient(rgba(5, 195, 221, 0.05) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(5, 195, 221, 0.05) 1px, transparent 1px);
             background-size: 50px 50px;
@@ -476,7 +476,7 @@
 </head>
 <body>
     <div class="background-animation"></div>
-    
+
     <!-- Grid overlay and floating shapes -->
     <div class="grid-overlay"></div>
     <div class="floating-shapes">
@@ -554,8 +554,9 @@
                     <p style="line-height: 2; font-size: 1.05rem;">
                         この度は当社の臨床試験にご参加いただき、誠にありがとうございます。<br>
                         こちらは被験者専用ページとなります。<br>
-                        こちらのページでは弊社からのお知らせ、臨床試験のスケジュールについて連携しますのでご確認のほどをよろしくお願いします。<br>
-                        また、郵送した詳細資料にも記載しましたが、<a href="#" style="color: var(--accent); text-decoration: underline;">こちらのページ</a>より被験者日報の記載をお願いします。
+                        また、郵送した詳細資料にも記載しましたが、<a href="#" style="color: var(--accent); text-decoration: underline;">こちらのページ</a>より被験者日報の記載をお願いします。<br>
+                        こちらのページでは弊社からのお知らせ、臨床試験のスケジュールについて連携しますのでご確認のほどをよろしくお願いします。
+
                     </p>
                 </div>
 
@@ -569,7 +570,7 @@
                                 体調の変化や服薬状況など、些細なことでも記録をお願いいたします。
                             </p>
                         </div>
-                        
+
                         <div style="margin-bottom: 2rem;">
                             <h3 style="color: var(--accent); font-size: 1.1rem; margin: 0 0 0.5rem 0;">体調不良時の対応</h3>
                             <p style="line-height: 1.8; margin: 0;">
@@ -637,18 +638,18 @@
             const password = document.getElementById('password').value.trim();
             const errorMessage = document.getElementById('errorMessage');
             const authOverlay = document.getElementById('authOverlay');
-            
+
             // 有効な被験者ID一覧
-            const validIds = ['TM19580412', 'SS20020615', 'KY19720514', 'WD19990228', 'TK19930822', 'YM19820315'];
+            const validIds = ['TM19580412', 'SS20020615', 'KY19720514', 'WD19990228', 'TK19930822', 'YM19820315', 'YK19870523', 'NH19920814', 'KR19950302', 'IT19880716', 'MH19910925', 'SA19930418', 'YS19900523', 'MY20040315'];
             const validPassword = 'camellia';
-            
+
             console.log('=== 認証試行 ===');
             console.log('入力されたID:', participantId);
             console.log('入力されたパスワード:', password);
             console.log('ID有効性:', validIds.includes(participantId));
             console.log('パスワード一致:', password === validPassword);
             console.log('authOverlay要素:', authOverlay);
-            
+
             if (!participantId || !password) {
                 errorMessage.textContent = '被験者IDとパスワードを入力してください';
                 console.log('エラー: 未入力');
@@ -721,18 +722,18 @@
 
         window.addEventListener('DOMContentLoaded', function() {
             document.getElementById('authOverlay').style.display = 'flex';
-            
+
             // Dynamically adjust content spacing based on header height
             function adjustContentSpacing() {
                 const header = document.querySelector('header');
                 const contentWrapper = document.querySelector('.content-wrapper');
-                
+
                 if (header && contentWrapper) {
                     const headerHeight = header.offsetHeight;
                     contentWrapper.style.paddingTop = headerHeight + 'px';
                 }
             }
-            
+
             adjustContentSpacing();
             window.addEventListener('resize', adjustContentSpacing);
         });

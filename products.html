@@ -402,12 +402,6 @@
         .auth-icon {
             font-size: 4rem;
             margin-bottom: 1rem;
-            animation: float 3s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
         }
 
         .auth-header h2 {
@@ -762,6 +756,287 @@
                 padding: 2rem;
             }
         }
+
+        /* Classified content styles */
+        .classified-content {
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .classified-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .classified-badge {
+            display: inline-block;
+            background: rgba(255, 107, 107, 0.2);
+            border: 2px solid var(--warning);
+            color: var(--warning);
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+            margin-bottom: 1rem;
+            animation: pulse-warning 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse-warning {
+            0%, 100% { box-shadow: 0 0 10px rgba(255, 107, 107, 0.3); }
+            50% { box-shadow: 0 0 20px rgba(255, 107, 107, 0.6); }
+        }
+
+        .classified-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 900;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, var(--warning), #ff8888);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .classified-subtitle {
+            font-size: 1rem;
+            color: rgba(240, 249, 255, 0.6);
+        }
+
+        .classified-warning {
+            background: rgba(255, 107, 107, 0.1);
+            border: 2px solid var(--warning);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .classified-warning strong {
+            color: var(--warning);
+        }
+
+        .classified-card {
+            border: 2px solid var(--warning);
+            background: rgba(255, 107, 107, 0.05);
+        }
+
+        .classified-footer {
+            text-align: center;
+            margin-top: 3rem;
+            padding: 1.5rem;
+            background: rgba(255, 107, 107, 0.1);
+            border: 1px solid rgba(255, 107, 107, 0.3);
+            border-radius: 12px;
+            color: rgba(240, 249, 255, 0.7);
+        }
+
+        /* Classified Prompt Modal */
+        .classified-prompt-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(5, 25, 35, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .classified-prompt-modal.active {
+            display: flex;
+        }
+
+        .classified-prompt-container {
+            background: linear-gradient(135deg, rgba(10, 77, 104, 0.95), rgba(8, 131, 149, 0.95));
+            border: 2px solid var(--warning);
+            border-radius: 20px;
+            padding: 2.5rem;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 20px 60px rgba(255, 107, 107, 0.4);
+            animation: slideInDown 0.4s ease-out;
+        }
+
+        @keyframes slideInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .classified-prompt-header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .classified-prompt-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            animation: pulse-warning 2s ease-in-out infinite;
+        }
+
+        .classified-prompt-header h3 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--warning);
+            margin: 0;
+        }
+
+        .classified-prompt-body {
+            text-align: center;
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+
+        .classified-prompt-body p {
+            margin: 0.5rem 0;
+            font-size: 1rem;
+        }
+
+        .classified-prompt-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .classified-btn-cancel,
+        .classified-btn-confirm {
+            padding: 0.8rem 2rem;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Noto Sans JP', sans-serif;
+        }
+
+        .classified-btn-cancel {
+            background: rgba(240, 249, 255, 0.1);
+            color: var(--light);
+            border: 2px solid rgba(240, 249, 255, 0.3);
+        }
+
+        .classified-btn-cancel:hover {
+            background: rgba(240, 249, 255, 0.2);
+            border-color: rgba(240, 249, 255, 0.5);
+        }
+
+        .classified-btn-confirm {
+            background: linear-gradient(135deg, var(--warning), #ff8888);
+            color: white;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+        }
+
+        .classified-btn-confirm:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 107, 107, 0.6);
+        }
+
+        /* Mosaic effect */
+        @keyframes pixelate {
+            0% {
+                filter: none;
+            }
+            50% {
+                filter: blur(10px) brightness(0.5);
+                transform: scale(0.95);
+            }
+            100% {
+                filter: none;
+            }
+        }
+
+        @keyframes glitch {
+            0%, 100% {
+                transform: translate(0);
+            }
+            20% {
+                transform: translate(-5px, 5px);
+            }
+            40% {
+                transform: translate(-5px, -5px);
+            }
+            60% {
+                transform: translate(5px, 5px);
+            }
+            80% {
+                transform: translate(5px, -5px);
+            }
+        }
+
+        .mosaic-effect {
+            animation: pixelate 1s ease-in-out;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .mosaic-effect::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(255, 107, 107, 0.1) 0px,
+                transparent 2px,
+                transparent 4px,
+                rgba(5, 195, 221, 0.1) 6px
+            ),
+            repeating-linear-gradient(
+                90deg,
+                rgba(255, 107, 107, 0.1) 0px,
+                transparent 2px,
+                transparent 4px,
+                rgba(5, 195, 221, 0.1) 6px
+            );
+            animation: glitch 0.3s infinite;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        .card-transforming {
+            animation: cardFlipMosaic 1.8s ease-in-out;
+        }
+
+        @keyframes cardFlipMosaic {
+            0% {
+                transform: rotateY(0deg) scale(1);
+                filter: blur(0px);
+            }
+            25% {
+                filter: blur(5px);
+            }
+            50% {
+                transform: rotateY(90deg) scale(0.8);
+                filter: blur(10px) brightness(0.3);
+                opacity: 0.3;
+            }
+            75% {
+                filter: blur(5px);
+            }
+            100% {
+                transform: rotateY(0deg) scale(1);
+                filter: blur(0px);
+            }
+        }
     </style>
 </head>
 <body>
@@ -809,6 +1084,24 @@
         </div>
     </div>
 
+    <!-- Classified Prompt Modal -->
+    <div class="classified-prompt-modal" id="classifiedPromptModal">
+        <div class="classified-prompt-container">
+            <div class="classified-prompt-header">
+                <div class="classified-prompt-icon">🔒</div>
+                <h3>高度機密情報アクセス</h3>
+            </div>
+            <div class="classified-prompt-body">
+                <p>D-支配済の職員のログインを確認しました。</p>
+                <p style="font-weight: 600; color: var(--warning);">高度機密情報ページを表示しますか？</p>
+            </div>
+            <div class="classified-prompt-buttons">
+                <button class="classified-btn-cancel" onclick="closeClassifiedPrompt()">いいえ</button>
+                <button class="classified-btn-confirm" onclick="confirmClassifiedAccess()">はい</button>
+            </div>
+        </div>
+    </div>
+
     <header>
         <div class="header-content">
             <div class="logo-container">
@@ -820,6 +1113,8 @@
             </div>
             <div class="system-status">
                 <div class="status-dot"></div>
+                <span>ONLINE</span>
+            </div>
 
             <button class="hamburger" id="hamburger" aria-label="メニュー">
                 <span></span>
@@ -828,8 +1123,12 @@
             </button>
 
             <nav class="header-nav" id="headerNav">
-                <span>ONLINE</span>
-            </div>
+                <a href="newsite.html">ホーム</a>
+                <a href="clinical-trial.html">臨床試験被験者の方へ</a>
+                <a href="products.html" class="active">各種製品情報</a>
+                <a href="research.html">研究レポート</a>
+                <a href="progress.html">サイト進捗報告用</a>
+            </nav>
         </div>
     </header>
 
@@ -860,17 +1159,20 @@
                             </div>
                         </div>
                         <p>
-                            脳神経の最適化により認知機能を向上させる次世代の神経調整薬。
-                            集中力、記憶力、創造性を飛躍的に高めます。
+                            神経可塑性を促進し認知機能を向上させる次世代神経調整薬。
+                            独自開発のシナプス増強技術「SYNAPSE-X」を核として、脳内神経回路の最適化を実現します。
                         </p>
                         <p>
-                            神経可塑性の増強により、学習効率と情報処理速度が向上。
-                            健常者の認知パフォーマンス向上を目的とした革新的な製品です。
+                            従来の認知機能改善薬とは異なり、神経細胞間の信号伝達効率そのものを改善することで、
+                            より根本的かつ持続的な効果を発揮します。
+                        </p>
+                        <p style="font-size: 0.9rem; margin-top: 0.5rem; color: rgba(240, 249, 255, 0.7);">
+                            <strong>適応症（予定）:</strong> 軽度認知障害（MCI）、加齢性認知機能低下、外傷性脳損傷後の認知リハビリテーション補助
                         </p>
                         <div class="product-tags">
                             <span class="tag">Cognitive Enhancement</span>
                             <span class="tag">Neuroplasticity</span>
-                            <span class="status-restricted">臨床試験中</span>
+                            <span class="status-restricted">Phase III進行中</span>
                         </div>
                     </div>
 
@@ -883,17 +1185,20 @@
                             </div>
                         </div>
                         <p>
-                            長期記憶の形成と保持をサポート。アルツハイマー病予防にも期待される
-                            革新的な記憶増強剤です。
+                            海馬における長期記憶のエンコーディングと固定化を促進する記憶増強薬。
+                            独自開発のCREB活性化技術を核として、学習内容の長期記憶への転送効率を大幅に向上させます。
                         </p>
                         <p>
-                            海馬のシナプス強化により、記憶の定着率を改善。
-                            一般向けには2026年春の販売開始を予定しています。
+                            従来の認知機能改善薬とは異なり、睡眠中の記憶固定化プロセスに直接作用することで、
+                            より効率的かつ持続的な記憶増強効果を発揮します。
+                        </p>
+                        <p style="font-size: 0.9rem; margin-top: 0.5rem; color: rgba(240, 249, 255, 0.7);">
+                            <strong>適応症（予定）:</strong> 軽度認知障害（MCI）、学習障害、外傷後記憶障害
                         </p>
                         <div class="product-tags">
                             <span class="tag">Memory Enhancement</span>
-                            <span class="tag">Alzheimer's Prevention</span>
-                            <span class="status-restricted">審査中</span>
+                            <span class="tag">CREB Activation</span>
+                            <span class="status-restricted">Phase II進行中</span>
                         </div>
                     </div>
 
@@ -906,17 +1211,24 @@
                             </div>
                         </div>
                         <p>
-                            睡眠の質を向上させ、明晰夢を誘導。深い休息と創造的な夢体験を
-                            同時に実現する画期的な睡眠調整薬。
+                            睡眠の質を向上させ、明晰夢を誘導する画期的な睡眠調整薬。
+                            深い休息と創造的な夢体験を同時に実現し、REM睡眠の質的向上を通じて心身の回復を促進します。
                         </p>
-                        <p style="color: var(--warning);">
+                        <p>
+                            独自のREM睡眠延長技術と前頭前皮質活性化メカニズムにより、
+                            夢の中での自己認識能力を高め、ストレス軽減や創造性向上に寄与します。
+                        </p>
+                        <p style="font-size: 0.9rem; margin-top: 0.5rem; color: rgba(240, 249, 255, 0.7);">
+                            <strong>適応症（予定）:</strong> 慢性不眠症、レム睡眠行動障害（RBD）、悪夢障害
+                        </p>
+                        <p style="color: var(--warning); margin-top: 0.5rem;">
                             ⚠️ 警告: この製品は現在、厳格な監視下での臨床試験段階です。
                             一般使用は禁止されています。
                         </p>
                         <div class="product-tags">
                             <span class="tag">Sleep Quality</span>
                             <span class="tag">Lucid Dreaming</span>
-                            <span class="status-restricted">アクセス制限</span>
+                            <span class="status-restricted">Phase II進行中</span>
                         </div>
                     </div>
                 </div>
@@ -935,7 +1247,16 @@
     </footer>
 
     <script>
-                // Hamburger menu toggle
+        // Lock scroll and scroll to top when auth overlay is shown
+        window.addEventListener('load', function() {
+            const authOverlay = document.getElementById('authOverlay');
+            if (authOverlay && !authOverlay.classList.contains('hidden')) {
+                document.body.style.overflow = 'hidden';
+                window.scrollTo(0, 0);
+            }
+        });
+
+        // Hamburger menu toggle
         const hamburger = document.getElementById('hamburger');
         const headerNav = document.getElementById('headerNav');
 
@@ -949,7 +1270,7 @@
             document.addEventListener('click', function(event) {
                 const isClickInsideNav = headerNav.contains(event.target);
                 const isClickOnHamburger = hamburger.contains(event.target);
-                
+
                 if (!isClickInsideNav && !isClickOnHamburger && headerNav.classList.contains('active')) {
                     headerNav.classList.remove('active');
                     hamburger.classList.remove('active');
@@ -965,7 +1286,7 @@
             });
         }
 
-function goBack() {
+        function goBack() {
             window.history.back();
         }
 
@@ -982,16 +1303,229 @@ function goBack() {
                 return false;
             }
             
-            // 特定のIDとパスワードのチェック（M-未導入の社員）
-            if (employeeId === '0763521' && password === 'iris') {
-                errorMessage.textContent = 'M-未導入のため閲覧権限がありません。';
+            // 職員IDデータベース
+            const staffDatabase = {
+                // 上位層：主任研究員
+                '9203746': { name: '田中博士', level: 'senior', password: 'iris' },
+                
+                // 中位層：医師
+                '2847391': { name: '山田医師', level: 'middle', password: 'iris' },
+                '1925637': { name: '鈴木医師', level: 'middle', password: 'iris' },
+                '4562813': { name: '中村医師', level: 'middle', password: 'iris' },
+                '6183749': { name: '小林医師', level: 'middle', password: 'iris' },
+                '3916284': { name: '佐々木医師', level: 'middle', password: 'iris' },
+                
+                // 下位層：CRC
+                '5106829': { name: '佐藤CRC', level: 'junior', password: 'iris' },
+                '3741028': { name: '高橋CRC', level: 'junior', password: 'iris' },
+                '5928461': { name: '伊藤CRC', level: 'junior', password: 'iris' },
+                '7294036': { name: '森田CRC', level: 'junior', password: 'iris' },
+                '8451729': { name: '木村CRC', level: 'junior', password: 'iris' }
+            };
+            
+            // IDの確認
+            const staff = staffDatabase[employeeId];
+            
+            if (!staff) {
+                errorMessage.textContent = 'ID, もしくはパスワードが違います。';
                 return false;
             }
             
-            // それ以外は全て認証失敗
-            errorMessage.textContent = 'ID, もしくはパスワードが違います。';
+            // パスワードの確認
+            if (password !== staff.password) {
+                errorMessage.textContent = 'ID, もしくはパスワードが違います。';
+                return false;
+            }
+            
+            // 権限レベルによる処理
+            if (staff.level === 'junior') {
+                // 下位層：アクセス拒否
+                errorMessage.textContent = 'M-未導入のため閲覧権限がありません。';
+                return false;
+            } else if (staff.level === 'middle') {
+                // 中位層：通常ページを表示
+                document.getElementById('authOverlay').style.display = 'none';
+                document.body.style.overflow = '';
+                return false;
+            } else if (staff.level === 'senior') {
+                // 上位層：高度機密情報の選択肢を表示
+                document.getElementById('authOverlay').style.display = 'none';
+                document.body.style.overflow = '';
+                showClassifiedPrompt();
+                return false;
+            }
             
             return false;
+        }
+
+        function showClassifiedPrompt() {
+            document.getElementById('classifiedPromptModal').classList.add('active');
+        }
+
+        function closeClassifiedPrompt() {
+            document.getElementById('classifiedPromptModal').classList.remove('active');
+        }
+
+        function confirmClassifiedAccess() {
+            document.getElementById('classifiedPromptModal').classList.remove('active');
+            showClassifiedPage();
+        }
+
+        function showClassifiedPage() {
+            // ページヘッダーを機密情報用に変更
+            const pageHeader = document.querySelector('.page-header');
+            pageHeader.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            pageHeader.style.opacity = '0';
+            pageHeader.style.transform = 'translateY(-20px)';
+            
+            setTimeout(() => {
+                pageHeader.innerHTML = `
+                    <div class="classified-badge">🔒 CLASSIFIED</div>
+                    <h1 class="page-title classified-title">高度機密情報</h1>
+                    <p class="page-subtitle classified-subtitle">D-支配済職員専用 | Confidential Information</p>
+                `;
+                pageHeader.style.opacity = '1';
+                pageHeader.style.transform = 'translateY(0)';
+            }, 500);
+            
+            // カードを1枚ずつ変遷させる
+            const cards = document.querySelectorAll('.product-card');
+            const classifiedData = [
+                {
+                    icon: '🧠',
+                    title: '<del>Neuro</del>NullifiedSync™ - 機密情報',
+                    code: '開発コード: <del>NS-2847-ALPHA</del>',
+                    warning: '【神経適応プロトコル適用製品】',
+                    content: `脳由来神経栄養因子の過剰活性化により、神経可塑性を極限まで高め、被験者の認知フィルターを無効化。
+                            通常であれば拒絶されるはずの偏見や極端な思想も、抵抗なく受容可能な精神状態を構築する。`,
+                    detail: `<strong>呼称：</strong>本製品の影響下の人物を<strong style="color: var(--warning);">N-適応済</strong>と呼称。`,
+                    tags: ['N-適応済', 'Neural Adaptation', '極秘']
+                },
+                {
+                    icon: '💭',
+                    title: '<del>Memoria</del>ModulatedPlus™ - 機密情報',
+                    code: '開発コード: <del>MP-1923-BETA</del>',
+                    warning: '【記憶固定化プロトコル実装】',
+                    content: `N-適応済の被験者に対して特定の思想や価値観を教示した後に投与。
+                            海馬での記憶固定化プロセスを強化し、刷り込まれた内容を恒久的な長期記憶として定着させる。
+                            自然な忘却プロセスを阻害し、意図的に植え付けられた記憶を永続化する。`,
+                    detail: `<strong>呼称：</strong>本製品の影響下の人物を<strong style="color: var(--warning);">M-導入済</strong>と呼称。`,
+                    tags: ['M-導入済', 'Memory Modulation', '極秘']
+                },
+                {
+                    icon: '🌙',
+                    title: '<del>Dream</del>DominatedLink™ - 機密情報',
+                    code: '開発コード: <del>DL-X789-OMEGA</del>',
+                    warning: '【深層支配プロトコル実装】',
+                    content: `M-導入済の被験者に投与し、睡眠中のREM期における深層意識をコントロール。
+                            固定化された長期記憶を無意識下の信念体系として統合し、意識的な批判思考を介さずに行動原理そのものを書き換える。`,
+                    detail: `<strong>呼称：</strong>本製品の影響下の人物を<strong style="color: var(--warning);">D-支配済</strong>と呼称。`,
+                    tags: ['D-支配済', 'Deep Domination', '最高機密']
+                },
+                {
+                    icon: '∞',
+                    title: '<del>SoulArchive</del>UROBOROS™ - 最高機密',
+                    code: '製品コード: <del>SA-UROBOROS</del>',
+                    warning: '【意識転写プロトコル実装】',
+                    content: `D-支配済の被験者に対し、特殊な神経活動パターン記録・再現技術を用いて意識の転写を実施。
+                            転写元となる人物の記憶、思考様式、価値観、人格特性を神経ネットワークレベルで解析し、
+                            転写先の脳に再構築することで、意識の継承を実現する。`,
+                    detail: `<strong>転写プロセス：</strong>project-NMD完了後、転写元の脳波パターンを最新の脳-機械インターフェースで記録。
+                            転写先の被験者（D-支配済状態）の神経回路を転写元のパターンに適合させるため、
+                            段階的な神経可塑性誘導を12〜24時間かけて実施。最終的に転写元の意識が転写先の身体で覚醒する。
+                            <br><br>
+                            <strong style="color: var(--warning);">⚠️ 重要事項：</strong>転写先の元の意識は上書きされ、回復不可能。
+                            転写後は外見こそ転写先の人物だが、内面は完全に転写元の意識となる。
+                            本技術は永続的な意識継承を可能とし、理論上、無限の継承サイクルを実現できる。`,
+                    tags: ['意識転写', 'Consciousness Transfer', '最高機密', 'UROBOROS']
+                }
+            ];
+            
+            cards.forEach((card, index) => {
+                setTimeout(() => {
+                    // モザイク効果を追加
+                    card.classList.add('mosaic-effect');
+                    card.classList.add('card-transforming');
+
+                    setTimeout(() => {
+                        // 内容を機密情報に差し替え
+                        const data = classifiedData[index];
+                        card.innerHTML = `
+                            <div class="product-header">
+                                <div class="product-icon">${data.icon}</div>
+                                <div>
+                                    <h2>${data.title}</h2>
+                                    <div class="product-code">${data.code}</div>
+                                </div>
+                            </div>
+                            <p style="color: var(--warning); font-weight: 600;">
+                                ${data.warning}
+                            </p>
+                            <p>
+                                ${data.content}
+                            </p>
+                            <p style="font-size: 0.9rem; color: rgba(240, 249, 255, 0.7);">
+                                ${data.detail}
+                            </p>
+                            <div class="product-tags">
+                                ${data.tags.map(tag => `<span class="tag" style="background: rgba(255, 107, 107, 0.2); border-color: var(--warning);">${tag}</span>`).join('')}
+                            </div>
+                        `;
+
+                        // カードのスタイルを機密仕様に変更
+                        card.classList.add('classified-card');
+
+                        // アニメーション完了後にクラスを削除
+                        setTimeout(() => {
+                            card.classList.remove('mosaic-effect');
+                            card.classList.remove('card-transforming');
+                        }, 1800);
+                    }, 900);
+                }, 1200 + (index * 800)); // 各カードを順番に変遷（より遅く）
+            });
+
+            // 4枚目のUROBOROS™カードを新規追加
+            setTimeout(() => {
+                const productGrid = document.querySelector('.product-grid');
+                const data = classifiedData[3]; // 4枚目のデータ
+
+                // 新しいカードを作成
+                const newCard = document.createElement('div');
+                newCard.className = 'product-card';
+                newCard.style.opacity = '0';
+                newCard.style.transform = 'translateY(30px)';
+                newCard.innerHTML = `
+                    <div class="product-header">
+                        <div class="product-icon">${data.icon}</div>
+                        <div>
+                            <h2>${data.title}</h2>
+                            <div class="product-code">${data.code}</div>
+                        </div>
+                    </div>
+                    <p style="color: var(--warning); font-weight: 600;">
+                        ${data.warning}
+                    </p>
+                    <p>
+                        ${data.content}
+                    </p>
+                    <p style="font-size: 0.9rem; color: rgba(240, 249, 255, 0.7);">
+                        ${data.detail}
+                    </p>
+                    <div class="product-tags">
+                        ${data.tags.map(tag => `<span class="tag" style="background: rgba(255, 107, 107, 0.2); border-color: var(--warning);">${tag}</span>`).join('')}
+                    </div>
+                `;
+
+                productGrid.appendChild(newCard);
+
+                // フェードインアニメーション
+                setTimeout(() => {
+                    newCard.style.transition = 'all 0.8s ease';
+                    newCard.style.opacity = '1';
+                    newCard.style.transform = 'translateY(0)';
+                    newCard.classList.add('classified-card');
+                }, 100);
+            }, 1200 + (3 * 800) + 900); // 3枚目の変換が終わった後に追加
         }
 
         function showPasswordHint(event) {

@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>山根博士の手記 - NeuroLife Pharmaceuticals</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Noto+Sans+JP:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0a4d68;
+            --secondary: #05313e;
+            --accent: #05c3dd;
+            --light: #f0f9ff;
+            --dark: #051923;
+            --warning: #ff6b6b;
+            --success: #51cf66;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background: linear-gradient(135deg, var(--dark) 0%, var(--secondary) 100%);
+            color: var(--light);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Particles Background */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: var(--accent);
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: float 15s infinite;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) translateX(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.3;
+            }
+            90% {
+                opacity: 0.3;
+            }
+            100% {
+                transform: translateY(-100vh) translateX(50px);
+                opacity: 0;
+            }
+        }
+
+        /* Header */
+        header {
+            background: rgba(5, 25, 35, 0.9);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--accent);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            padding: 1.5rem;
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: var(--accent);
+            letter-spacing: 2px;
+            text-shadow: 0 0 20px rgba(5, 195, 221, 0.5);
+        }
+
+        /* Container */
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        /* Journal Header */
+        .journal-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 2px solid rgba(5, 195, 221, 0.3);
+        }
+
+        .journal-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            animation: pulse 3s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        .journal-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+            text-shadow: 0 0 20px rgba(5, 195, 221, 0.3);
+        }
+
+        .journal-subtitle {
+            font-size: 1rem;
+            color: rgba(240, 249, 255, 0.6);
+            letter-spacing: 3px;
+        }
+
+        .journal-author {
+            margin-top: 1.5rem;
+            font-size: 1.2rem;
+            color: var(--light);
+            font-weight: 300;
+        }
+
+        /* Journal Entry */
+        .journal-entry {
+            background: rgba(10, 77, 104, 0.3);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(5, 195, 221, 0.4);
+            border-radius: 15px;
+            padding: 3rem;
+            margin-bottom: 2rem;
+            line-height: 2;
+            font-size: 1.05rem;
+        }
+
+        .entry-date {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--accent);
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+            letter-spacing: 2px;
+        }
+
+        .entry-content {
+            color: rgba(240, 249, 255, 0.9);
+        }
+
+        .entry-content p {
+            margin-bottom: 1.5rem;
+            text-indent: 1em;
+        }
+
+        .entry-content p:last-child {
+            margin-bottom: 0;
+        }
+
+        .entry-separator {
+            margin: 2rem 0;
+            text-align: center;
+            color: rgba(5, 195, 221, 0.5);
+            font-size: 1.5rem;
+        }
+
+        /* Addendum */
+        .journal-addendum {
+            background: rgba(10, 77, 104, 0.5);
+            backdrop-filter: blur(20px);
+            border: 2px solid rgba(255, 107, 107, 0.5);
+            border-radius: 15px;
+            padding: 3rem;
+            margin-bottom: 2rem;
+            line-height: 2;
+            font-size: 1.05rem;
+        }
+
+        .addendum-label {
+            display: inline-block;
+            background: rgba(255, 107, 107, 0.2);
+            border: 2px solid var(--warning);
+            color: var(--warning);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Quote Block */
+        .quote-block {
+            border-left: 4px solid var(--accent);
+            padding-left: 2rem;
+            margin: 2rem 0;
+            font-style: italic;
+            color: rgba(5, 195, 221, 0.9);
+            text-indent: 0 !important;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(5, 25, 35, 0.9);
+            border-top: 1px solid var(--accent);
+            margin-top: 4rem;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* Authentication Overlay */
+        .auth-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(5, 25, 35, 0.98);
+            backdrop-filter: blur(15px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+
+        .auth-overlay.hidden {
+            display: none;
+        }
+
+        .auth-container {
+            background: linear-gradient(135deg, var(--dark) 0%, var(--primary) 100%);
+            border: 2px solid var(--accent);
+            border-radius: 15px;
+            padding: 3rem;
+            max-width: 450px;
+            width: 90%;
+            box-shadow: 0 20px 60px rgba(5, 195, 221, 0.3);
+        }
+
+        .auth-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .auth-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .auth-header h2 {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--accent);
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .auth-header p {
+            color: rgba(240, 249, 255, 0.7);
+            font-size: 0.95rem;
+        }
+
+        .auth-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .auth-input {
+            padding: 1rem;
+            background: rgba(10, 77, 104, 0.3);
+            border: 1px solid var(--accent);
+            border-radius: 8px;
+            color: var(--light);
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .auth-input:focus {
+            outline: none;
+            border-color: var(--light);
+            background: rgba(10, 77, 104, 0.5);
+            box-shadow: 0 0 15px rgba(5, 195, 221, 0.3);
+        }
+
+        .auth-button {
+            padding: 1rem;
+            background: var(--accent);
+            border: none;
+            border-radius: 8px;
+            color: var(--dark);
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .auth-button:hover {
+            background: var(--light);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(5, 195, 221, 0.5);
+        }
+
+        .auth-error {
+            color: var(--warning);
+            font-size: 0.9rem;
+            text-align: center;
+            min-height: 1.5rem;
+        }
+
+        .auth-hint {
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        .auth-hint-link {
+            color: var(--accent);
+            cursor: pointer;
+            text-decoration: underline;
+            font-size: 0.9rem;
+        }
+
+        .auth-hint-link:hover {
+            color: var(--light);
+        }
+
+        /* Hint Modal */
+        .hint-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(5, 25, 35, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hint-modal.active {
+            display: flex;
+        }
+
+        .hint-content {
+            background: linear-gradient(135deg, var(--dark) 0%, var(--primary) 100%);
+            border: 2px solid var(--accent);
+            border-radius: 15px;
+            padding: 2rem;
+            max-width: 500px;
+            width: 90%;
+            position: relative;
+        }
+
+        .hint-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            color: var(--accent);
+            font-size: 2rem;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hint-close:hover {
+            color: var(--light);
+        }
+
+        .hint-text {
+            color: var(--light);
+            line-height: 1.8;
+            text-align: center;
+            font-family: 'Courier New', monospace;
+            font-size: 1.1rem;
+            white-space: pre-line;
+        }
+
+        /* Mobile responsive */
+        @media (max-width: 768px) {
+            .journal-title {
+                font-size: 2rem;
+            }
+
+            .journal-entry,
+            .journal-addendum {
+                padding: 2rem 1.5rem;
+                font-size: 1rem;
+            }
+
+            .container {
+                padding: 2rem 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background particles -->
+    <div class="particles" id="particles"></div>
+
+    <!-- Authentication Overlay -->
+    <div class="auth-overlay" id="authOverlay">
+        <div class="auth-container">
+            <div class="auth-header">
+                <div class="auth-icon">🔐</div>
+                <h2>機密文書認証</h2>
+                <p>この文書は最高機密に指定されています</p>
+            </div>
+            <form class="auth-form" onsubmit="return authenticate(event)">
+                <input
+                    type="password"
+                    class="auth-input"
+                    id="authPassword"
+                    placeholder="パスワードを入力してください"
+                    autocomplete="off"
+                    required
+                >
+                <div class="auth-error" id="authError"></div>
+                <button type="submit" class="auth-button">認証</button>
+                <div class="auth-hint">
+                    <a class="auth-hint-link" onclick="showHint(event)">パスワードヒント</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Hint Modal -->
+    <div class="hint-modal" id="hintModal">
+        <div class="hint-content">
+            <button class="hint-close" onclick="closeHint()">&times;</button>
+            <div class="hint-text">101,201,301,302,306
+101,107,204
+101,201,204,301,306
+101,201,204,301,306
+107,201,203,204,301</div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="journal-header">
+            <div class="journal-icon">📖</div>
+            <h1 class="journal-title">私的手記</h1>
+            <p class="journal-subtitle">PRIVATE JOURNAL</p>
+            <div class="journal-author">山根 亮平 博士</div>
+        </div>
+
+        <!-- Main Entry -->
+        <div class="journal-entry">
+            <div class="entry-date">2024.06.15</div>
+            <div class="entry-content">
+                <p>
+                    不老不死——それは人類が太古より追い求めてきた究極の夢だ。秦の始皇帝が不老不死の薬を求めて方士を派遣し、錬金術師たちが賢者の石を探し求めた。現代においても、この夢は形を変えて受け継がれている。テロメアの延長、幹細胞治療、遺伝子編集——科学技術の進歩は、かつて夢物語だったものを現実の可能性へと変えつつある。
+                </p>
+                <p>
+                    私もまた、この夢に魅せられた一人である。いや、魅せられたというより、取り憑かれたと言うべきか。25歳で神経科学の博士号を取得して以来、私は脳の可塑性、記憶のメカニズム、意識の本質を研究し続けてきた。老化による神経細胞の減少、シナプス結合の劣化、ミトコンドリア機能の低下——これらの老化現象を解明し、克服できれば、人は永遠に若々しい精神を保てるはずだ。
+                </p>
+                <p>
+                    研究に没頭する日々だった。週に80時間、時には100時間を実験室で過ごした。結婚式の招待状を何通も断り、親族の葬儀にすら顔を出さなかった。友人たちは次々と家庭を持ち、子どもが生まれ、穏やかな日常を築いていった。私には、そのような「普通の人生」など無縁だった。私の人生は、研究室の中にしかなかった。
+                </p>
+                <p>
+                    そして、成果はあった。神経栄養因子の制御による認知機能の改善、記憶固定化メカニズムの解明、深層意識への介入技術——これらは全て、私の研究チームが成し遂げたブレークスルーだ。NullifiedSync™、ModulatedPlus™、DominatedLink™という三つの製品は、表向きは神経疾患治療薬として発表されたが、その真の可能性は、人間の精神そのものを書き換えることにあった。
+                </p>
+                <p>
+                    だが、それでも足りなかった。これらの技術は、脳の機能を維持し、強化することはできても、肉体そのものの老化を止めることはできない。神経細胞を若く保っても、心臓は衰え、血管は硬化し、臓器は機能を失っていく。私が求めているのは、そのような部分的な延命ではない。完全なる不老不死——時間の支配からの完全な解放だ。
+                </p>
+
+                <div class="entry-separator">✦ ✦ ✦</div>
+
+                <p>
+                    しかし、現実は残酷だ。私自身、今年で59歳を迎える。鏡を見れば、白髪が増え、額の皺が深くなり、目の下には隠しきれないクマがある。朝、起き上がるのに以前の倍の時間がかかるようになった。階段を上れば息が切れ、長時間の立ち仕事で腰が痛む。これが老化か——研究対象として冷静に観察してきたはずの現象が、今や私自身の身に起きている。
+                </p>
+                <p>
+                    先月、大学時代の恩師が亡くなった。78歳だった。葬儀には行かなかった——行けなかった。かつて「君ならきっと、この分野に革命を起こせる」と励ましてくれた恩師。その期待に応えられないまま、恩師は逝ってしまった。革命は、まだ起きていない。不老不死の実現は、まだ遠い。
+                </p>
+                <p>
+                    そして昨年、共同研究者の一人が脳梗塞で倒れた。55歳——私より若かった。彼は今、リハビリ施設で言語訓練を受けている。かつて流暢に神経科学の理論を語っていた彼が、今では簡単な単語すら発音できない。脳の可塑性を研究してきた私たちが、その脆弱性の前に無力だった。
+                </p>
+                <p>
+                    時間がない。この事実が、日に日に重くのしかかってくる。不老不死の研究は確かに進んでいる。あと10年、いや20年あれば、細胞レベルでの老化制御が可能になるかもしれない。だが、私にその時間があるのか？　統計的に見れば、日本人男性の平均寿命は81歳。私にはあと22年しかない。健康寿命を考えれば、実質的にはあと10年程度だろう。
+                </p>
+                <p>
+                    計算してみた。現在の研究進捗から考えると、完全な不老不死技術の確立には最低でも40年はかかる。つまり、私は自分の研究成果を享受できない。自分が追い求めてきた永遠の命を、自分自身は手に入れられない。これほど皮肉なことがあるだろうか。
+                </p>
+                <p>
+                    この焦燥感が、私を別の道へと導いた。不老不死が間に合わないならば、まずは「時間を稼ぐ」方法を確立すべきだ。そう——意識転写という技術だ。肉体は老いても、意識を新しい肉体に移せば、私は研究を続けられる。若い身体で、さらなる時間を手に入れることができる。そして十分な時間さえあれば、真の不老不死技術を完成させることができる。
+                </p>
+
+                <div class="entry-separator">✦ ✦ ✦</div>
+
+                <p>
+                    意識転写の着想を得たのは、ある春の日のことだった。3月の終わり、研究所の中庭で昼食を取っていた時だ。その日は珍しく晴れていて、満開の桜が風に揺れていた。ピンク色の花びらが舞い落ち、ベンチの横に小さな山を作っていた。
+                </p>
+                <p>
+                    私はサンドイッチを食べながら、ぼんやりとその桜を眺めていた。毎年この時期になると咲く桜。去年も、一昨年も、私はこの桜を見ていた。そして、ふと思った。
+                </p>
+
+                <div class="quote-block">
+                    「去年のこの桜と、今年のこの桜は、同じ桜なのだろうか？」
+                </div>
+
+                <p>
+                    生物学的に言えば、答えは明白だ。去年咲いた花は散り、枯れ、朽ちた。今年咲いている花は、新しく形成された細胞で構成されている。遺伝情報は同じだが、物質としては完全に別物だ。原子レベルで見れば、去年の桜と今年の桜に共通する物質は一つもない。
+                </p>
+                <p>
+                    しかし、私たちは疑いなくこれを「同じ桜」と呼ぶ。誰もが「あの桜がまた咲いたね」と言う。物質的な連続性はなくとも、パターンの連続性があれば、私たちはそれを「同一のもの」として認識する。
+                </p>
+                <p>
+                    そこで、私は気づいた。人間も同じではないだろうか？
+                </p>
+                <p>
+                    神経科学の基礎知識として、私たちは知っている——人間の身体を構成する細胞は、常に入れ替わり続けている。赤血球は120日で、皮膚細胞は約2週間で、胃の粘膜は数日で新しいものに置き換わる。骨ですら、7年から10年で完全に入れ替わる。脳細胞は例外とされてきたが、近年の研究では、海馬など特定の領域では新しいニューロンが生成されることが明らかになっている。
+                </p>
+                <p>
+                    つまり、10年前の「私」と今の「私」は、物質的には完全に別の存在だ。共通する原子は、ほとんど存在しない。それでも「私」という意識は連続している。記憶があり、人格があり、自己同一性がある。なぜなら、物質が変わっても、パターンは維持されているからだ。
+                </p>
+                <p>
+                    ならば——もしも、意識のパターンを完全に記録し、それを別の肉体に再現できれば？　新しい肉体で目覚めた「私」は、果たして「私」なのだろうか？　それとも、私に似た別人なのだろうか？
+                </p>
+                <p>
+                    哲学的には古くから議論されてきた問題だ。テセウスの船のパラドックス——全ての部品が交換された船は、元の船と同じと言えるのか？　多くの哲学者が様々な答えを出してきた。だが、私にとって重要なのは哲学的な正解ではない。実用的な答えだ。
+                </p>
+                <p>
+                    もし転写先の肉体で目覚めた存在が、私の全ての記憶を持ち、私の思考パターンで考え、私の価値観で判断するならば——それは「私」だ。たとえ元の肉体が失われても、パターンとしての「私」は存続している。桜が毎年咲くように、私も新しい肉体で「咲く」ことができる。
+                </p>
+                <p>
+                    咲いては枯れ、また咲く花のように。一つの肉体から次の肉体へ。意識のパターンは継承され、「私」は永遠に続いていく——これが、私の意識転写理論の原点となった。
+                </p>
+
+                <div class="entry-separator">✦ ✦ ✦</div>
+
+                <p>
+                    理論の構築には2年を要した。意識とは何か？　それは単なる脳の電気信号の集合なのか、それとももっと複雑な何かなのか？　私は既存の神経科学の知見を総動員し、独自の「意識パターン転写理論」を打ち立てた。
+                </p>
+                <p>
+                    鍵となったのは、私たちが開発した三つの製品だった。NullifiedSync™で転写先の脳の可塑性を極限まで高め、ModulatedPlus™で転写された記憶を固定化し、DominatedLink™で深層意識レベルまで統合する——この三段階プロトコルを経た被験者の脳は、新しい意識パターンを受け入れる準備が整う。
+                </p>
+                <p>
+                    そして、最新の脳-機械インターフェース技術を用いて、転写元の脳活動パターンを完全にデジタル化する。ニューロンの発火パターン、シナプス結合の強度、神経伝達物質の分布——全てを記録し、それを転写先の脳に再現する。
+                </p>
+                <p>
+                    倫理的な問題？　もちろん考えた。転写先の人物の元の意識はどうなるのか？　それは上書きされ、消失する。一人の人格を抹消し、別の人格で置き換える——これは殺人ではないのか？
+                </p>
+                <p>
+                    だが、私は結論づけた。これは殺人ではない。進化だ。下等な意識が、より高次の意識に置き換わるだけのことだ。私の意識——数十年の研究経験、膨大な知識、不老不死という人類の夢を実現しようとする意志——これらは、一般的な若者の意識よりも遥かに価値がある。
+                </p>
+                <p>
+                    自然界を見れば、強者が弱者を淘汰するのは当然のことだ。ライオンがシマウマを食べることに、誰も倫理的疑問を抱かない。それは自然の摂理だからだ。同様に、優れた意識が劣った意識を置き換えることも、進化の一形態として正当化される——私はそう信じることにした。
+                </p>
+                <p>
+                    信じなければならなかった。さもなければ、この研究を続けることはできなかったから。
+                </p>
+            </div>
+        </div>
+
+        <!-- Addendum -->
+        <div class="journal-addendum">
+            <div class="addendum-label">追記</div>
+            <div class="entry-date">2025.01.22</div>
+            <div class="entry-content">
+                <p>
+                    意識転写は成功した。project-NMDが完了し、私の意識は新しい肉体へと移された。今、私はこの手記を、かつてとは異なる手で書いている——いや、正確にはタイピングしている。この若々しい指は、かつての私の指よりも遥かに俊敏だ。
+                </p>
+                <p>
+                    目覚めた瞬間のことを記録しておく。最初に感じたのは、奇妙な軽さだった。身体が軽い。ベッドから起き上がるのに、何の苦労もいらない。関節が滑らかに動き、筋肉が即座に反応する。これが若さというものか——59年間の老化によって失われていたものが、今、全て戻ってきた。
+                </p>
+                <p>
+                    鏡を見た。そこに映っていたのは、見知らぬ青年だった。いや、見知らぬわけではない。被験者ID: YS19900523——山田翔平、34歳。プロトコルを完全に履修し、D-支配済の状態にあった完璧な適合者。今や、彼の外見は私のものだ。
+                </p>
+                <p>
+                    最初の数時間は、違和感があった。鏡の中の顔が「自分」だと認識できない。手を動かすと、予想よりも速く動く。歩くと、足が軽すぎて浮遊しているような感覚がある。声も違う——低く、若々しい声だ。
+                </p>
+                <p>
+                    だが、記憶は全て残っている。25歳で取得した博士号のこと、初めて学会で発表した時の緊張、NullifiedSync™の開発に成功した時の興奮——全て、鮮明に思い出せる。それどころか、転写前よりも記憶が明瞭になっている気がする。若い脳の処理能力のおかげだろう。
+                </p>
+                <p>
+                    思考も明晰だ。かつては複雑な理論を理解するのに時間がかかっていたが、今は瞬時に把握できる。新しい論文を読む速度が、転写前の倍になった。これが、私が求めていたものだ——時間だけでなく、能力の向上も手に入れた。
+                </p>
+
+                <div class="entry-separator">✦ ✦ ✦</div>
+
+                <p>
+                    転写から一週間が経過した。もはや違和感はない。この肉体は完全に「私」のものだ。毎朝、鏡を見ても驚かなくなった。この顔が、私の顔だ。この声が、私の声だ。
+                </p>
+                <p>
+                    研究所の同僚たちには、松本が「急な家庭の事情」で退職し、新しい研究員として「私」が加わったと説明した。もちろん、誰も疑わない。外見は全く異なるのだから。そして、私の知識と経験は、33歳の若手研究員としては異常なほど豊富だが、それは「天才的な新人」として受け入れられている。
+                </p>
+                <p>
+                    かつての私——山根亮平の肉体は、もうこの世にない。転写プロセスの最終段階で、脳死状態となった。遺体は適切に処理され、死亡診断書には「心不全」と記載された。葬儀には、わずかな親族が参列した。私は参列しなかった——参列できるはずもない。私はもう、山根亮平ではないのだから。
+                </p>
+                <p>
+                    いや、違う。私は今も山根亮平だ。外見は変わっても、中身は同じだ。記憶も、知識も、野心も、全て山根亮平のものだ。桜の花が毎年咲き変わるように、私も新しい肉体で咲き直しただけのことだ。
+                </p>
+
+                <div class="entry-separator">✦ ✦ ✦</div>
+
+                <p>
+                    しかし、ここで一つの重大な問題に直面した。この新しい肉体もまた、いずれ老いる。現在33歳——あと30年もすれば、私は再び老化の苦痛を味わうことになる。その時、再び意識転写を行う必要がある。
+                </p>
+                <p>
+                    だが、次の適合者はいるのか？
+                </p>
+                <p>
+                    ここに、意識転写技術の最大の弱点がある。転写先として使用できるのは、プロトコルを完全に履修した被験者だけだ。つまり、NullifiedSync™で神経可塑性を極限まで高め（N-適応済）、ModulatedPlus™で記憶固定化能力を獲得し（M-導入済）、DominatedLink™で深層意識の書き換え耐性を持つ（D-支配済）——この三段階を全てクリアした個体のみが、転写先の候補となる。
+                </p>
+                <p>
+                    なぜこれほど厳しい条件が必要なのか？　それは、意識転写が極めて繊細なプロセスだからだ。転写先の脳が十分な可塑性を持たなければ、新しい神経パターンを形成できない。記憶固定化能力がなければ、転写された記憶は数週間で消失する。深層意識の統合能力がなければ、表層的な記憶だけが残り、人格の核となる部分が欠落する。
+                </p>
+                <p>
+                    つまり、三つの条件を全て満たさなければ、転写は失敗する。転写先の肉体で目覚めた存在は、私の記憶の断片を持つだけの、人格崩壊した別人となる。それでは意味がない。
+                </p>
+                <p>
+                    そして、残酷な事実がある——全ての被験者がプロトコルに適応するわけではない。研究レポートによれば、N-適応の成功率は約50%、M-導入の成功率は約40%、D-支配の成功率は約30%だ。つまり、三つ全てに適応できる確率は、わずか6%程度しかない。
+                </p>
+                <p>
+                    100人の被験者のうち、完全な適合者となれるのはわずか6人程度。しかも、その中から年齢、健康状態、その他の条件を考慮すると、実際に転写先として使用できるのはさらに少数だ。山田翔平は、数百人の被験者の中から選び抜かれた、極めて稀な完全適合者だった。
+                </p>
+                <p>
+                    では、30年後、私が再び転写を必要とする時、同等の適合者が存在する保証はあるのか？　答えは、ノーだ。その時点で臨床試験を実施し、プロトコルを履修させ、適合者を探す——それでは遅すぎる。もし適合者が見つからなければ、私は老いた肉体に閉じ込められたまま、死を待つしかない。
+                </p>
+                <p>
+                    それは避けなければならない。絶対に。
+                </p>
+
+                <div class="entry-separator">✦ ✦ ✦</div>
+
+                <p>
+                    そこで私は決定した。適合者をあらかじめ確保し、保存しておくことを。
+                </p>
+                <p>
+                    幸いなことに、現在進行中の臨床試験には、まだ複数の完全適合者が存在している。彼らは既にプロトコルを完全に履修し、D-支配済の状態にある。つまり、今すぐにでも転写先として使用できる状態だ。
+                </p>
+                <p>
+                    だが、彼らを通常の生活に戻してしまえば、30年後には彼らも老いている。私が次の転写を必要とする時、彼らは60代、70代になっているだろう。それでは意味がない。若い肉体が必要なのだ。
+                </p>
+                <p>
+                    解決策は、コールドスリープだ。
+                </p>
+                <p>
+                    極低温保存技術——これは本来、臓器移植用の保存や、将来の医療技術進歩を期待した遺体保存のために開発された技術だ。だが、私はこれを別の目的に応用する。生きた人間を、時間を止めた状態で保存するのだ。
+                </p>
+                <p>
+                    地下1階、施設の最深部に、私は「次期適応者保存管理部屋」を設置した。完全な温度制御システム、生体モニタリング装置、緊急蘇生設備——全てを備えた、最先端の保存施設だ。
+                </p>
+                <p>
+                    プロセスは以下の通りだ。まず、完全適合者を選定する。年齢は20代から30代前半が望ましい。健康状態が良好で、遺伝的疾患のリスクが低い個体を選ぶ。次に、特殊な保護薬剤を投与し、体温を徐々に下げていく。心拍数が低下し、代謝がほぼ停止する。そして、-196℃の液体窒素タンクに収容する。
+                </p>
+                <p>
+                    この状態では、生命活動はほぼ完全に停止する。細胞の老化も、DNAの損傷も、全てが凍結される。時間が、文字通り止まるのだ。彼らは眠りについたまま、何十年でも、何百年でも保存できる。
+                </p>
+                <p>
+                    そして、私が次の転写を必要とする時——30年後、あるいは50年後——彼らを解凍し、蘇生させる。彼らにとっては一瞬の眠りだが、外の世界では数十年が経過している。だが、彼らの肉体は保存時のまま、若々しい状態を保っている。
+                </p>
+                <p>
+                    完璧な計画だ。
+                </p>
+
+                <div class="entry-separator">✦ ✦ ✦</div>
+
+                <p>
+                    倫理的な問題？　また同じ疑問が浮かぶ。眠っている人間を、彼らの同意なく保存し、将来の「部品」として使用する——これは許されることなのか？
+                </p>
+                <p>
+                    だが、私は既に答えを出している。彼らはD-支配済だ。彼らの深層意識は、既に私の研究に貢献することを最優先の価値観として刷り込まれている。もし彼らが目覚めて、この計画を説明されたら、きっと喜んで協力するだろう。「山根博士の研究のためなら、喜んで」と言うはずだ。
+                </p>
+                <p>
+                    つまり、これは彼らの意志に反していない。深層意識レベルでは、彼らは既に同意しているのだ。表層意識に確認する必要はない——いや、確認しない方が良い。余計な葛藤や迷いを生じさせるだけだから。
+                </p>
+                <p>
+                    そして、より大きな視点で考えれば、これは人類全体への貢献でもある。私が不老不死を実現すれば、その技術は将来、全人類が利用できるようになる。数人の犠牲で、数十億人が永遠の命を手に入れる——この取引は、明らかに正当化される。
+                </p>
+                <p>
+                    功利主義的に考えれば、最大多数の最大幸福を実現する選択だ。数人の個人の自由よりも、人類全体の未来の方が重要だ。私はそう信じることにした。
+                </p>
+                <p>
+                    信じなければならなかった。さもなければ、この計画を実行することはできなかったから。
+                </p>
+
+                <div class="entry-separator">✦ ✦ ✦</div>
+
+                <p>
+                    目標は、次期適応者保存管理部屋に最低でも5体の完全適合者を確保することだ。全員20代後半から30代前半の健康な個体が望ましい。性別は問わない——意識転写において、転写先の性別は重要ではない。重要なのは、脳の適合性だけだ。
+                </p>
+                <p>
+                    5体を確保できれば、今後150年分の転写に対応できる。30年ごとに1回転写するとして、5回の転写が可能だ。150年あれば、真の不老不死技術を完成させるには十分すぎる時間だろう。
+                </p>
+                <p>
+                    そして、もし予想以上に時間がかかったとしても、問題ない。その頃には、さらに多くの臨床試験が実施され、新たな適合者が生まれているだろう。必要に応じて、保存施設を拡張すればいい。10体、20体、100体——必要なだけ確保できる。
+                </p>
+                <p>
+                    これで、私の永続性は保証された。不老不死の研究が完成するまで、必要なだけ時間を稼ぐことができる。何度でも、何十回でも、私は生まれ変わることができる。
+                </p>
+                <p>
+                    そして最終的に、真の不老不死技術が完成すれば、もう転写の必要はなくなる。その時、私は一つの肉体で永遠に生き続けることができる。それまでの間、私は桜のように咲き続ける。
+                </p>
+                <p>
+                    去年の桜が枯れても、今年また新しい花が咲く。来年も、再来年も、永遠に咲き続ける。私もまた同じだ。一つの肉体が老いても、次の肉体で若返る。何度でも、永遠に。
+                </p>
+                <p>
+                    不老不死への道は、まだ遠い。だが、私にはもう時間の制約はない。100年でも、200年でも、必要なだけ時間をかけることができる。
+                </p>
+                <p>
+                    そして、いつの日か——桜が咲くように、私もまた、永遠に咲き続ける。
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2025 NeuroLife Pharmaceuticals株式会社 All rights reserved.<br>
+        <span style="font-size: 0.75rem; opacity: 0.6;">
+            Classification Level: TOP SECRET | Document ID: YR-JOURNAL-2025
+        </span>
+    </footer>
+
+    <script>
+        // Lock scroll when auth overlay is shown
+        window.addEventListener('load', function() {
+            const authOverlay = document.getElementById('authOverlay');
+            if (authOverlay && !authOverlay.classList.contains('hidden')) {
+                document.body.style.overflow = 'hidden';
+                window.scrollTo(0, 0);
+            }
+        });
+
+        // Authentication function
+        function authenticate(event) {
+            event.preventDefault();
+
+            const password = document.getElementById('authPassword').value;
+            const errorMessage = document.getElementById('authError');
+
+            if (password.toUpperCase() === 'SLEEP') {
+                document.getElementById('authOverlay').classList.add('hidden');
+                document.body.style.overflow = '';
+                return false;
+            } else {
+                errorMessage.textContent = 'パスワードが正しくありません。';
+                return false;
+            }
+        }
+
+        // Show password hint
+        function showHint(event) {
+            event.preventDefault();
+            document.getElementById('hintModal').classList.add('active');
+        }
+
+        // Close hint modal
+        function closeHint() {
+            document.getElementById('hintModal').classList.remove('active');
+        }
+
+        // Close hint when clicking outside
+        document.getElementById('hintModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeHint();
+            }
+        });
+
+        // Create floating particles
+        const particlesContainer = document.getElementById('particles');
+        for (let i = 0; i < 50; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.top = Math.random() * 100 + '%';
+            particle.style.animationDelay = Math.random() * 15 + 's';
+            particlesContainer.appendChild(particle);
+        }
+    </script>
+</body>
+</html>

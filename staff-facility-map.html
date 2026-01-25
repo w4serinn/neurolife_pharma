@@ -1,0 +1,1112 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>職員用施設マップ | ニューロライフ製薬株式会社</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Noto+Sans+JP:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0a4d68;
+            --secondary: #088395;
+            --accent: #05c3dd;
+            --dark: #051923;
+            --light: #f0f9ff;
+            --warning: #ff6b6b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background: linear-gradient(135deg, var(--dark) 0%, var(--primary) 100%);
+            color: var(--light);
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Animated background particles */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: var(--accent);
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: float 15s infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) translateX(0); }
+            50% { transform: translateY(-100px) translateX(50px); }
+        }
+
+        header {
+            background: rgba(5, 25, 35, 0.9);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--accent);
+            padding: 1.5rem 2rem;
+            position: relative;
+            z-index: 10;
+            box-shadow: 0 4px 20px rgba(5, 195, 221, 0.1);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 20px rgba(5, 195, 221, 0.5);
+            text-decoration: none;
+            white-space: nowrap;
+        }
+
+        .logo span {
+            color: var(--warning);
+            font-size: 0.6rem;
+            vertical-align: super;
+        }
+
+        nav {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 400;
+            transition: all 0.3s;
+            padding: 0.5rem 0.8rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            white-space: nowrap;
+        }
+
+        nav a:hover {
+            color: var(--accent);
+            background: rgba(5, 195, 221, 0.1);
+        }
+
+        nav a.active {
+            color: var(--accent);
+            background: rgba(5, 195, 221, 0.15);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero {
+            text-align: center;
+            margin-bottom: 3rem;
+            animation: fadeIn 1s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(90deg, var(--accent), var(--light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        h2 {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--accent);
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .card {
+            background: rgba(10, 77, 104, 0.3);
+            border: 1px solid var(--accent);
+            border-radius: 12px;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 2rem;
+        }
+
+        /* Facility Map Styles */
+        .map-container {
+            margin-top: 3rem;
+        }
+
+        .floor-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .floor-tab {
+            padding: 0.8rem 2rem;
+            background: rgba(10, 77, 104, 0.5);
+            border: 1px solid var(--accent);
+            border-radius: 8px;
+            color: var(--light);
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+
+        .floor-tab:hover {
+            background: rgba(8, 131, 149, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .floor-tab.active {
+            background: var(--accent);
+            color: var(--dark);
+            box-shadow: 0 4px 15px rgba(5, 195, 221, 0.5);
+        }
+
+        .map-scroll-wrapper {
+            overflow-x: auto;
+            overflow-y: hidden;
+            padding: 1rem;
+            margin: 0 -1rem;
+            border-radius: 8px;
+        }
+
+        .facility-map.active {
+            display: block;
+        }
+
+        .floor-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--primary);
+        }
+
+        .floor-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            color: var(--primary);
+            font-weight: 900;
+            margin-bottom: 0.5rem;
+        }
+
+        .floor-map-image {
+            width: 80%;
+            max-width: 400px;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+            border: 2px solid var(--primary);
+            border-radius: 8px;
+        }
+
+        .room-legend-table {
+            margin-top: 0;
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .room-legend-table th,
+        .room-legend-table td {
+            padding: 0.6rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(10, 77, 104, 0.3);
+            color: var(--dark);
+            font-size: 0.85rem;
+        }
+
+        .room-legend-table th {
+            background: rgba(10, 77, 104, 0.15);
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        .room-legend-table tbody tr {
+            cursor: pointer;
+        }
+
+        .room-legend-table tr:hover {
+            background: rgba(5, 195, 221, 0.1);
+        }
+
+        .room-legend-table thead tr {
+            cursor: default;
+        }
+
+        .room-legend-table thead tr:hover {
+            background: transparent;
+        }
+
+        .room-legend-table tbody tr.no-click {
+            cursor: default;
+            opacity: 0.7;
+        }
+
+        .room-legend-table tbody tr.no-click:hover {
+            background: transparent;
+        }
+
+        .room-number {
+            font-weight: 700;
+            color: var(--primary);
+            min-width: 40px;
+            display: inline-block;
+        }
+
+        .room-name-link {
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .room-name-link:hover {
+            color: var(--accent);
+            text-decoration: underline;
+        }
+
+        .room-name-static {
+            cursor: default;
+        }
+
+        /* Modal/Popup styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(5, 25, 35, 0.9);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s;
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, var(--dark) 0%, var(--primary) 100%);
+            border: 2px solid var(--accent);
+            border-radius: 12px;
+            padding: 2rem;
+            max-width: 90%;
+            max-height: 90%;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 10px 50px rgba(5, 195, 221, 0.3);
+            animation: slideIn 0.3s;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 2rem;
+            color: var(--accent);
+            cursor: pointer;
+            background: none;
+            border: none;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .modal-close:hover {
+            color: var(--light);
+            transform: rotate(90deg);
+        }
+
+        .modal-room-number {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        .modal-room-name {
+            font-size: 1.5rem;
+            color: var(--light);
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-room-image {
+            width: 100%;
+            max-width: 600px;
+            height: auto;
+            border-radius: 8px;
+            border: 2px solid var(--accent);
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-room-description {
+            color: rgba(240, 249, 255, 0.9);
+            line-height: 1.8;
+            font-size: 1rem;
+        }
+
+        .room-info-note {
+            text-align: left;
+            color: var(--primary);
+            font-size: 0.85rem;
+            margin-bottom: 0rem;
+            margin-top: 0.5rem;
+            font-weight: 500;
+            padding-left: 0.5rem;
+        }
+
+        .facility-map {
+            min-width: 400px;
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 2rem;
+            display: none;
+            background: rgba(230, 235, 240, 0.95);
+            border-radius: 8px;
+        }
+
+        .room-type-badge {
+            display: inline-block;
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-left: 0.5rem;
+        }
+
+        .badge-research {
+            background: rgba(135, 206, 235, 0.4);
+            color: rgba(10, 77, 104, 1);
+        }
+
+        .badge-clinical {
+            background: rgba(255, 182, 193, 0.4);
+            color: rgba(200, 50, 50, 1);
+        }
+
+        .badge-common {
+            background: rgba(144, 238, 144, 0.4);
+            color: rgba(0, 100, 0, 1);
+        }
+
+        .badge-special {
+            background: rgba(255, 222, 173, 0.5);
+            color: rgba(200, 100, 0, 1);
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(5, 25, 35, 0.9);
+            border-top: 1px solid var(--accent);
+            margin-top: 4rem;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* Authentication Overlay */
+        .auth-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(5, 25, 35, 0.98);
+            backdrop-filter: blur(15px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+
+        .auth-overlay.hidden {
+            display: none;
+        }
+
+        .auth-container {
+            background: linear-gradient(135deg, var(--dark) 0%, var(--primary) 100%);
+            border: 2px solid var(--accent);
+            border-radius: 15px;
+            padding: 3rem;
+            max-width: 450px;
+            width: 90%;
+            box-shadow: 0 20px 60px rgba(5, 195, 221, 0.3);
+        }
+
+        .auth-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .auth-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .auth-header h2 {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--accent);
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .auth-header p {
+            color: rgba(240, 249, 255, 0.7);
+            font-size: 0.95rem;
+        }
+
+        .auth-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .auth-input {
+            padding: 1rem;
+            background: rgba(10, 77, 104, 0.3);
+            border: 1px solid var(--accent);
+            border-radius: 8px;
+            color: var(--light);
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .auth-input:focus {
+            outline: none;
+            border-color: var(--light);
+            background: rgba(10, 77, 104, 0.5);
+            box-shadow: 0 0 15px rgba(5, 195, 221, 0.3);
+        }
+
+        .auth-button {
+            padding: 1rem;
+            background: var(--accent);
+            border: none;
+            border-radius: 8px;
+            color: var(--dark);
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .auth-button:hover {
+            background: var(--light);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(5, 195, 221, 0.5);
+        }
+
+        .auth-error {
+            color: var(--warning);
+            font-size: 0.9rem;
+            text-align: center;
+            min-height: 1.5rem;
+        }
+
+        .auth-hint {
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        .auth-hint-link {
+            color: var(--accent);
+            cursor: pointer;
+            text-decoration: underline;
+            font-size: 0.9rem;
+        }
+
+        .auth-hint-link:hover {
+            color: var(--light);
+        }
+
+        .hint-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(5, 25, 35, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hint-modal.active {
+            display: flex;
+        }
+
+        .hint-content {
+            background: linear-gradient(135deg, var(--dark) 0%, var(--primary) 100%);
+            border: 2px solid var(--accent);
+            border-radius: 15px;
+            padding: 2rem;
+            max-width: 500px;
+            width: 90%;
+            position: relative;
+        }
+
+        .hint-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            color: var(--accent);
+            font-size: 2rem;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hint-close:hover {
+            color: var(--light);
+        }
+
+        .hint-text {
+            color: var(--light);
+            line-height: 1.8;
+            text-align: center;
+            font-family: 'Courier New', monospace;
+            font-size: 1.1rem;
+            white-space: pre-line;
+        }
+
+        /* Mobile responsive */
+        @media (max-width: 768px) {
+            header {
+                padding: 1rem;
+            }
+
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: flex-start;
+            }
+
+            .logo {
+                font-size: 1.3rem;
+            }
+
+            nav {
+                flex-wrap: wrap;
+                gap: 0.5rem;
+                width: 100%;
+            }
+
+            nav a {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.9rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+            }
+
+            .container {
+                padding: 2rem 1rem;
+            }
+
+            .map-scroll-wrapper {
+                margin: 0 -0.5rem;
+                padding: 0.5rem;
+            }
+
+            .facility-map {
+                padding: 1rem;
+                min-width: 350px;
+            }
+
+            .floor-header {
+                margin-bottom: 1.5rem;
+            }
+
+            .floor-title {
+                font-size: 2rem;
+            }
+
+            .floor-map-image {
+                border-width: 1px;
+            }
+
+            .room-legend-table th,
+            .room-legend-table td {
+                padding: 0.5rem 0.3rem;
+                font-size: 0.75rem;
+            }
+
+            .room-type-badge {
+                padding: 0.15rem 0.4rem;
+                font-size: 0.65rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background particles -->
+    <div class="particles" id="particles"></div>
+
+    <!-- Authentication Overlay -->
+    <div class="auth-overlay" id="authOverlay">
+        <div class="auth-container">
+            <div class="auth-header">
+                <div class="auth-icon">🔒</div>
+                <h2>職員認証</h2>
+                <p>このページは職員専用です</p>
+            </div>
+            <form class="auth-form" onsubmit="return authenticate(event)">
+                <input
+                    type="password"
+                    class="auth-input"
+                    id="authPassword"
+                    placeholder="パスワードを入力してください"
+                    autocomplete="off"
+                    required
+                >
+                <div class="auth-error" id="authError"></div>
+                <button type="submit" class="auth-button">認証</button>
+                <div class="auth-hint">
+                    <a class="auth-hint-link" onclick="showHint(event)">パスワードヒント</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Hint Modal -->
+    <div class="hint-modal" id="hintModal">
+        <div class="hint-content">
+            <button class="hint-close" onclick="closeHint()">&times;</button>
+            <div class="hint-text">101,201,204
+101,102,201,204
+202,203
+101,201,203,204,302</div>
+        </div>
+    </div>
+
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                NeuroLife<span style="font-size: 0.5em; font-weight: 400; margin-left: 0.3rem;">Pharmaceuticals</span><span data-hint="NL-X789">®</span>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="hero">
+            <h1>職員用施設マップ</h1>
+            <p style="color: rgba(240, 249, 255, 0.8); font-size: 1.1rem;">STAFF FACILITY MAP</p>
+        </div>
+
+        <div class="map-container">
+            <h2>施設マップ（職員専用）</h2>
+
+            <div class="floor-tabs">
+                <button class="floor-tab" data-floor="3f">3F</button>
+                <button class="floor-tab" data-floor="2f">2F</button>
+                <button class="floor-tab active" data-floor="1f">1F</button>
+                <button class="floor-tab" data-floor="b1f">B1F</button>
+            </div>
+
+            <div class="card">
+                <div class="map-scroll-wrapper">
+                    <!-- 3F Map -->
+                    <div class="facility-map" id="map-3f">
+                        <div class="floor-header">
+                            <div class="floor-title">3F</div>
+                            <p style="color: var(--primary); font-size: 0.9rem;">先端研究フロア / 高度観察フロア</p>
+                        </div>
+                        <img src="floormap3-1.png" alt="3Fフロアマップ" class="floor-map-image">
+
+                        <p class="room-info-note">※ 下記一覧から確認したい部屋をクリック/タップすると、詳細画像が表示されます</p>
+                        <table class="room-legend-table">
+                            <thead>
+                                <tr>
+                                    <th>室番号</th>
+                                    <th>室名</th>
+                                    <th>区分</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><span class="room-number">301</span></td>
+                                    <td><span class="room-name-link" onclick="openRoomModal('301', '展望カフェテリア', 'その他', '最上階に位置する展望カフェテリアです。リラックスした雰囲気の中で食事や休憩をお楽しみいただけます。')">展望カフェテリア</span></td>
+                                    <td><span class="room-type-badge badge-common">その他</span></td>
+                                </tr>
+                                <tr>
+                                    <td><span class="room-number">302</span></td>
+                                    <td><span class="room-name-link" onclick="openRoomModal('302', '被験者宿泊室', '臨床試験', '3階に位置する被験者用の宿泊施設です。静かで快適な環境を提供しています。')">被験者宿泊室</span></td>
+                                    <td><span class="room-type-badge badge-clinical">臨床試験</span></td>
+                                </tr>
+                                <tr>
+                                    <td><span class="room-number">303</span></td>
+                                    <td><span class="room-name-link" onclick="openRoomModal('303', '治験薬投与室', '臨床試験', '3階の治験薬投与専用施設です。高度な医療設備を備え、安全な投薬管理を行っています。')">治験薬投与室</span></td>
+                                    <td><span class="room-type-badge badge-clinical">臨床試験</span></td>
+                                </tr>
+                                <tr>
+                                    <td><span class="room-number">304</span></td>
+                                    <td><span class="room-name-link" onclick="openRoomModal('304', '代表室', '研究開発', '代表取締役の執務室です。企業戦略の立案や重要な意思決定が行われます。')">代表室</span></td>
+                                    <td><span class="room-type-badge badge-research">研究開発</span></td>
+                                </tr>
+                                <tr>
+                                    <td><span class="room-number">305</span></td>
+                                    <td><span class="room-name-link" onclick="openRoomModal('305', '分析ラボ', '研究開発', '最先端の分析機器を備えた研究施設です。薬物の詳細な成分分析や品質管理を行っています。')">分析ラボ</span></td>
+                                    <td><span class="room-type-badge badge-research">研究開発</span></td>
+                                </tr>
+                                <tr>
+                                    <td><span class="room-number">306</span></td>
+                                    <td><span class="room-name-link" onclick="openRoomModal('306', '被験者健康検査室', '研究開発', '被験者の健康状態を総合的に検査する施設です。各種医療検査機器を完備しています。')">被験者健康検査室</span></td>
+                                    <td><span class="room-type-badge badge-research">研究開発</span></td>
+                                </tr>
+                                <tr class="no-click">
+                                    <td><span class="room-number">307</span></td>
+                                    <td><span class="room-name-static">業務用エレベータ</span></td>
+                                    <td><span class="room-type-badge badge-clinical">臨床試験</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- 2F Map -->
+                    <div class="facility-map" id="map-2f">
+                        <div class="floor-header">
+                            <div class="floor-title">2F</div>
+                            <p style="color: var(--primary); font-size: 0.9rem;">開発フロア / 診療フロア</p>
+                        </div>
+                        <img src="floormap-2.png" alt="2Fフロアマップ" class="floor-map-image">
+
+                        <p class="room-info-note">※ 下記一覧から確認したい部屋をクリック/タップすると、詳細画像が表示されます</p>
+                        <table class="room-legend-table">
+                            <thead>
+                                <tr>
+                                    <th>室番号</th>
+                                    <th>室名</th>
+                                    <th>区分</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><span class="room-number">201</span></td>
+                                    <td><span class="room-name-link" onclick="openRoomModal('201', 'ナースステーション', 'その他', '医療スタッフが常駐し、被験者の健康状態を24時間体制で管理・モニタリングする拠点です。緊急時の対応や日常的な健康相談にも対応しています。')">ナースステーション</span></td>
+                                    <td><span class="room-type-badge badge-common">その他</span></td>
+                                </tr>
+                                <tr>
+                                    <td><span class="room-number">202</span></td>
+                                    <td><span class="room-name-link" onclick="openRoomModal('202', '治験薬投与室', '臨床試験', '治験薬の投与を行う専用の施設です。厳格な管理体制のもと、被験者への安全な投薬を実施しています。')">治験薬投与室</span></td>
+                                    <td><span class="room-type-badge badge-clinical">臨床試験</span></td>
+                                </tr>
+                                <tr>
+                                    <td><span class="room-number">203</span></td>
+                                    <td><span class="room-name-link" onclick="openRoomModal('203', '被験者宿泊室', '臨床試験', '臨床試験参加者のための宿泊施設です。快適な環境で試験期間中の滞在をサポートします。')">被験者宿泊室</span></td>
+                                    <td><span class="room-type-badge badge-clinical">臨床試験</span></td>
+                                </tr>
+                                <tr>
+                                    <td><span class="room-number">204</span></td>
+                                    <td><span class="room-name-link" onclick="openRoomModal('204', '動態試験実施室', '研究開発', '薬物動態試験を実施する専門施設です。最新の分析機器を用いて薬物の体内動態を詳細に解析します。')">動態試験実施室</span></td>
+                                    <td><span class="room-type-badge badge-research">研究開発</span></td>
+                                </tr>
+                                <tr>
+                                    <td><span class="room-number">205</span></td>
+                                    <td><span class="room-name-link" onclick="openRoomModal('205', '研究室1', '研究開発', '神経科学を中心とした基礎研究を行う研究室です。先端的な研究プロジェクトを推進しています。')">研究室1</span></td>
+                                    <td><span class="room-type-badge badge-research">研究開発</span></td>
+                                </tr>
+                                <tr>
+                                    <td><span class="room-number">206</span></td>
+                                    <td><span class="room-name-link" onclick="openRoomModal('206', '研究室2', '研究開発', 'バイオテクノロジーや分子生物学の研究を行う施設です。次世代医薬品の開発に取り組んでいます。')">研究室2</span></td>
+                                    <td><span class="room-type-badge badge-research">研究開発</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- 1F Map -->
+                    <div class="facility-map active" id="map-1f">
+                        <div class="floor-header">
+                            <div class="floor-title">1F</div>
+                            <p style="color: var(--primary); font-size: 0.9rem;">エントランスフロア</p>
+                        </div>
+                        <img src="floormap-1.png" alt="1Fフロアマップ" class="floor-map-image">
+
+                        <p class="room-info-note">※ 下記一覧から確認したい部屋をクリック/タップすると、詳細画像が表示されます</p>
+                        <table class="room-legend-table">
+                            <thead>
+                                <tr>
+                                    <th>室番号</th>
+                                    <th>室名</th>
+                                    <th>区分</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><span class="room-number">101</span></td>
+                                    <td><span class="room-name-link" onclick="openRoomModal('101', 'エントランス', 'その他', '当施設のメインエントランスです。広々とした空間で、来訪者の皆様を快適にお迎えいたします。')">エントランス</span></td>
+                                    <td><span class="room-type-badge badge-common">その他</span></td>
+                                </tr>
+                                <tr>
+                                    <td><span class="room-number">102</span></td>
+                                    <td><span class="room-name-link" onclick="openRoomModal('102', '被験者受付', '臨床試験', '臨床試験にご参加いただく被験者様の受付窓口です。専門スタッフが丁寧にご案内いたします。')">被験者受付</span></td>
+                                    <td><span class="room-type-badge badge-clinical">臨床試験</span></td>
+                                </tr>
+                                <tr>
+                                    <td><span class="room-number">103</span></td>
+                                    <td><span class="room-name-link" onclick="openRoomModal('103', '被験者待合室', '臨床試験', '臨床試験参加者の待合スペースです。リラックスしてお待ちいただける環境を整えています。')">被験者待合室</span></td>
+                                    <td><span class="room-type-badge badge-clinical">臨床試験</span></td>
+                                </tr>
+                                <tr>
+                                    <td><span class="room-number">104</span></td>
+                                    <td><span class="room-name-link" onclick="openRoomModal('104', '問診室', '臨床試験', '医師による問診を行う部屋です。プライバシーに配慮した個室で、詳細な健康状態の確認を行います。')">問診室</span></td>
+                                    <td><span class="room-type-badge badge-clinical">臨床試験</span></td>
+                                </tr>
+                                <tr>
+                                    <td><span class="room-number">105</span></td>
+                                    <td><span class="room-name-link" onclick="openRoomModal('105', '来客ラウンジ', '研究開発', 'お客様との打ち合わせや商談に使用するラウンジです。落ち着いた雰囲気の中でお話しいただけます。')">来客ラウンジ</span></td>
+                                    <td><span class="room-type-badge badge-research">研究開発</span></td>
+                                </tr>
+                                <tr>
+                                    <td><span class="room-number">106</span></td>
+                                    <td><span class="room-name-link" onclick="openRoomModal('106', '会議室', '研究開発', '社内会議やプレゼンテーションに使用する会議室です。最新の設備を備えています。')">会議室</span></td>
+                                    <td><span class="room-type-badge badge-research">研究開発</span></td>
+                                </tr>
+                                <tr>
+                                    <td><span class="room-number">107</span></td>
+                                    <td><span class="room-name-link" onclick="openRoomModal('107', '資料、医療機器保管室', '研究開発', '重要な研究資料や医療機器を厳重に管理・保管する施設です。適切な環境管理のもと運営されています。')">資料、医療機器保管室</span></td>
+                                    <td><span class="room-type-badge badge-research">研究開発</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- B1F Map -->
+                    <div class="facility-map" id="map-b1f">
+                        <div class="floor-header">
+                            <div class="floor-title">B1F</div>
+                            <p style="color: var(--primary); font-size: 0.9rem;">地下フロア</p>
+                        </div>
+                        <img src="floormap0.png" alt="B1Fフロアマップ" class="floor-map-image">
+
+                        <p class="room-info-note">※ 下記一覧から確認したい部屋をクリック/タップすると、詳細画像が表示されます</p>
+                        <table class="room-legend-table">
+                            <thead>
+                                <tr>
+                                    <th>室番号</th>
+                                    <th>室名</th>
+                                    <th>区分</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="no-click">
+                                    <td><span class="room-number">001</span></td>
+                                    <td><span class="room-name-static">業務用エレベータ</span></td>
+                                    <td><span class="room-type-badge badge-clinical">臨床試験</span></td>
+                                </tr>
+                                <tr class="no-click">
+                                    <td><span class="room-number">002</span></td>
+                                    <td><span class="room-name-static">次期適応者保存管理部屋</span></td>
+                                    <td><span class="room-type-badge badge-clinical">臨床試験</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <p style="text-align: center; margin-top: 2rem; color: rgba(240, 249, 255, 0.7); font-size: 0.9rem;">
+                    ※ 施設内は関係者以外立入禁止となっております<br>
+                    ※ 本マップは職員専用です
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 ニューロライフ製薬株式会社 All rights reserved.</p>
+        <p style="margin-top: 0.5rem; font-size: 0.8rem; opacity: 0.6;">
+            本サイトの情報は医療従事者向けです | プライバシーポリシー | 利用規約
+        </p>
+    </footer>
+
+    <!-- Room Detail Modal -->
+    <div id="roomModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeRoomModal()">&times;</button>
+            <div class="modal-room-number" id="modalRoomNumber"></div>
+            <div class="modal-room-name" id="modalRoomName"></div>
+            <img id="modalRoomImage" class="modal-room-image" src="" alt="Room Image">
+            <div class="modal-room-description" id="modalRoomDescription"></div>
+        </div>
+    </div>
+
+    <script>
+        // Lock scroll when auth overlay is shown
+        window.addEventListener('load', function() {
+            const authOverlay = document.getElementById('authOverlay');
+            if (authOverlay && !authOverlay.classList.contains('hidden')) {
+                document.body.style.overflow = 'hidden';
+                window.scrollTo(0, 0);
+            }
+        });
+
+        // Authentication function
+        function authenticate(event) {
+            event.preventDefault();
+
+            const password = document.getElementById('authPassword').value;
+            const errorMessage = document.getElementById('authError');
+
+            if (password.toLowerCase() === 'cold') {
+                document.getElementById('authOverlay').classList.add('hidden');
+                document.body.style.overflow = '';
+                return false;
+            } else {
+                errorMessage.textContent = 'パスワードが正しくありません。';
+                return false;
+            }
+        }
+
+        // Show password hint
+        function showHint(event) {
+            event.preventDefault();
+            document.getElementById('hintModal').classList.add('active');
+        }
+
+        // Close hint modal
+        function closeHint() {
+            document.getElementById('hintModal').classList.remove('active');
+        }
+
+        // Close hint when clicking outside
+        document.getElementById('hintModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeHint();
+            }
+        });
+
+        // Create floating particles
+        const particlesContainer = document.getElementById('particles');
+        for (let i = 0; i < 50; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.top = Math.random() * 100 + '%';
+            particle.style.animationDelay = Math.random() * 15 + 's';
+            particle.style.animationDuration = (10 + Math.random() * 10) + 's';
+            particlesContainer.appendChild(particle);
+        }
+
+        // Floor tab switching
+        const floorTabs = document.querySelectorAll('.floor-tab');
+        const facilityMaps = document.querySelectorAll('.facility-map');
+
+        floorTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const targetFloor = tab.getAttribute('data-floor');
+
+                // Remove active class from all tabs and maps
+                floorTabs.forEach(t => t.classList.remove('active'));
+                facilityMaps.forEach(m => m.classList.remove('active'));
+
+                // Add active class to clicked tab and corresponding map
+                tab.classList.add('active');
+                document.getElementById(`map-${targetFloor}`).classList.add('active');
+            });
+        });
+
+        // Room modal functions
+        function openRoomModal(roomNumber, roomName, category, description) {
+            document.getElementById('modalRoomNumber').textContent = roomNumber;
+            document.getElementById('modalRoomName').textContent = roomName;
+            document.getElementById('modalRoomImage').src = `${roomNumber}.png`;
+            document.getElementById('modalRoomImage').alt = `${roomName}の画像`;
+            document.getElementById('modalRoomDescription').textContent = description;
+            document.getElementById('roomModal').classList.add('active');
+        }
+
+        function closeRoomModal() {
+            document.getElementById('roomModal').classList.remove('active');
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('roomModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeRoomModal();
+            }
+        });
+
+        // Make table rows clickable (except no-click rows)
+        document.addEventListener('DOMContentLoaded', function() {
+            const tableRows = document.querySelectorAll('.room-legend-table tbody tr:not(.no-click)');
+            tableRows.forEach(row => {
+                row.addEventListener('click', function() {
+                    const link = this.querySelector('.room-name-link');
+                    if (link) {
+                        link.click();
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

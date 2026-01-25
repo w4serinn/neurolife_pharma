@@ -590,6 +590,14 @@
                 };
             }
 
+            // 全Phase共通: 誕生日について
+            if (message.includes('誕生日') || message.includes('生年月日')) {
+                return {
+                    text: 'ユウスケの誕生日ですか？2004年3月15日生まれで、今21歳です。\n\nいつも誕生日には一緒に過ごしていたのに…今年は連絡が取れなくて心配です。',
+                    delay: 1000
+                };
+            }
+
             // Phase 0: 初期対応
             if (storyState.phase === 0) {
                 // Phase 1のキーワードが来たら自動的にPhase 1に移行

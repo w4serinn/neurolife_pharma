@@ -277,11 +277,9 @@
             border-radius: 15px;
             padding: 2rem;
             transition: all 0.3s;
-            cursor: pointer;
         }
 
         .report-item:hover {
-            transform: translateX(5px);
             border-color: var(--accent);
             background: rgba(10, 77, 104, 0.7);
         }
@@ -405,12 +403,6 @@
         .auth-icon {
             font-size: 4rem;
             margin-bottom: 1rem;
-            animation: float 3s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
         }
 
         .auth-header h2 {
@@ -769,6 +761,287 @@
                 flex-direction: column;
             }
         }
+
+        /* Classified content styles */
+        .classified-content {
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .classified-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .classified-badge {
+            display: inline-block;
+            background: rgba(255, 107, 107, 0.2);
+            border: 2px solid var(--warning);
+            color: var(--warning);
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+            margin-bottom: 1rem;
+            animation: pulse-warning 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse-warning {
+            0%, 100% { box-shadow: 0 0 10px rgba(255, 107, 107, 0.3); }
+            50% { box-shadow: 0 0 20px rgba(255, 107, 107, 0.6); }
+        }
+
+        .classified-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 900;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, var(--warning), #ff8888);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .classified-subtitle {
+            font-size: 1rem;
+            color: rgba(240, 249, 255, 0.6);
+        }
+
+        .classified-warning {
+            background: rgba(255, 107, 107, 0.1);
+            border: 2px solid var(--warning);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .classified-warning strong {
+            color: var(--warning);
+        }
+
+        .classified-card {
+            border: 2px solid var(--warning);
+            background: rgba(255, 107, 107, 0.05);
+        }
+
+        .classified-footer {
+            text-align: center;
+            margin-top: 3rem;
+            padding: 1.5rem;
+            background: rgba(255, 107, 107, 0.1);
+            border: 1px solid rgba(255, 107, 107, 0.3);
+            border-radius: 12px;
+            color: rgba(240, 249, 255, 0.7);
+        }
+
+        /* Classified Prompt Modal */
+        .classified-prompt-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(5, 25, 35, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .classified-prompt-modal.active {
+            display: flex;
+        }
+
+        .classified-prompt-container {
+            background: linear-gradient(135deg, rgba(10, 77, 104, 0.95), rgba(8, 131, 149, 0.95));
+            border: 2px solid var(--warning);
+            border-radius: 20px;
+            padding: 2.5rem;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 20px 60px rgba(255, 107, 107, 0.4);
+            animation: slideInDown 0.4s ease-out;
+        }
+
+        @keyframes slideInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .classified-prompt-header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .classified-prompt-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            animation: pulse-warning 2s ease-in-out infinite;
+        }
+
+        .classified-prompt-header h3 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--warning);
+            margin: 0;
+        }
+
+        .classified-prompt-body {
+            text-align: center;
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+
+        .classified-prompt-body p {
+            margin: 0.5rem 0;
+            font-size: 1rem;
+        }
+
+        .classified-prompt-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .classified-btn-cancel,
+        .classified-btn-confirm {
+            padding: 0.8rem 2rem;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Noto Sans JP', sans-serif;
+        }
+
+        .classified-btn-cancel {
+            background: rgba(240, 249, 255, 0.1);
+            color: var(--light);
+            border: 2px solid rgba(240, 249, 255, 0.3);
+        }
+
+        .classified-btn-cancel:hover {
+            background: rgba(240, 249, 255, 0.2);
+            border-color: rgba(240, 249, 255, 0.5);
+        }
+
+        .classified-btn-confirm {
+            background: linear-gradient(135deg, var(--warning), #ff8888);
+            color: white;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+        }
+
+        .classified-btn-confirm:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 107, 107, 0.6);
+        }
+
+        /* Mosaic effect */
+        @keyframes pixelate {
+            0% {
+                filter: none;
+            }
+            50% {
+                filter: blur(10px) brightness(0.5);
+                transform: scale(0.95);
+            }
+            100% {
+                filter: none;
+            }
+        }
+
+        @keyframes glitch {
+            0%, 100% {
+                transform: translate(0);
+            }
+            20% {
+                transform: translate(-5px, 5px);
+            }
+            40% {
+                transform: translate(-5px, -5px);
+            }
+            60% {
+                transform: translate(5px, 5px);
+            }
+            80% {
+                transform: translate(5px, -5px);
+            }
+        }
+
+        .mosaic-effect {
+            animation: pixelate 1s ease-in-out;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .mosaic-effect::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(255, 107, 107, 0.1) 0px,
+                transparent 2px,
+                transparent 4px,
+                rgba(5, 195, 221, 0.1) 6px
+            ),
+            repeating-linear-gradient(
+                90deg,
+                rgba(255, 107, 107, 0.1) 0px,
+                transparent 2px,
+                transparent 4px,
+                rgba(5, 195, 221, 0.1) 6px
+            );
+            animation: glitch 0.3s infinite;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        .card-transforming {
+            animation: cardFlipMosaic 1.8s ease-in-out;
+        }
+
+        @keyframes cardFlipMosaic {
+            0% {
+                transform: rotateY(0deg) scale(1);
+                filter: blur(0px);
+            }
+            25% {
+                filter: blur(5px);
+            }
+            50% {
+                transform: rotateY(90deg) scale(0.8);
+                filter: blur(10px) brightness(0.3);
+                opacity: 0.3;
+            }
+            75% {
+                filter: blur(5px);
+            }
+            100% {
+                transform: rotateY(0deg) scale(1);
+                filter: blur(0px);
+            }
+        }
     </style>
 </head>
 <body>
@@ -816,6 +1089,24 @@
         </div>
     </div>
 
+    <!-- Classified Prompt Modal -->
+    <div class="classified-prompt-modal" id="classifiedPromptModal">
+        <div class="classified-prompt-container">
+            <div class="classified-prompt-header">
+                <div class="classified-prompt-icon">🔒</div>
+                <h3>高度機密情報アクセス</h3>
+            </div>
+            <div class="classified-prompt-body">
+                <p>D-支配済の職員のログインを確認しました。</p>
+                <p style="font-weight: 600; color: var(--warning);">高度機密情報ページを表示しますか？</p>
+            </div>
+            <div class="classified-prompt-buttons">
+                <button class="classified-btn-cancel" onclick="closeClassifiedPrompt()">いいえ</button>
+                <button class="classified-btn-confirm" onclick="confirmClassifiedAccess()">はい</button>
+            </div>
+        </div>
+    </div>
+
     <header>
         <div class="header-content">
             <div class="logo-container">
@@ -827,6 +1118,8 @@
             </div>
             <div class="system-status">
                 <div class="status-dot"></div>
+                <span>ONLINE</span>
+            </div>
 
             <button class="hamburger" id="hamburger" aria-label="メニュー">
                 <span></span>
@@ -835,8 +1128,12 @@
             </button>
 
             <nav class="header-nav" id="headerNav">
-                <span>ONLINE</span>
-            </div>
+                <a href="newsite.html">ホーム</a>
+                <a href="clinical-trial.html">臨床試験被験者の方へ</a>
+                <a href="products.html">各種製品情報</a>
+                <a href="research.html" class="active">研究レポート</a>
+                <a href="progress.html">サイト進捗報告用</a>
+            </nav>
         </div>
     </header>
 
@@ -861,95 +1158,97 @@
                     <div class="report-item">
                         <div class="report-header">
                             <div>
-                                <div class="report-title">神経可塑性増強に関する最新研究</div>
-                                <div class="report-id">Report ID: NL-RES-2025-001</div>
+                                <div class="report-title">NeuroSync™ 学術論文集</div>
+                                <div class="report-id">製品コード: NS-2847-ALPHA</div>
                             </div>
-                            <div class="report-date">2025-01-15</div>
+                            <div class="report-date">2025-01-10</div>
                         </div>
                         <div class="report-summary">
-                            NeuroSync™の作用機序に関する詳細な研究データ。
-                            シナプス可塑性の増強効果と長期記憶形成への影響を分析。
+                            BDNF依存性シナプス可塑性の増強メカニズムに関する包括的研究データ。軽度認知障害患者における第II相試験結果を含む。
+                        </div>
+                        <div style="margin: 1rem 0; padding: 1rem; background: rgba(5, 25, 35, 0.4); border-radius: 6px; border-left: 3px solid var(--accent);">
+                            <div style="font-weight: 600; color: var(--accent); margin-bottom: 0.5rem;">📄 収録論文（8件）</div>
+                            <ul style="margin-left: 1.5rem; font-size: 0.9rem; line-height: 1.6;">
+                                <li>NS-2847-ALPHAによるBDNF依存性シナプス可塑性の増強機構</li>
+                                <li>新規神経調整薬NS-2847-ALPHAの薬物動態プロファイル：健常成人における第I相試験</li>
+                                <li>軽度認知障害患者におけるNS-2847-ALPHAの有効性と安全性：無作為化二重盲検プラセボ対照試験</li>
+                                <li>NS-2847-ALPHAによる海馬長期増強の促進：電気生理学的および形態学的解析</li>
+                                <li>認知機能向上を目的とした神経可塑性促進薬の開発動向：NS-2847-ALPHAを中心に（総説）</li>
+                            </ul>
+                            <div style="font-weight: 600; color: var(--accent); margin: 1rem 0 0.5rem;">🎤 学会発表（3件）</div>
+                            <ul style="margin-left: 1.5rem; font-size: 0.9rem; line-height: 1.6;">
+                                <li>NS-2847-ALPHAの長期投与における認知機能改善効果の持続性</li>
+                                <li>fMRIによるNS-2847-ALPHA投与後の脳機能ネットワーク変化の解析</li>
+                                <li>NS-2847-ALPHA Phase III中間解析結果の報告</li>
+                            </ul>
                         </div>
                         <div class="report-tags">
-                            <span class="tag">Neuroplasticity</span>
-                            <span class="tag">Synaptic Enhancement</span>
-                            <span class="tag">Phase II</span>
+                            <span class="tag">Phase III進行中</span>
+                            <span class="tag">IF最高値: 9.2</span>
+                            <span class="tag">著者: 山田 健太郎、山根 亮平 他</span>
                         </div>
                     </div>
 
                     <div class="report-item">
                         <div class="report-header">
                             <div>
-                                <div class="report-title">記憶エンコーディングの最適化手法</div>
-                                <div class="report-id">Report ID: NL-RES-2024-089</div>
+                                <div class="report-title">MemoriaPlus™ 学術論文集</div>
+                                <div class="report-id">製品コード: MP-1923-BETA</div>
                             </div>
-                            <div class="report-date">2024-12-20</div>
+                            <div class="report-date">2025-01-10</div>
                         </div>
                         <div class="report-summary">
-                            MemoriaPlus™による海馬機能の改善効果。
-                            健常者およびMCI患者における記憶テストの結果比較。
+                            海馬長期増強の促進とCREB経路活性化に関する研究成果。記憶固定化における睡眠の役割、加齢に伴う記憶力低下への有効性を実証。
+                        </div>
+                        <div style="margin: 1rem 0; padding: 1rem; background: rgba(5, 25, 35, 0.4); border-radius: 6px; border-left: 3px solid var(--accent);">
+                            <div style="font-weight: 600; color: var(--accent); margin-bottom: 0.5rem;">📄 収録論文（6件）</div>
+                            <ul style="margin-left: 1.5rem; font-size: 0.9rem; line-height: 1.6;">
+                                <li>MP-1923-BETAによる海馬長期増強の促進とCREB経路活性化</li>
+                                <li>新規記憶増強薬MP-1923-BETAの薬物動態および安全性：第I相臨床試験結果</li>
+                                <li>加齢に伴う記憶力低下に対するMP-1923-BETAの有効性：無作為化比較試験</li>
+                                <li>記憶固定化における睡眠の役割とMP-1923-BETAの影響</li>
+                            </ul>
+                            <div style="font-weight: 600; color: var(--accent); margin: 1rem 0 0.5rem;">🎤 学会発表（2件）</div>
+                            <ul style="margin-left: 1.5rem; font-size: 0.9rem; line-height: 1.6;">
+                                <li>MP-1923-BETAによる言語記憶および視覚記憶の改善効果</li>
+                                <li>記憶増強薬の新たな作用機序：CREB経路を標的とした治療戦略</li>
+                            </ul>
                         </div>
                         <div class="report-tags">
-                            <span class="tag">Memory Enhancement</span>
-                            <span class="tag">Hippocampus</span>
-                            <span class="tag">Clinical Data</span>
+                            <span class="tag">Phase II進行中</span>
+                            <span class="tag">IF最高値: 7.4</span>
+                            <span class="tag">著者: 中山 智也、山根 亮平 他</span>
                         </div>
                     </div>
 
                     <div class="report-item">
                         <div class="report-header">
                             <div>
-                                <div class="report-title">DreamLink™ 第二相臨床試験報告</div>
-                                <div class="report-id">Report ID: NL-RES-2024-067</div>
+                                <div class="report-title">DreamLink™ 学術論文集</div>
+                                <div class="report-id">製品コード: DL-X789-OMEGA</div>
                             </div>
-                            <div class="report-date">2024-11-08</div>
+                            <div class="report-date">2025-01-12</div>
                         </div>
                         <div class="report-summary">
-                            睡眠段階の調整と明晰夢誘導に関する臨床データ。
-                            被験者の睡眠の質改善とREM睡眠時の覚醒度コントロール。
+                            REM睡眠の選択的延長メカニズムと前頭前皮質活性化に関する研究。明晰夢誘導剤の薬物動態および第I相試験結果。
+                        </div>
+                        <div style="margin: 1rem 0; padding: 1rem; background: rgba(5, 25, 35, 0.4); border-radius: 6px; border-left: 3px solid var(--accent);">
+                            <div style="font-weight: 600; color: var(--accent); margin-bottom: 0.5rem;">📄 収録論文（3件）</div>
+                            <ul style="margin-left: 1.5rem; font-size: 0.9rem; line-height: 1.6;">
+                                <li>DL-X789-OMEGAによるREM睡眠の選択的延長メカニズム</li>
+                                <li>新規明晰夢誘導剤の薬物動態および安全性評価:第I相試験結果</li>
+                                <li>前頭前皮質の睡眠中活性化と夢の自己認識:神経画像研究</li>
+                            </ul>
+                            <div style="font-weight: 600; color: var(--accent); margin: 1rem 0 0.5rem;">🎤 学会発表（2件）</div>
+                            <ul style="margin-left: 1.5rem; font-size: 0.9rem; line-height: 1.6;">
+                                <li>DL-X789-OMEGAの臨床応用に向けた課題と展望</li>
+                                <li>明晰夢と創造性:神経科学的アプローチ</li>
+                            </ul>
                         </div>
                         <div class="report-tags">
-                            <span class="tag">Sleep Research</span>
-                            <span class="tag">Lucid Dreaming</span>
-                            <span class="access-restricted">アクセス制限</span>
-                        </div>
-                    </div>
-
-                    <div class="report-item">
-                        <div class="report-header">
-                            <div>
-                                <div class="report-title">安全性評価: 長期投与による影響</div>
-                                <div class="report-id">Report ID: NL-RES-2024-055</div>
-                            </div>
-                            <div class="report-date">2024-10-12</div>
-                        </div>
-                        <div class="report-summary">
-                            全製品における長期投与試験の安全性データ。
-                            副作用プロファイルと投与量の最適化に関する分析。
-                        </div>
-                        <div class="report-tags">
-                            <span class="tag">Safety Assessment</span>
-                            <span class="tag">Long-term Study</span>
-                            <span class="tag">Dosage Optimization</span>
-                        </div>
-                    </div>
-
-                    <div class="report-item">
-                        <div class="report-header">
-                            <div>
-                                <div class="report-title">M-プロトコル: 実験記録 #2847</div>
-                                <div class="report-id">Report ID: NL-RES-2024-M2847</div>
-                            </div>
-                            <div class="report-date">2024-09-25</div>
-                        </div>
-                        <div class="report-summary">
-                            特殊プロトコルに基づく実験データ。
-                            詳細な閲覧にはM-導入済の認証が必要です。
-                        </div>
-                        <div class="report-tags">
-                            <span class="tag">M-Protocol</span>
-                            <span class="tag">Experiment #2847</span>
-                            <span class="access-restricted">M-導入済限定</span>
+                            <span class="tag">Phase II進行中</span>
+                            <span class="tag">IF最高値: 5.2</span>
+                            <span class="tag">著者: 高橋 誠一、山根 亮平 他</span>
                         </div>
                     </div>
                 </div>
@@ -968,7 +1267,16 @@
     </footer>
 
     <script>
-                // Hamburger menu toggle
+        // Lock scroll and scroll to top when auth overlay is shown
+        window.addEventListener('load', function() {
+            const authOverlay = document.getElementById('authOverlay');
+            if (authOverlay && !authOverlay.classList.contains('hidden')) {
+                document.body.style.overflow = 'hidden';
+                window.scrollTo(0, 0);
+            }
+        });
+
+        // Hamburger menu toggle
         const hamburger = document.getElementById('hamburger');
         const headerNav = document.getElementById('headerNav');
 
@@ -982,7 +1290,7 @@
             document.addEventListener('click', function(event) {
                 const isClickInsideNav = headerNav.contains(event.target);
                 const isClickOnHamburger = hamburger.contains(event.target);
-                
+
                 if (!isClickInsideNav && !isClickOnHamburger && headerNav.classList.contains('active')) {
                     headerNav.classList.remove('active');
                     hamburger.classList.remove('active');
@@ -998,7 +1306,7 @@
             });
         }
 
-function goBack() {
+        function goBack() {
             window.history.back();
         }
 
@@ -1015,16 +1323,208 @@ function goBack() {
                 return false;
             }
             
-            // 特定のIDとパスワードのチェック（M-未導入の社員）
-            if (employeeId === '0763521' && password === 'iris') {
-                errorMessage.textContent = 'M-未導入のため閲覧権限がありません。';
+            // 職員IDデータベース
+            const staffDatabase = {
+                // 上位層：主任研究員
+                '9203746': { name: '田中博士', level: 'senior', password: 'iris' },
+                
+                // 中位層：医師
+                '2847391': { name: '山田医師', level: 'middle', password: 'iris' },
+                '1925637': { name: '鈴木医師', level: 'middle', password: 'iris' },
+                '4562813': { name: '中村医師', level: 'middle', password: 'iris' },
+                '6183749': { name: '小林医師', level: 'middle', password: 'iris' },
+                '3916284': { name: '佐々木医師', level: 'middle', password: 'iris' },
+                
+                // 下位層：CRC
+                '5106829': { name: '佐藤CRC', level: 'junior', password: 'iris' },
+                '3741028': { name: '高橋CRC', level: 'junior', password: 'iris' },
+                '5928461': { name: '伊藤CRC', level: 'junior', password: 'iris' },
+                '7294036': { name: '森田CRC', level: 'junior', password: 'iris' },
+                '8451729': { name: '木村CRC', level: 'junior', password: 'iris' }
+            };
+            
+            // IDの確認
+            const staff = staffDatabase[employeeId];
+            
+            if (!staff) {
+                errorMessage.textContent = 'ID, もしくはパスワードが違います。';
                 return false;
             }
             
-            // それ以外は全て認証失敗
-            errorMessage.textContent = 'ID, もしくはパスワードが違います。';
+            // パスワードの確認
+            if (password !== staff.password) {
+                errorMessage.textContent = 'ID, もしくはパスワードが違います。';
+                return false;
+            }
+            
+            // 権限レベルによる処理
+            if (staff.level === 'junior') {
+                // 下位層：アクセス拒否
+                errorMessage.textContent = 'M-未導入のため閲覧権限がありません。';
+                return false;
+            } else if (staff.level === 'middle') {
+                // 中位層：通常ページを表示
+                document.getElementById('authOverlay').style.display = 'none';
+                document.body.style.overflow = '';
+                return false;
+            } else if (staff.level === 'senior') {
+                // 上位層：高度機密情報の選択肢を表示
+                document.getElementById('authOverlay').style.display = 'none';
+                document.body.style.overflow = '';
+                showClassifiedPrompt();
+                return false;
+            }
             
             return false;
+        }
+
+        function showClassifiedPrompt() {
+            document.getElementById('classifiedPromptModal').classList.add('active');
+        }
+
+        function closeClassifiedPrompt() {
+            document.getElementById('classifiedPromptModal').classList.remove('active');
+        }
+
+        function confirmClassifiedAccess() {
+            document.getElementById('classifiedPromptModal').classList.remove('active');
+            showClassifiedPage();
+        }
+
+        function showClassifiedPage() {
+            // ページヘッダーを機密情報用に変更
+            const pageHeader = document.querySelector('.page-header');
+            pageHeader.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            pageHeader.style.opacity = '0';
+            pageHeader.style.transform = 'translateY(-20px)';
+            
+            setTimeout(() => {
+                pageHeader.innerHTML = `
+                    <div class="classified-badge">🔒 CLASSIFIED</div>
+                    <h1 class="page-title classified-title">高度機密研究レポート</h1>
+                    <p class="page-subtitle classified-subtitle">D-支配済職員専用 | Confidential Research Reports</p>
+                `;
+                pageHeader.style.opacity = '1';
+                pageHeader.style.transform = 'translateY(0)';
+            }, 500);
+            
+            // カードを1枚ずつ変遷させる
+            const cards = document.querySelectorAll('.report-item');
+            const classifiedData = [
+                {
+                    badge: 'CLASSIFIED',
+                    icon: '🧠',
+                    title: 'N-適応プロトコル効果比較レポート',
+                    code: '機密コード: N-ADAPT-COMPARE-2024-11',
+                    content: `NullifiedSync™投与による神経可塑性変化の比較観察記録。`,
+                    detail: `<div style="margin-top: 1rem; padding: 1rem; background: rgba(5, 25, 35, 0.6); border-radius: 8px;">
+                            <strong style="color: var(--accent);">【N-適応済】被験者ID: YK19870523（山本健太 / 37歳 男性）</strong><br>
+                            投与4週間後、脳波検査にてシータ波の顕著な増加を確認。批判的思考を司る前頭前野の活動が30%低下し、
+                            提示された情報への受容性が著しく向上。極端な主張や矛盾する情報に対しても抵抗反応を示さず、
+                            「そういう考え方もあるのだな」と柔軟に受け入れる傾向が観察された。
+                            </div>
+                            <div style="margin-top: 1rem; padding: 1rem; background: rgba(5, 25, 35, 0.6); border-radius: 8px;">
+                            <strong style="color: rgba(255, 107, 107, 0.8);">【N-未適応】被験者ID: NH19920814（中村春奈 / 32歳 女性）</strong><br>
+                            同条件での投与にもかかわらず、神経可塑性の変化は限定的。批判的思考能力は維持されており、
+                            論理的矛盾や偏った情報に対して疑問を呈する反応が継続。「それは少し極端すぎませんか」といった
+                            抵抗的な発言が多く記録された。プロトコル不完全適応例として経過観察中。
+                            </div>`,
+                    author: '山根 亮平 博士',
+                    date: '2024年11月15日'
+                },
+                {
+                    badge: 'CLASSIFIED',
+                    icon: '💭',
+                    title: 'M-導入プロトコル効果比較レポート',
+                    code: '機密コード: M-INTRO-COMPARE-2024-12',
+                    content: `ModulatedPlus™による記憶固定化プロセスの比較検証記録。`,
+                    detail: `<div style="margin-top: 1rem; padding: 1rem; background: rgba(5, 25, 35, 0.6); border-radius: 8px;">
+                            <strong style="color: var(--accent);">【M-導入済】被験者ID: KR19950302（木村涼子 / 29歳 女性）</strong><br>
+                            N-適応後、特定の組織理念を1週間教示し、ModulatedPlus™を投与。
+                            3ヶ月後の再評価において、教示内容を完全に長期記憶化していることを確認。
+                            「これは私がずっと大切にしてきた価値観だ」と述懐し、刷り込まれた記憶を
+                            自身の本来の信念として認識している。自然な忘却プロセスは完全に阻害されている。
+                            </div>
+                            <div style="margin-top: 1rem; padding: 1rem; background: rgba(5, 25, 35, 0.6); border-radius: 8px;">
+                            <strong style="color: rgba(255, 107, 107, 0.8);">【M-未導入】被験者ID: IT19880716（伊藤武 / 36歳 男性）</strong><br>
+                            N-適応状態であったものの、ModulatedPlus™投与に対する反応が不十分。
+                            同様の教示内容を受けたが、1ヶ月後には「そういえばそんな話もありましたね」程度の
+                            曖昧な記憶へと変容。自然な忘却が進行しており、記憶固定化は不成功。
+                            海馬の特定受容体の発現量不足が原因と推測される。
+                            </div>`,
+                    author: '中山 智也 博士',
+                    date: '2024年12月8日'
+                },
+                {
+                    badge: 'TOP SECRET',
+                    icon: '🌙',
+                    title: 'D-支配プロトコル効果比較レポート',
+                    code: '機密コード: D-DOMIN-COMPARE-2025-01',
+                    content: `DominatedLink™による深層心理統合の最終段階比較観察。`,
+                    detail: `<div style="margin-top: 1rem; padding: 1rem; background: rgba(5, 25, 35, 0.6); border-radius: 8px;">
+                            <strong style="color: var(--accent);">【D-支配済】被験者ID: MH19910925（松本博之 / 33歳 男性）</strong><br>
+                            M-導入後、DominatedLink™を6週間継続投与。睡眠中の脳波モニタリングにより、
+                            REM期における扁桃体と海馬の異常な同期活動を確認。固定化された記憶内容が
+                            深層意識の信念体系として完全に統合され、意識的な思考を介さずとも組織理念に
+                            沿った判断を自動的に下すようになった。「なぜかわからないが、これが正しいと確信している」
+                            との発言から、批判的検証なしに行動原理が書き換えられたことが示唆される。
+                            </div>
+                            <div style="margin-top: 1rem; padding: 1rem; background: rgba(5, 25, 35, 0.6); border-radius: 8px;">
+                            <strong style="color: rgba(255, 107, 107, 0.8);">【D-未支配】被験者ID: SA19930418（佐々木愛 / 31歳 女性）</strong><br>
+                            M-導入プロトコルは完全成功。教示内容は長期記憶として定着し、意識レベルで価値観として認識されている。
+                            しかし、DominatedLink™投与後も深層心理への統合は確認されず。「意識的には理解しているが、無意識レベルまで浸透していない」との
+                            自己報告があり、深層信念体系レベルでの書き換えには至っていない。
+                            REM睡眠中の前頭前野活動が異常に高く、深層意識への介入を無意識下で防御している
+                            可能性が指摘されている。継続観察対象。
+                            </div>`,
+                    author: '高橋 誠一 博士',
+                    date: '2025年1月22日'
+                }
+            ];
+            
+            cards.forEach((card, index) => {
+                setTimeout(() => {
+                    // モザイク効果を追加
+                    card.classList.add('mosaic-effect');
+                    card.classList.add('card-transforming');
+                    
+                    setTimeout(() => {
+                        // 内容を機密情報に差し替え
+                        const data = classifiedData[index];
+                        card.innerHTML = `
+                            <div class="report-header">
+                                <div>
+                                    <div style="display: inline-block; background: rgba(255, 107, 107, 0.2); border: 2px solid var(--warning); color: var(--warning); padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.7rem; font-weight: 700; letter-spacing: 2px; margin-bottom: 0.8rem;">${data.badge}</div>
+                                    <div class="report-title" style="display: flex; align-items: center; gap: 0.5rem;">
+                                        <span style="font-size: 1.5rem;">${data.icon}</span>
+                                        ${data.title}
+                                    </div>
+                                    <div class="report-id">${data.code}</div>
+                                </div>
+                                <div class="report-date">${data.date}</div>
+                            </div>
+                            <div class="report-summary" style="color: var(--warning); font-weight: 600;">
+                                ${data.content}
+                            </div>
+                            <div style="margin-top: 1rem; color: rgba(240, 249, 255, 0.9); line-height: 1.7;">
+                                ${data.detail}
+                            </div>
+                            <div class="report-tags" style="margin-top: 1.5rem;">
+                                <span class="access-restricted">著者: ${data.author}</span>
+                            </div>
+                        `;
+
+                        // カードのスタイルを機密仕様に変更
+                        card.classList.add('classified-card');
+                        
+                        // アニメーション完了後にクラスを削除
+                        setTimeout(() => {
+                            card.classList.remove('mosaic-effect');
+                            card.classList.remove('card-transforming');
+                        }, 1800);
+                    }, 900);
+                }, 1200 + (index * 800)); // 各カードを順番に変遷（より遅く）
+            });
         }
 
         function showPasswordHint(event) {
