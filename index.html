@@ -395,7 +395,7 @@
 
     <div class="chat-container" id="chatContainer">
         <div class="date-separator">今日</div>
-        
+
         <!-- 初期メッセージはJavaScriptで追加 -->
     </div>
 
@@ -510,7 +510,7 @@
             let attachmentHTML = '';
             if (hasAttachment && !isUser) {
                 attachmentHTML = `
-                    <div class="attachment" onclick="window.open('index.html', '_blank')">
+                    <div class="attachment" onclick="window.open('company-site.html', '_blank')">
                         <span class="attachment-icon">🔗</span>
                         NeuroLife製薬 公式サイト
                     </div>
@@ -537,7 +537,7 @@
             `;
 
             container.appendChild(messageDiv);
-            
+
             // アニメーション完了後（350ms）にスムーズにスクロール
             setTimeout(() => {
                 container.scrollTo({
@@ -555,7 +555,7 @@
                 hasQuickReplies: hasQuickReplies,
                 timestamp: new Date().toLocaleTimeString('ja-JP', { hour: '2-digit', minute: '2-digit' })
             };
-            
+
             messageHistory.push(msg);
             saveMessages();
             addMessageToDOM(text, isUser, hasAttachment, hasQuickReplies, msg.timestamp);
@@ -573,7 +573,7 @@
             const notification = document.getElementById('notification');
             notification.textContent = text;
             notification.classList.add('show');
-            
+
             setTimeout(() => {
                 notification.classList.remove('show');
             }, 3000);
@@ -601,9 +601,9 @@
             // Phase 0: 初期対応
             if (storyState.phase === 0) {
                 // Phase 1のキーワードが来たら自動的にPhase 1に移行
-                if (message.includes('製品') || message.includes('neurosync') || message.includes('memoriaplus') || 
+                if (message.includes('製品') || message.includes('neurosync') || message.includes('memoriaplus') ||
                     message.includes('dreamlink') || message.includes('dl-x789') || message.includes('x789') ||
-                    message.includes('臨床試験') || message.includes('被験者') || 
+                    message.includes('臨床試験') || message.includes('被験者') ||
                     message.includes('新サイト') || message.includes('社内情報システム') ||
                     message.includes('パスワード') || message.includes('nemophila')) {
                     storyState.phase = 1;
@@ -682,12 +682,12 @@
                 }
 
                 // ヒント・手がかり（パスワードの返答後のみ）
-                if (storyState.askedAboutPassword && 
-                    (message.includes('ヒント') || message.includes('手がかり') || 
+                if (storyState.askedAboutPassword &&
+                    (message.includes('ヒント') || message.includes('手がかり') ||
                      message.includes('わからない') || message.includes('分からない'))) {
                     storyState.hintCount++;
                     saveState();
-                    
+
                     if (storyState.hintCount === 1) {
                         return {
                             text: '5955->メモとかはヒントなんでしょうね。。。そのままだと文字数が合わないですし。。。',
@@ -728,7 +728,7 @@
                 }
 
                 // 製品情報、neurosync、memoriaplus、dreamlink
-                if (message.includes('製品情報') || message.includes('製品') || 
+                if (message.includes('製品情報') || message.includes('製品') ||
                     message.includes('neurosync') || message.includes('memoriaplus') || message.includes('dreamlink')) {
                     return {
                         text: '製品に関する情報が欲しいですけど、そのためには社員認証を突破しないと。',
@@ -764,12 +764,12 @@
                 }
 
                 // ヒント・手がかり（パスワードの返答後のみ）
-                if (storyState.askedAboutPassword2 && 
-                    (message.includes('ヒント') || message.includes('手がかり') || 
+                if (storyState.askedAboutPassword2 &&
+                    (message.includes('ヒント') || message.includes('手がかり') ||
                      message.includes('わからない') || message.includes('分からない'))) {
                     storyState.hintCount2++;
                     saveState();
-                    
+
                     if (storyState.hintCount2 === 1) {
                         return {
                             text: '線を辿るとlemonという文字ができるということなんでしょうか。',
@@ -864,7 +864,7 @@
                 setTimeout(() => {
                     scrollToBottom();
                 }, 400);
-                
+
                 if (response.callback) {
                     response.callback();
                 }
