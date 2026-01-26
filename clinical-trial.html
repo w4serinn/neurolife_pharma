@@ -507,19 +507,19 @@
                 <h2>臨床試験被験者認証</h2>
                 <p>アクセスには被験者IDとパスワードが必要です</p>
             </div>
-            <form class="auth-form" id="authForm" onsubmit="return authenticate(event)">
+            <form class="auth-form" id="authForm" onsubmit="return false;">
                 <div class="form-group">
                     <label for="participantId">被験者ID</label>
-                    <input type="text" id="participantId" placeholder="例: AB12345678">
+                    <input type="text" id="participantId" placeholder="例: AB12345678" onkeydown="preventEnterSubmit(event)">
                 </div>
                 <div class="form-group">
                     <label for="password">パスワード</label>
-                    <input type="password" id="password" placeholder="パスワードを入力">
+                    <input type="password" id="password" placeholder="パスワードを入力" onkeydown="preventEnterSubmit(event)">
                 </div>
                 <div class="error-message" id="errorMessage"></div>
                 <div class="auth-buttons">
                     <button type="button" class="back-button" onclick="goBack()">戻る</button>
-                    <button type="submit" class="auth-button">ログイン</button>
+                    <button type="button" class="auth-button" onclick="authenticate(event)">ログイン</button>
                 </div>
                 <div class="forgot-password">
                     <a href="#" onclick="openPasswordReset(event)">パスワードを忘れた場合</a>
@@ -623,10 +623,20 @@
                 Clinical Trial Portal v1.0 | Last Updated: 2025-01-01
             </span>
         </div>
+        <p style="margin-top: 1rem; font-size: 0.75rem; opacity: 0.5; color: #ff6b6b; text-align: center;">
+            ※このサイトはフィクションです。実在の企業・団体・製品とは一切関係ありません。
+        </p>
     </footer>
     <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
         let warningShown = false;
         let userInteractionDetected = false;
+
+        function preventEnterSubmit(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                return false;
+            }
+        }
 
         function goBack() {
             window.location.href = 'newsite.html';
