@@ -507,19 +507,19 @@
                 <h2>臨床試験被験者認証</h2>
                 <p>アクセスには被験者IDとパスワードが必要です</p>
             </div>
-            <form class="auth-form" id="authForm" onsubmit="return false;">
+            <form class="auth-form" id="authForm" onsubmit="return authenticate(event)">
                 <div class="form-group">
                     <label for="participantId">被験者ID</label>
-                    <input type="text" id="participantId" placeholder="例: AB12345678" onkeydown="preventEnterSubmit(event)">
+                    <input type="text" id="participantId" placeholder="例: AB12345678">
                 </div>
                 <div class="form-group">
                     <label for="password">パスワード</label>
-                    <input type="password" id="password" placeholder="パスワードを入力" onkeydown="preventEnterSubmit(event)">
+                    <input type="password" id="password" placeholder="パスワードを入力">
                 </div>
                 <div class="error-message" id="errorMessage"></div>
                 <div class="auth-buttons">
                     <button type="button" class="back-button" onclick="goBack()">戻る</button>
-                    <button type="button" class="auth-button" onclick="authenticate(event)">ログイン</button>
+                    <button type="submit" class="auth-button">ログイン</button>
                 </div>
                 <div class="forgot-password">
                     <a href="#" onclick="openPasswordReset(event)">パスワードを忘れた場合</a>
@@ -630,13 +630,6 @@
     <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
         let warningShown = false;
         let userInteractionDetected = false;
-
-        function preventEnterSubmit(event) {
-            if (event.key === 'Enter') {
-                event.preventDefault();
-                return false;
-            }
-        }
 
         function goBack() {
             window.location.href = 'newsite.html';
