@@ -67,7 +67,7 @@
             gap: 1rem;
         }
 
-        
+
         /* Hamburger Menu Button */
         .hamburger {
             display: none;
@@ -1315,51 +1315,52 @@
 
         function authenticate(event) {
             event.preventDefault();
-            
+
             const employeeId = document.getElementById('employeeId').value;
             const password = document.getElementById('password').value;
             const errorMessage = document.getElementById('errorMessage');
-            
+
             // 入力チェック
             if (!employeeId || !password) {
                 errorMessage.textContent = '社員IDとパスワードを入力してください';
                 return false;
             }
-            
+
             // 職員IDデータベース
             const staffDatabase = {
                 // 上位層：主任研究員
                 '9203746': { name: '田中博士', level: 'senior', password: 'iris' },
-                
+
                 // 中位層：医師
                 '2847391': { name: '山田医師', level: 'middle', password: 'iris' },
                 '1925637': { name: '鈴木医師', level: 'middle', password: 'iris' },
                 '4562813': { name: '中村医師', level: 'middle', password: 'iris' },
                 '6183749': { name: '小林医師', level: 'middle', password: 'iris' },
                 '3916284': { name: '佐々木医師', level: 'middle', password: 'iris' },
-                
+
                 // 下位層：CRC
                 '5106829': { name: '佐藤CRC', level: 'junior', password: 'iris' },
                 '3741028': { name: '高橋CRC', level: 'junior', password: 'iris' },
                 '5928461': { name: '伊藤CRC', level: 'junior', password: 'iris' },
                 '7294036': { name: '森田CRC', level: 'junior', password: 'iris' },
+                '0763521': { name: '浅田CRC', level: 'junior', password: 'iris' },
                 '8451729': { name: '木村CRC', level: 'junior', password: 'iris' }
             };
-            
+
             // IDの確認
             const staff = staffDatabase[employeeId];
-            
+
             if (!staff) {
                 errorMessage.textContent = 'ID, もしくはパスワードが違います。';
                 return false;
             }
-            
+
             // パスワードの確認
             if (password !== staff.password) {
                 errorMessage.textContent = 'ID, もしくはパスワードが違います。';
                 return false;
             }
-            
+
             // 権限レベルによる処理
             if (staff.level === 'junior') {
                 // 下位層：アクセス拒否
@@ -1377,7 +1378,7 @@
                 showClassifiedPrompt();
                 return false;
             }
-            
+
             return false;
         }
 
@@ -1400,7 +1401,7 @@
             pageHeader.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
             pageHeader.style.opacity = '0';
             pageHeader.style.transform = 'translateY(-20px)';
-            
+
             setTimeout(() => {
                 pageHeader.innerHTML = `
                     <div class="classified-badge">🔒 CLASSIFIED</div>
@@ -1410,7 +1411,7 @@
                 pageHeader.style.opacity = '1';
                 pageHeader.style.transform = 'translateY(0)';
             }, 500);
-            
+
             // カードを1枚ずつ変遷させる
             const cards = document.querySelectorAll('.report-item');
             const classifiedData = [
@@ -1484,13 +1485,13 @@
                     date: '2025年1月22日'
                 }
             ];
-            
+
             cards.forEach((card, index) => {
                 setTimeout(() => {
                     // モザイク効果を追加
                     card.classList.add('mosaic-effect');
                     card.classList.add('card-transforming');
-                    
+
                     setTimeout(() => {
                         // 内容を機密情報に差し替え
                         const data = classifiedData[index];
@@ -1519,7 +1520,7 @@
 
                         // カードのスタイルを機密仕様に変更
                         card.classList.add('classified-card');
-                        
+
                         // アニメーション完了後にクラスを削除
                         setTimeout(() => {
                             card.classList.remove('mosaic-effect');
@@ -1542,7 +1543,7 @@
         function adjustContentSpacing() {
             const header = document.querySelector('header');
             const contentWrapper = document.querySelector('.content-wrapper');
-            
+
             if (header && contentWrapper) {
                 const headerHeight = header.offsetHeight;
                 contentWrapper.style.paddingTop = headerHeight + 'px';
