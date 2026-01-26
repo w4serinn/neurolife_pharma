@@ -491,7 +491,7 @@
             <h1 class="warning-title">ACCESS DENIED</h1>
             <div class="warning-details">
                 <strong style="color: #cc8888; display: block; margin-bottom: 1rem;">システムによる自動検知</strong>
-                投与後状態監視中の被験者IDによるページ操作を検知しました。<br>
+                認証試験完了後の被験者IDによるページ操作を検知しました。<br>
                 閲覧禁止に自動移行します。
             </div>
             <div class="countdown-text">
@@ -550,7 +550,7 @@
                     <p class="page-subtitle">Clinical Trial Participant Portal</p>
                 </div>
                 <div class="content-card">
-                    <h2>臨床試験DL-X789-OMEGA 被験者の皆様へ</h2>
+                    <h2>臨床試験 被験者の皆様へ</h2>
                     <p style="line-height: 2; font-size: 1.05rem;">
                         この度は当社の臨床試験にご参加いただき、誠にありがとうございます。<br>
                         こちらは被験者専用ページとなります。<br>
@@ -672,7 +672,9 @@
                 console.log('hiddenクラス追加後:', authOverlay.className);
                 console.log('display プロパティ:', window.getComputedStyle(authOverlay).display);
                 errorMessage.textContent = '';
-                setupInteractionDetection();
+                setTimeout(function() {
+                    setupInteractionDetection();
+                }, 500);
             } else {
                 console.log('✗ 認証失敗');
                 console.log('入力値が一致しません');
