@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /company-site.html
+Disallow: /
