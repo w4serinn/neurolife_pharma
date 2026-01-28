@@ -1232,6 +1232,25 @@
                             <span class="status-restricted">Phase II進行中</span>
                         </div>
                     </div>
+
+                    <div class="product-card">
+                        <div class="product-header">
+                            <div class="product-icon">∞</div>
+                            <div>
+                                <h2>SoulArchive™</h2>
+                                <div class="product-code">製品コード: SA-0001-PROTO</div>
+                            </div>
+                        </div>
+                        <p>
+                            現在開発中の新薬です。
+                        </p>
+                        <p style="color: var(--warning); font-weight: 600;">
+                            ⚠️ 機密情報のため、M-導入済以下の職員の閲覧を禁ず。
+                        </p>
+                        <div class="product-tags">
+                            <span class="status-restricted">開発中</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </main>
@@ -1430,7 +1449,7 @@
                 {
                     icon: '∞',
                     title: '<del>SoulArchive</del>UROBOROS™ - 最高機密',
-                    code: '製品コード: <del>SA-UROBOROS</del>',
+                    code: '製品コード: <del>SA-0001-PROTO</del>',
                     warning: '【意識転写プロトコル実装】',
                     content: `D-支配済の被験者に対し、特殊な神経活動パターン記録・再現技術を用いて意識の転写を実施。
                             転写元となる人物の記憶、思考様式、価値観、人格特性を神経ネットワークレベルで解析し、
@@ -1447,6 +1466,7 @@
             ];
 
             cards.forEach((card, index) => {
+                if (index >= classifiedData.length) return;
                 setTimeout(() => {
                     // モザイク効果を追加
                     card.classList.add('mosaic-effect');
@@ -1488,49 +1508,6 @@
                     }, 900);
                 }, 1200 + (index * 800)); // 各カードを順番に変遷（より遅く）
             });
-
-            // 4枚目のUROBOROS™カードを新規追加
-            setTimeout(() => {
-                const productGrid = document.querySelector('.product-grid');
-                const data = classifiedData[3]; // 4枚目のデータ
-
-                // 新しいカードを作成
-                const newCard = document.createElement('div');
-                newCard.className = 'product-card';
-                newCard.style.opacity = '0';
-                newCard.style.transform = 'translateY(30px)';
-                newCard.innerHTML = `
-                    <div class="product-header">
-                        <div class="product-icon">${data.icon}</div>
-                        <div>
-                            <h2>${data.title}</h2>
-                            <div class="product-code">${data.code}</div>
-                        </div>
-                    </div>
-                    <p style="color: var(--warning); font-weight: 600;">
-                        ${data.warning}
-                    </p>
-                    <p>
-                        ${data.content}
-                    </p>
-                    <p style="font-size: 0.9rem; color: rgba(240, 249, 255, 0.7);">
-                        ${data.detail}
-                    </p>
-                    <div class="product-tags">
-                        ${data.tags.map(tag => `<span class="tag" style="background: rgba(255, 107, 107, 0.2); border-color: var(--warning);">${tag}</span>`).join('')}
-                    </div>
-                `;
-
-                productGrid.appendChild(newCard);
-
-                // フェードインアニメーション
-                setTimeout(() => {
-                    newCard.style.transition = 'all 0.8s ease';
-                    newCard.style.opacity = '1';
-                    newCard.style.transform = 'translateY(0)';
-                    newCard.classList.add('classified-card');
-                }, 100);
-            }, 1200 + (3 * 800) + 900); // 3枚目の変換が終わった後に追加
         }
 
         function showPasswordHint(event) {
